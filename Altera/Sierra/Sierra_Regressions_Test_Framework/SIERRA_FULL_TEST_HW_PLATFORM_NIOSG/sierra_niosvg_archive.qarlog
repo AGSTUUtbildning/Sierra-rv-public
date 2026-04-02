@@ -1,0 +1,10 @@
+
+
+******* Archived project restoration attempt on Thu Apr  2 09:59:09 2026
+Source archive file:	D:/GitHub/Utvecklingsprojekt_HT_2026/Sierra_regressions_test_framework/SIERRA_FULL_TEST_HW_PLATFORM_NIOSG/sierra_niosvg_archive.qar
+Quartus Prime failed to read the archive or extract some files into 
+	D:/GitHub/Utvecklingsprojekt_HT_2026/Sierra_regressions_test_framework/SIERRA_FULL_TEST_HW_PLATFORM_NIOSG/sierra_niosvg_archive_restored/.
+	======= Files failed to restore before extraction terminated: ======
+sierra_test_niosvg_hw/synthesis/submodules/sierra_test_niosvg_hw_mm_interconnect_0_avalon_st_adapter_006_error_adapter_0.sv
+			[1 file(s)]
+

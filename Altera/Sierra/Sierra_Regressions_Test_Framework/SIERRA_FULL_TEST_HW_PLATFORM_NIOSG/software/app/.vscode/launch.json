@@ -1,0 +1,122 @@
+{
+    "configurations": [
+        {
+            "logging": {
+                "engineLogging": "error"
+            },
+            "name": "sierra_test",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "e:\\Utveklingsprojekt\\sierra_test\\HW\\software\\app\\build\\app.elf",
+            "args": [],
+            "stopAtConnect": true,
+            "stopAtEntry": true,
+            "cwd": "e:\\Utveklingsprojekt\\sierra_test\\HW\\software\\app",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "c:\\altera_lite\\25.1std\\riscfree\\toolchain\\riscv32-unknown-elf\\bin\\riscv32-unknown-elf-gdb.exe",
+            "miDebuggerServerAddress": "localhost:31167",
+            "useExtendedRemote": true,
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "setting GDB command timeout increase if the target connection is slow",
+                    "text": "set remotetimeout 5000",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "setting tcp connection timeout in seconds",
+                    "text": "set tcp connect-timeout 90",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "setting tcp retry using tcp connect-timeout",
+                    "text": "set tcp auto-retry on",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Enable non-stop mode",
+                    "text": "set non-stop on",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Enable async mode",
+                    "text": "set target-async on",
+                    "ignoreFailures": true
+                }
+            ],
+            "postRemoteConnectCommands": [
+                {
+                    "description": "Remove the default break at main inserted by cppdbg",
+                    "text": "delete 1",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set mstatus",
+                    "text": "set $mstatus = 0x1800",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Import custom instruction module",
+                    "text": "python import gdb.custominsn",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Source custom instruction Python file",
+                    "text": "source c:\\altera_lite\\25.1std\\riscfree\\toolchain\\riscv32-unknown-elf\\share\\gdb\\python\\gdb\\custominsn.py",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Enable custom instruction display",
+                    "text": "set custom-instruction-display on",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Show custom instruction display status",
+                    "text": "show custom-instruction-display",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Pre-run command",
+                    "text": "set custom-instruction-filename c:\\altera_lite\\25.1std\\riscfree\\debugger\\gdbserver-riscv\\niosv_custom_instr.xml",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Load command",
+                    "text": "load",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Break at main",
+                    "text": "-break-insert -t main",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "continue",
+                    "text": "continue",
+                    "ignoreFailures": true
+                }
+            ],
+            "debugServerPath": "c:\\altera_lite\\25.1std\\riscfree\\debugger\\gdbserver-riscv\\ash-riscv-gdb-server.exe",
+            "debugServerArgs": "--gdb-port 31167 --transport-type jtag --device 0x031050DD --jtag-frequency 16000KHz --tap-number 1 --core-number 0 --probe-type usb-blaster-2 --instance 1 --auto-detect true",
+            "serverLaunchTimeout": 5000,
+            "hardwareBreakpoints": {
+                "require": false,
+                "limit": 4
+            },
+            "symbolLoadInfo": {
+                "loadAll": true,
+                "exceptionList": ""
+            },
+            "metadata": {
+                "tap-label": "10M50DA(.|ES)/10M50DC (0x031050DD)",
+                "core-label": "Nios V (0x08986E00)"
+            }
+        }
+    ]
+}
