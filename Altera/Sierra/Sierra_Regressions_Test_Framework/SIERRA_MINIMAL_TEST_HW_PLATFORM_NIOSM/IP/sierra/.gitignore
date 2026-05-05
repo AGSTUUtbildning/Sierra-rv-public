@@ -1,0 +1,6 @@
+**/.ccls-cache/
+**/.vscode/
+
+Doxygen/
+documentation/~*
+~*
