@@ -26,7 +26,7 @@
 #ifndef __SIERRA_H__
 #define __SIERRA_H__
 
-#include <sierra_io.h>
+#include <altera_avalon_sierra_io.h>
 #include <sierra_info.h>
 
 #ifdef __cplusplus

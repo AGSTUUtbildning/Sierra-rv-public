@@ -31,11 +31,16 @@
  */
 
 #include <io.h>
-#include <stdio.h>
 #include <system.h>
 #include "sierra.h"
-#include "sierra_logging.h"
 #include <sys/alt_irq.h>
+#include <sierra_logging.h>
+
+#if SIERRA_LOGGING == 1
+  #include <stdio.h>
+#else
+  #include <sys/alt_log_printf.h>
+#endif
 
 /*!----------------------------------------------------------------------------
     Include Sierra driver files specific to Altera
@@ -80,9 +85,13 @@ static void init_interrupt(void)
     asm volatile("csrs mie, t0");
 
         // Registrera ISR för Sierran, behövs inte, eftersom den tas om han i trap_vecktor
-   int rc = alt_ic_isr_register(0, SIERRA_RTOS_IRQ, dummy_isr, NULL, NULL);
+    int rc = alt_ic_isr_register(0, SIERRA_RTOS_IRQ, dummy_isr, NULL, NULL);
     if (rc != 0) {
+    #if SIERRA_LOGGING == 1
         printf("error registration Sierra irq (rc=%d)\n", rc);
+    #else
+        ALT_LOG_PRINTF("error registration Sierra irq (rc=%d)\n", rc);
+    #endif
     }
 }
 
@@ -125,14 +134,14 @@ uint32_t sierra_time_base_reg(void)
 //----------------------------------------------------------------------------
 void sierra_set_timebase(uint32_t hex)
 {
+  // Logs the set time base
+  sierra_logging_medium(info_sierra_time_timebase_set, sierra_get_current_time(), hex);
   M_IOWR_SierraTime_base_reg(hex);
 
-  // Logs the set time base
-  SIERRA_LOG_INFO("SIERRA_TIME, Timebase is set to %lu.", hex);
   if (hex > SIERRA_MAX_TIMEBASE)
   {
     // Warns in case of abnormal values
-    SIERRA_LOG_WARN("SIERRA_TIME, Timebase value %lu exceeds %d!", hex, SIERRA_MAX_TIMEBASE);
+    sierra_logging_full(warn_sierra_time_timebase_exc, sierra_get_current_time(), hex, SIERRA_MAX_TIMEBASE);
   }
 }
 
@@ -179,7 +188,7 @@ void get_next_task(void)
 
   // Get next task ID
   const uint8_t next_taskid = constant_task_mask & status.statusB_t.running_taskID;
-  SIERRA_LOG_INFO("SIERRA_TASK, Task %d preempted task %d.", next_taskid, RUNNING_TASKID);
+  sierra_logging_full(info_sierra_task_preemted_task, sierra_get_current_time(), next_taskid, RUNNING_TASKID);
   RUNNING_TASKID = next_taskid;
   current_tcb = &TCB_LIST[RUNNING_TASKID];
  
@@ -212,7 +221,7 @@ void sierra_tsw_on(void)
   sierra_tsw_on_internal();
 
   // Logs data when tsw is turned on
-  SIERRA_LOG_INFO("SIERRA_TSW, Task switching was turned on.");
+  sierra_logging_short(info_sierra_tsw_switching_on, sierra_get_current_time());
 }
 
 //----------------------------------------------------------------------------
@@ -232,7 +241,7 @@ void sierra_tsw_off(void)
   sierra_tsw_off_internal();
 
   // Logs data when tsw is turned off
-  SIERRA_LOG_INFO("SIERRA_TSW, Task switching was turned off.");
+  sierra_logging_short(info_sierra_tsw_switching_off, sierra_get_current_time());
 }
 
 //----------------------------------------------------------------------------
@@ -243,7 +252,7 @@ void get_new_task(void)
   current_tcb = &TCB_LIST[RUNNING_TASKID];
 
   // Logs data about the next running task
-  SIERRA_LOG_INFO("SIERRA_TASK, Next task requested, task %d moved to Running state.", RUNNING_TASKID);
+  sierra_logging_medium(info_sierra_task_next_requested, sierra_get_current_time(), RUNNING_TASKID);
 }
 
 //----------------------------------------------------------------------------
@@ -272,7 +281,7 @@ void sierra_await_irq(int IRQ_number)
   const statusA_union statusA = handle_service_call(&svc);
 
   // Logs data when an interrupt service task is ready to process to wait for an external interrupt
-  SIERRA_LOG_INFO("SIERRA_IRQ, Task %d will now wait for IRQ %d.", RUNNING_TASKID, IRQ_number);
+  sierra_logging_full(info_sierra_irq_task_wait_irq, sierra_get_current_time(), RUNNING_TASKID, IRQ_number);
 
   NEXT_TASKID = constant_task_mask & statusA.statusA_t.svc_return;
   sierra_tsw_on_internal();

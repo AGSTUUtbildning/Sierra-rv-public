@@ -4,18 +4,20 @@ OBS!!! Första version. Risk för att linker/Makefiler innehåller fel. WIP
 ///                                    memory linker regions                                    //
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-.bss        -> onchip_memoy
-.entry      -> reset (Kan bara ändras i HW) (?)
-.exceptions -> onchip_memoy
-.heap       -> onchip_memoy
-.rodata     -> onchip_memoy
-.rwdata     -> onchip_memoy
-.stack      -> onchip_memoy
-.text       -> onchip_memoy
+.bss        -> onchip_memory
+.entry      -> onchip_memory
+.exceptions -> onchip_memory
+.heap       -> onchip_memory
+.rodata     -> onchip_memory
+.rwdata     -> onchip_memory
+.stack      -> onchip_memory
+.text       -> onchip_memory
 
 
-Denna version bygger på en hårdvara med en minnesstorlek på 65536 bytes. 
-Regressionstest-applikationen tar upp ca 42.34 kb av minnet.
+Denna version bygger på en hårdvara med en minnesstorlek på 65536 bytes (~65 kb). 
+Använd versionen av Sierra som ligger i IP-mappen.
+Regressionstest-applikationen tar upp ca 40 - 50 kb av minnet, beroende på inställningar i BSP. 
+Går säkert att optimera minnesstorleken med flaggor i make-filerna, eller utöka det i HW vid behov.
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 ///                                          HW                                                 //
@@ -26,7 +28,7 @@ Regressionstest-applikationen tar upp ca 42.34 kb av minnet.
     - Avalon interface
 
  * on-chip ram
-    - 64 kb chacheble
+    - 65 kb free memory available
 
  * JTAG UART
 

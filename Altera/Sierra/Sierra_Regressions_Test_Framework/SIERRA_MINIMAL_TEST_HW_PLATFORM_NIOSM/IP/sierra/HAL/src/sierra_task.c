@@ -28,7 +28,7 @@
 #include <altera_avalon_sierra_regs.h>
 #include <altera_avalon_sierra_tcb.h>
 #include <stdio.h>
-#include "sierra_logging.h"
+#include <sierra_logging.h>
 
 
 
@@ -100,8 +100,7 @@ void sierra_create_task(const uint8_t taskID,
   handle_service_call(&svc);
 
   // === Loggning ===
-  SIERRA_LOG_INFO("SIERRA_TASK, Task %d was created with priority %d and stack size %d.",
-                  taskID, priority, stacksz);
+  sierra_logging_full(info_sierra_task_create_w_p_s, sierra_get_current_time(), taskID, priority);
 }
 
 
@@ -131,14 +130,14 @@ void sierra_start_task(const uint8_t taskID)
   handle_service_call(&svc);
 
   // Logs data when a task is started and placed in a ready state
-  SIERRA_LOG_INFO("SIERRA_TASK, Task %d was started.", taskID);
+  sierra_logging_medium(info_sierra_task_started, sierra_get_current_time(), taskID);
 }
 
 //----------------------------------------------------------------------------
 void sierra_block_task(const uint8_t taskID)
 {
   // Logs data when the running task is placed in a blocked state
-  SIERRA_LOG_INFO("SIERRA_TASK, Task %d blocking task %d.", RUNNING_TASKID, taskID);
+  sierra_logging_full(info_sierra_task_blocking, sierra_get_current_time(), RUNNING_TASKID, taskID);
 
   svc_t svc;
   svc.task_block.type =  sierra_task_block;
@@ -158,7 +157,7 @@ void sierra_block_task(const uint8_t taskID)
 void sierra_delete_task(void)
 {
   // Logs data when a task is deleted
-  SIERRA_LOG_INFO("SIERRA_TASK, Task %d is being deleted.", RUNNING_TASKID);
+  sierra_logging_medium(info_sierra_task_deleted, sierra_get_current_time(), RUNNING_TASKID);
 
   svc_t svc;
   svc.wait_for_next_period.type =  sierra_task_delete;
@@ -179,14 +178,14 @@ void sierra_change_task_prio(const uint8_t taskID, const int priority)
   handle_service_call(&svc);
 
   // Logs data when a task's priority is changed
-  SIERRA_LOG_INFO("SIERRA_TASK, Task %d changed priority to %d.", taskID, priority);
+  sierra_logging_full(info_sierra_task_change_prio, sierra_get_current_time(), taskID, priority);
 }
 
 //----------------------------------------------------------------------------
 void sierra_yield_task(void)
 {
   // Logs data when a task yields
-  SIERRA_LOG_INFO("SIERRA_TASK, Task %d yields.", RUNNING_TASKID);
+  sierra_logging_medium(info_sierra_task_yields, sierra_get_current_time(), RUNNING_TASKID);
 
   svc_t svc;
   svc.task_yield.type = sierra_task_yield;

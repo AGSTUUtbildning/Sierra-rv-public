@@ -28,7 +28,15 @@
 #include <altera_avalon_sierra_ker.h>
 #include <altera_avalon_sierra_tcb.h>
 #include <sierra.h>
-#include <stdio.h>
+#include <sierra_logging.h>
+
+#if SIERRA_LOGGING == 1
+  #include <stdio.h>
+  #define SIERRA_INFO_PRINTF(...) printf(__VA_ARGS__)
+#else
+  #include <sys/alt_log_printf.h>
+  #define SIERRA_INFO_PRINTF(...) ALT_LOG_PRINTF(__VA_ARGS__)
+#endif
 
 //----------------------------------------------------------------------------
 void sierra_print_versions(void)
@@ -38,17 +46,17 @@ void sierra_print_versions(void)
   const version_register_union test = sierra_HW_version();
 
 
-  printf("Sierra HW Version %d.%d.%d\n", test.version_register.MAJOR_version,test.version_register.MINOR_version,test.version_register.PATCH_version );
-  printf("Sierra SW Version %d.%d.%d\n", info.sw_version.MAJOR_SW, info.sw_version.MINOR_SW, info.sw_version.PATCH_SW);
+  SIERRA_INFO_PRINTF("Sierra HW Version %d.%d.%d\n", test.version_register.MAJOR_version,test.version_register.MINOR_version,test.version_register.PATCH_version );
+  SIERRA_INFO_PRINTF("Sierra SW Version %d.%d.%d\n", info.sw_version.MAJOR_SW, info.sw_version.MINOR_SW, info.sw_version.PATCH_SW);
 }
 
 //----------------------------------------------------------------------------
 void sierra_printf_HW_version(void)
 { 
   const version_register_union test = sierra_HW_version();
-  printf("Version = %d.%d.%d\n", test.version_register.MAJOR_version, test.version_register.MINOR_version, test.version_register.PATCH_version);
-  printf("Number of tasks bits = %d\n", test.version_register.number_of_tasks);
-  printf("Number of semaphore bits = %d\n", test.version_register.number_of_semaphores);
+  SIERRA_INFO_PRINTF("Version = %d.%d.%d\n", test.version_register.MAJOR_version, test.version_register.MINOR_version, test.version_register.PATCH_version);
+  SIERRA_INFO_PRINTF("Number of tasks bits = %d\n", test.version_register.number_of_tasks);
+  SIERRA_INFO_PRINTF("Number of semaphore bits = %d\n", test.version_register.number_of_semaphores);
 }
 
 //----------------------------------------------------------------------------
@@ -62,18 +70,18 @@ void sierra_task_info(void)
   "Dormant"
   };
   info = sierra_get_task_info(0);
-  printf("Idle\n");
-  printf("  info.state_info = %s\n", task_state[info.state_info]);
-  printf("  info.priority = %d\n", info.priority); 
+  SIERRA_INFO_PRINTF("Idle\n");
+  SIERRA_INFO_PRINTF("  info.state_info = %s\n", task_state[info.state_info]);
+  SIERRA_INFO_PRINTF("  info.priority = %d\n", info.priority);
 
   for (size_t i = 1; i < N_TASKS; ++i)
   {
     if (TCB_LIST[i].taskID != INVALID_TASK_ID)
     {
-      printf("Task %u\n", (unsigned int)i);
+      SIERRA_INFO_PRINTF("Task %d\n", (unsigned int)i);
       info = sierra_get_task_info(i);
-      printf("  info.state_info = %s\n", task_state[info.state_info]);
-      printf("  info.priority = %d\n", info.priority);
+      SIERRA_INFO_PRINTF("  info.state_info = %s\n", task_state[info.state_info]);
+      SIERRA_INFO_PRINTF("  info.priority = %d\n", info.priority);
     }
   }
 }
