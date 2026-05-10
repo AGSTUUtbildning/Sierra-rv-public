@@ -1,0 +1,204 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/altera_lite/25.1std/riscfree/build_tools/cmake/share/cmake-3.31/Modules/CMakeDetermineSystem.cmake:200 (message)"
+      - "CMakeLists.txt:8 (project)"
+    message: |
+      The target system is: Generic -  - Nios V/g
+      The host system is: Windows - 10.0.26200 - AMD64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/altera_lite/25.1std/riscfree/build_tools/cmake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/altera_lite/25.1std/riscfree/build_tools/cmake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/altera_lite/25.1std/riscfree/build_tools/cmake/share/cmake-3.31/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:8 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/riscv32-unknown-elf-gcc.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+      
+      The C compiler identification is GNU, found in:
+        C:/AGSTU/sierra_niosvg_archive_restored/software/app/build-win-release-make/CMakeFiles/3.31.1/CompilerIdC/a.out
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/altera_lite/25.1std/riscfree/build_tools/cmake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:1237 (message)"
+      - "C:/altera_lite/25.1std/riscfree/build_tools/cmake/share/cmake-3.31/Modules/CMakeDetermineASMCompiler.cmake:135 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "CMakeLists.txt:8 (project)"
+    message: |
+      Checking whether the ASM compiler is GNU using "--version" matched "(GNU assembler)|(GCC)|(Free Software Foundation)":
+      riscv32-unknown-elf-gcc.exe (GCC) 13.2.0
+      Copyright (C) 2023 Free Software Foundation, Inc.
+      This is free software; see the source for copying conditions.  There is NO
+      warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/altera_lite/25.1std/riscfree/build_tools/cmake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "C:/altera_lite/25.1std/riscfree/build_tools/cmake/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:8 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "C:/AGSTU/sierra_niosvg_archive_restored/software/app/build-win-release-make/CMakeFiles/CMakeScratch/TryCompile-z35lu2"
+      binary: "C:/AGSTU/sierra_niosvg_archive_restored/software/app/build-win-release-make/CMakeFiles/CMakeScratch/TryCompile-z35lu2"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/AGSTU/sierra_niosvg_archive_restored/software/app/build-win-release-make/CMakeFiles/CMakeScratch/TryCompile-z35lu2'
+        
+        Run Build Command(s): C:/altera_lite/25.1std/riscfree/build_tools/cmake/bin/cmake.exe -E env VERBOSE=1 C:/altera_lite/25.1std/riscfree/build_tools/bin/make.exe -f Makefile cmTC_46206/fast
+        C:/altera_lite/25.1std/riscfree/build_tools/bin/make.exe  -f CMakeFiles/cmTC_46206.dir/build.make CMakeFiles/cmTC_46206.dir/build
+        make[1]: Entering directory 'C:/AGSTU/sierra_niosvg_archive_restored/software/app/build-win-release-make/CMakeFiles/CMakeScratch/TryCompile-z35lu2'
+        Building C object CMakeFiles/cmTC_46206.dir/CMakeCCompilerABI.c.obj
+        C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/riscv32-unknown-elf-gcc.exe -DALTERA_AVALON_JTAG_UART_IGNORE_FIFO_FULL_ERROR -DALTERA_AVALON_JTAG_UART_SMALL -DALT_LOG_ENABLE -DALT_LOG_FLAGS=0 -DALT_NO_C_PLUS_PLUS -DALT_USE_DIRECT_DRIVERS -DALT_USE_SMALL_DRIVERS -D__hal__  -Os -DNDEBUG   -v -DALT_SINGLE_THREADED -Wall -Wformat-security -Wformat -ffunction-sections -fdata-sections -march=rv32imf_zicbom -mabi=ilp32f -o CMakeFiles/cmTC_46206.dir/CMakeCCompilerABI.c.obj -c C:/altera_lite/25.1std/riscfree/build_tools/cmake/share/cmake-3.31/Modules/CMakeCCompilerABI.c
+        Using built-in specs.
+        COLLECT_GCC=C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/riscv32-unknown-elf-gcc.exe
+        Target: riscv32-unknown-elf
+        Configured with: ../../gcc/configure --target=riscv32-unknown-elf --prefix=/c/Build/niosv/install --with-sysroot=/c/Build/niosv/install/riscv32-unknown-elf --with-native-system-header-dir=/include --with-newlib --disable-shared --enable-languages=c,c++ --enable-tls --disable-werror --disable-libmudflap --disable-libssp --disable-quadmath --disable-libgomp --disable-nls --enable-multilib --with-isa-spec=2.2 --with-multilib-generator='rv32e-ilp32e--zicbom rv32ea-ilp32e--zicbom rv32im-ilp32--zicbom rv32ia-ilp32--zicbom rv32ima-ilp32--zicbom rv32imf-ilp32--zicbom rv32imf-ilp32f--zicbom rv32imaf-ilp32--zicbom rv32imaf-ilp32f--zicbom rv64ima-lp64--zicbom rv64imaf-lp64--zicbom rv64imaf-lp64f--zicbom' --with-arch=rv32i --with-abi=ilp32 --with-zstd=no --with-system-zlib --enable-libstdcxx-pch=no
+        Thread model: single
+        Supported LTO compression algorithms: zlib
+        gcc version 13.2.0 (GCC) 
+        COLLECT_GCC_OPTIONS='-D' 'ALTERA_AVALON_JTAG_UART_IGNORE_FIFO_FULL_ERROR' '-D' 'ALTERA_AVALON_JTAG_UART_SMALL' '-D' 'ALT_LOG_ENABLE' '-D' 'ALT_LOG_FLAGS=0' '-D' 'ALT_NO_C_PLUS_PLUS' '-D' 'ALT_USE_DIRECT_DRIVERS' '-D' 'ALT_USE_SMALL_DRIVERS' '-D' '__hal__' '-Os' '-D' 'NDEBUG' '-v' '-D' 'ALT_SINGLE_THREADED' '-Wall' '-Wformat-security' '-Wformat=1' '-ffunction-sections' '-fdata-sections' '-march=rv32imf_zicbom' '-mabi=ilp32f' '-o' 'CMakeFiles/cmTC_46206.dir/CMakeCCompilerABI.c.obj' '-c' '-misa-spec=2.2' '-march=rv32imf_zicbom' '-dumpdir' 'CMakeFiles/cmTC_46206.dir/'
+         C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../libexec/gcc/riscv32-unknown-elf/13.2.0/cc1.exe -quiet -v -imultilib rv32imf/ilp32f -iprefix C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/ -isysroot C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../riscv32-unknown-elf -D ALTERA_AVALON_JTAG_UART_IGNORE_FIFO_FULL_ERROR -D ALTERA_AVALON_JTAG_UART_SMALL -D ALT_LOG_ENABLE -D ALT_LOG_FLAGS=0 -D ALT_NO_C_PLUS_PLUS -D ALT_USE_DIRECT_DRIVERS -D ALT_USE_SMALL_DRIVERS -D __hal__ -D NDEBUG -D ALT_SINGLE_THREADED C:/altera_lite/25.1std/riscfree/build_tools/cmake/share/cmake-3.31/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_46206.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -march=rv32imf_zicbom -mabi=ilp32f -misa-spec=2.2 -march=rv32imf_zicbom -Os -Wall -Wformat-security -Wformat=1 -version -ffunction-sections -fdata-sections -o C:\\Users\\LUDVIG~1\\AppData\\Local\\Temp\\ccNH39rf.s
+        GNU C17 (GCC) version 13.2.0 (riscv32-unknown-elf)
+        	compiled by GNU C version 14.1.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
+        
+        warning: GMP header version 6.2.1 differs from library version 6.2.1.fix1.
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring duplicate directory "C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/lib/gcc/../../lib/gcc/riscv32-unknown-elf/13.2.0/include"
+        ignoring nonexistent directory "C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../riscv32-unknown-elfC:/Build/niosv/install/lib/gcc/riscv32-unknown-elf/13.2.0/../../../../include"
+        ignoring duplicate directory "C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/lib/gcc/../../lib/gcc/riscv32-unknown-elf/13.2.0/include-fixed"
+        ignoring duplicate directory "C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/lib/gcc/../../lib/gcc/riscv32-unknown-elf/13.2.0/../../../../riscv32-unknown-elf/include"
+        ignoring nonexistent directory "C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../riscv32-unknown-elfC:/msys64-old-20240923/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/include
+         C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/include-fixed
+         C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/../../../../riscv32-unknown-elf/include
+        End of search list.
+        Compiler executable checksum: b36e1212d9a1769fa46c257797acf5fb
+        COLLECT_GCC_OPTIONS='-D' 'ALTERA_AVALON_JTAG_UART_IGNORE_FIFO_FULL_ERROR' '-D' 'ALTERA_AVALON_JTAG_UART_SMALL' '-D' 'ALT_LOG_ENABLE' '-D' 'ALT_LOG_FLAGS=0' '-D' 'ALT_NO_C_PLUS_PLUS' '-D' 'ALT_USE_DIRECT_DRIVERS' '-D' 'ALT_USE_SMALL_DRIVERS' '-D' '__hal__' '-Os' '-D' 'NDEBUG' '-v' '-D' 'ALT_SINGLE_THREADED' '-Wall' '-Wformat-security' '-Wformat=1' '-ffunction-sections' '-fdata-sections' '-march=rv32imf_zicbom' '-mabi=ilp32f' '-o' 'CMakeFiles/cmTC_46206.dir/CMakeCCompilerABI.c.obj' '-c' '-misa-spec=2.2' '-march=rv32imf_zicbom' '-dumpdir' 'CMakeFiles/cmTC_46206.dir/'
+         C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/../../../../riscv32-unknown-elf/bin/as.exe -v --traditional-format -march=rv32imf_zicbom -march=rv32imf_zicbom -mabi=ilp32f -misa-spec=2.2 -o CMakeFiles/cmTC_46206.dir/CMakeCCompilerABI.c.obj C:\\Users\\LUDVIG~1\\AppData\\Local\\Temp\\ccNH39rf.s
+        GNU assembler version 2.40.90 (riscv32-unknown-elf) using BFD version (GNU Binutils) 2.40.90.20230730
+        COMPILER_PATH=C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../libexec/gcc/riscv32-unknown-elf/13.2.0/;C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../libexec/gcc/;C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/../../../../riscv32-unknown-elf/bin/
+        LIBRARY_PATH=C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/rv32imf/ilp32f/;C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/../../../../riscv32-unknown-elf/lib/rv32imf/ilp32f/;C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../riscv32-unknown-elf/lib/rv32imf/ilp32f/;C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/;C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/;C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/../../../../riscv32-unknown-elf/lib/;C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../riscv32-unknown-elf/lib/
+        COLLECT_GCC_OPTIONS='-D' 'ALTERA_AVALON_JTAG_UART_IGNORE_FIFO_FULL_ERROR' '-D' 'ALTERA_AVALON_JTAG_UART_SMALL' '-D' 'ALT_LOG_ENABLE' '-D' 'ALT_LOG_FLAGS=0' '-D' 'ALT_NO_C_PLUS_PLUS' '-D' 'ALT_USE_DIRECT_DRIVERS' '-D' 'ALT_USE_SMALL_DRIVERS' '-D' '__hal__' '-Os' '-D' 'NDEBUG' '-v' '-D' 'ALT_SINGLE_THREADED' '-Wall' '-Wformat-security' '-Wformat=1' '-ffunction-sections' '-fdata-sections' '-march=rv32imf_zicbom' '-mabi=ilp32f' '-o' 'CMakeFiles/cmTC_46206.dir/CMakeCCompilerABI.c.obj' '-c' '-misa-spec=2.2' '-march=rv32imf_zicbom' '-dumpdir' 'CMakeFiles/cmTC_46206.dir/CMakeCCompilerABI.c.'
+        Linking C static library libcmTC_46206.a
+        C:/altera_lite/25.1std/riscfree/build_tools/cmake/bin/cmake.exe -P CMakeFiles/cmTC_46206.dir/cmake_clean_target.cmake
+        C:/altera_lite/25.1std/riscfree/build_tools/cmake/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_46206.dir/link.txt --verbose=1
+        C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/riscv32-unknown-elf-ar.exe qc libcmTC_46206.a CMakeFiles/cmTC_46206.dir/CMakeCCompilerABI.c.obj
+        C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/riscv32-unknown-elf-ranlib.exe libcmTC_46206.a
+        make[1]: Leaving directory 'C:/AGSTU/sierra_niosvg_archive_restored/software/app/build-win-release-make/CMakeFiles/CMakeScratch/TryCompile-z35lu2'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/altera_lite/25.1std/riscfree/build_tools/cmake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:182 (message)"
+      - "C:/altera_lite/25.1std/riscfree/build_tools/cmake/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:8 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/include]
+          add: [C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/include-fixed]
+          add: [C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/../../../../riscv32-unknown-elf/include]
+        end of search list found
+        collapse include dir [C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/include] ==> [C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/lib/gcc/riscv32-unknown-elf/13.2.0/include]
+        collapse include dir [C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/include-fixed] ==> [C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/lib/gcc/riscv32-unknown-elf/13.2.0/include-fixed]
+        collapse include dir [C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/../../../../riscv32-unknown-elf/include] ==> [C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/riscv32-unknown-elf/include]
+        implicit include dirs: [C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/lib/gcc/riscv32-unknown-elf/13.2.0/include;C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/lib/gcc/riscv32-unknown-elf/13.2.0/include-fixed;C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/riscv32-unknown-elf/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/altera_lite/25.1std/riscfree/build_tools/cmake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "C:/altera_lite/25.1std/riscfree/build_tools/cmake/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:8 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
+        ignore line: [Change Dir: 'C:/AGSTU/sierra_niosvg_archive_restored/software/app/build-win-release-make/CMakeFiles/CMakeScratch/TryCompile-z35lu2']
+        ignore line: []
+        ignore line: [Run Build Command(s): C:/altera_lite/25.1std/riscfree/build_tools/cmake/bin/cmake.exe -E env VERBOSE=1 C:/altera_lite/25.1std/riscfree/build_tools/bin/make.exe -f Makefile cmTC_46206/fast]
+        ignore line: [C:/altera_lite/25.1std/riscfree/build_tools/bin/make.exe  -f CMakeFiles/cmTC_46206.dir/build.make CMakeFiles/cmTC_46206.dir/build]
+        ignore line: [make[1]: Entering directory 'C:/AGSTU/sierra_niosvg_archive_restored/software/app/build-win-release-make/CMakeFiles/CMakeScratch/TryCompile-z35lu2']
+        ignore line: [Building C object CMakeFiles/cmTC_46206.dir/CMakeCCompilerABI.c.obj]
+        ignore line: [C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/riscv32-unknown-elf-gcc.exe -DALTERA_AVALON_JTAG_UART_IGNORE_FIFO_FULL_ERROR -DALTERA_AVALON_JTAG_UART_SMALL -DALT_LOG_ENABLE -DALT_LOG_FLAGS=0 -DALT_NO_C_PLUS_PLUS -DALT_USE_DIRECT_DRIVERS -DALT_USE_SMALL_DRIVERS -D__hal__  -Os -DNDEBUG   -v -DALT_SINGLE_THREADED -Wall -Wformat-security -Wformat -ffunction-sections -fdata-sections -march=rv32imf_zicbom -mabi=ilp32f -o CMakeFiles/cmTC_46206.dir/CMakeCCompilerABI.c.obj -c C:/altera_lite/25.1std/riscfree/build_tools/cmake/share/cmake-3.31/Modules/CMakeCCompilerABI.c]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/riscv32-unknown-elf-gcc.exe]
+        ignore line: [Target: riscv32-unknown-elf]
+        ignore line: [Configured with: ../../gcc/configure --target=riscv32-unknown-elf --prefix=/c/Build/niosv/install --with-sysroot=/c/Build/niosv/install/riscv32-unknown-elf --with-native-system-header-dir=/include --with-newlib --disable-shared --enable-languages=c c++ --enable-tls --disable-werror --disable-libmudflap --disable-libssp --disable-quadmath --disable-libgomp --disable-nls --enable-multilib --with-isa-spec=2.2 --with-multilib-generator='rv32e-ilp32e--zicbom rv32ea-ilp32e--zicbom rv32im-ilp32--zicbom rv32ia-ilp32--zicbom rv32ima-ilp32--zicbom rv32imf-ilp32--zicbom rv32imf-ilp32f--zicbom rv32imaf-ilp32--zicbom rv32imaf-ilp32f--zicbom rv64ima-lp64--zicbom rv64imaf-lp64--zicbom rv64imaf-lp64f--zicbom' --with-arch=rv32i --with-abi=ilp32 --with-zstd=no --with-system-zlib --enable-libstdcxx-pch=no]
+        ignore line: [Thread model: single]
+        ignore line: [Supported LTO compression algorithms: zlib]
+        ignore line: [gcc version 13.2.0 (GCC) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-D' 'ALTERA_AVALON_JTAG_UART_IGNORE_FIFO_FULL_ERROR' '-D' 'ALTERA_AVALON_JTAG_UART_SMALL' '-D' 'ALT_LOG_ENABLE' '-D' 'ALT_LOG_FLAGS=0' '-D' 'ALT_NO_C_PLUS_PLUS' '-D' 'ALT_USE_DIRECT_DRIVERS' '-D' 'ALT_USE_SMALL_DRIVERS' '-D' '__hal__' '-Os' '-D' 'NDEBUG' '-v' '-D' 'ALT_SINGLE_THREADED' '-Wall' '-Wformat-security' '-Wformat=1' '-ffunction-sections' '-fdata-sections' '-march=rv32imf_zicbom' '-mabi=ilp32f' '-o' 'CMakeFiles/cmTC_46206.dir/CMakeCCompilerABI.c.obj' '-c' '-misa-spec=2.2' '-march=rv32imf_zicbom' '-dumpdir' 'CMakeFiles/cmTC_46206.dir/']
+        ignore line: [ C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../libexec/gcc/riscv32-unknown-elf/13.2.0/cc1.exe -quiet -v -imultilib rv32imf/ilp32f -iprefix C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/ -isysroot C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../riscv32-unknown-elf -D ALTERA_AVALON_JTAG_UART_IGNORE_FIFO_FULL_ERROR -D ALTERA_AVALON_JTAG_UART_SMALL -D ALT_LOG_ENABLE -D ALT_LOG_FLAGS=0 -D ALT_NO_C_PLUS_PLUS -D ALT_USE_DIRECT_DRIVERS -D ALT_USE_SMALL_DRIVERS -D __hal__ -D NDEBUG -D ALT_SINGLE_THREADED C:/altera_lite/25.1std/riscfree/build_tools/cmake/share/cmake-3.31/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_46206.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -march=rv32imf_zicbom -mabi=ilp32f -misa-spec=2.2 -march=rv32imf_zicbom -Os -Wall -Wformat-security -Wformat=1 -version -ffunction-sections -fdata-sections -o C:\\Users\\LUDVIG~1\\AppData\\Local\\Temp\\ccNH39rf.s]
+        ignore line: [GNU C17 (GCC) version 13.2.0 (riscv32-unknown-elf)]
+        ignore line: [	compiled by GNU C version 14.1.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
+        ignore line: []
+        ignore line: [warning: GMP header version 6.2.1 differs from library version 6.2.1.fix1.]
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring duplicate directory "C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/lib/gcc/../../lib/gcc/riscv32-unknown-elf/13.2.0/include"]
+        ignore line: [ignoring nonexistent directory "C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../riscv32-unknown-elfC:/Build/niosv/install/lib/gcc/riscv32-unknown-elf/13.2.0/../../../../include"]
+        ignore line: [ignoring duplicate directory "C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/lib/gcc/../../lib/gcc/riscv32-unknown-elf/13.2.0/include-fixed"]
+        ignore line: [ignoring duplicate directory "C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/lib/gcc/../../lib/gcc/riscv32-unknown-elf/13.2.0/../../../../riscv32-unknown-elf/include"]
+        ignore line: [ignoring nonexistent directory "C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../riscv32-unknown-elfC:/msys64-old-20240923/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/include]
+        ignore line: [ C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/include-fixed]
+        ignore line: [ C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/../../../../riscv32-unknown-elf/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: b36e1212d9a1769fa46c257797acf5fb]
+        ignore line: [COLLECT_GCC_OPTIONS='-D' 'ALTERA_AVALON_JTAG_UART_IGNORE_FIFO_FULL_ERROR' '-D' 'ALTERA_AVALON_JTAG_UART_SMALL' '-D' 'ALT_LOG_ENABLE' '-D' 'ALT_LOG_FLAGS=0' '-D' 'ALT_NO_C_PLUS_PLUS' '-D' 'ALT_USE_DIRECT_DRIVERS' '-D' 'ALT_USE_SMALL_DRIVERS' '-D' '__hal__' '-Os' '-D' 'NDEBUG' '-v' '-D' 'ALT_SINGLE_THREADED' '-Wall' '-Wformat-security' '-Wformat=1' '-ffunction-sections' '-fdata-sections' '-march=rv32imf_zicbom' '-mabi=ilp32f' '-o' 'CMakeFiles/cmTC_46206.dir/CMakeCCompilerABI.c.obj' '-c' '-misa-spec=2.2' '-march=rv32imf_zicbom' '-dumpdir' 'CMakeFiles/cmTC_46206.dir/']
+        ignore line: [ C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/../../../../riscv32-unknown-elf/bin/as.exe -v --traditional-format -march=rv32imf_zicbom -march=rv32imf_zicbom -mabi=ilp32f -misa-spec=2.2 -o CMakeFiles/cmTC_46206.dir/CMakeCCompilerABI.c.obj C:\\Users\\LUDVIG~1\\AppData\\Local\\Temp\\ccNH39rf.s]
+        ignore line: [GNU assembler version 2.40.90 (riscv32-unknown-elf) using BFD version (GNU Binutils) 2.40.90.20230730]
+        ignore line: [COMPILER_PATH=C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../libexec/gcc/riscv32-unknown-elf/13.2.0/]
+        ignore line: [C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../libexec/gcc/]
+        ignore line: [C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/../../../../riscv32-unknown-elf/bin/]
+        ignore line: [LIBRARY_PATH=C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/rv32imf/ilp32f/]
+        ignore line: [C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/../../../../riscv32-unknown-elf/lib/rv32imf/ilp32f/]
+        ignore line: [C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../riscv32-unknown-elf/lib/rv32imf/ilp32f/]
+        ignore line: [C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/]
+        ignore line: [C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/]
+        ignore line: [C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../lib/gcc/riscv32-unknown-elf/13.2.0/../../../../riscv32-unknown-elf/lib/]
+        ignore line: [C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/../riscv32-unknown-elf/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-D' 'ALTERA_AVALON_JTAG_UART_IGNORE_FIFO_FULL_ERROR' '-D' 'ALTERA_AVALON_JTAG_UART_SMALL' '-D' 'ALT_LOG_ENABLE' '-D' 'ALT_LOG_FLAGS=0' '-D' 'ALT_NO_C_PLUS_PLUS' '-D' 'ALT_USE_DIRECT_DRIVERS' '-D' 'ALT_USE_SMALL_DRIVERS' '-D' '__hal__' '-Os' '-D' 'NDEBUG' '-v' '-D' 'ALT_SINGLE_THREADED' '-Wall' '-Wformat-security' '-Wformat=1' '-ffunction-sections' '-fdata-sections' '-march=rv32imf_zicbom' '-mabi=ilp32f' '-o' 'CMakeFiles/cmTC_46206.dir/CMakeCCompilerABI.c.obj' '-c' '-misa-spec=2.2' '-march=rv32imf_zicbom' '-dumpdir' 'CMakeFiles/cmTC_46206.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C static library libcmTC_46206.a]
+        ignore line: [C:/altera_lite/25.1std/riscfree/build_tools/cmake/bin/cmake.exe -P CMakeFiles/cmTC_46206.dir/cmake_clean_target.cmake]
+        ignore line: [C:/altera_lite/25.1std/riscfree/build_tools/cmake/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTC_46206.dir/link.txt --verbose=1]
+        ignore line: [C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/riscv32-unknown-elf-ar.exe qc libcmTC_46206.a CMakeFiles/cmTC_46206.dir/CMakeCCompilerABI.c.obj]
+        ignore line: [C:/altera_lite/25.1std/riscfree/toolchain/riscv32-unknown-elf/bin/riscv32-unknown-elf-ranlib.exe libcmTC_46206.a]
+        ignore line: [make[1]: Leaving directory 'C:/AGSTU/sierra_niosvg_archive_restored/software/app/build-win-release-make/CMakeFiles/CMakeScratch/TryCompile-z35lu2']
+        ignore line: []
+        ignore line: []
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+...

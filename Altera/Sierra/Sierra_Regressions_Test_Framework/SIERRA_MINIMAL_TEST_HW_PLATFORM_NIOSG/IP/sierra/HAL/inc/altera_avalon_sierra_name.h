@@ -1,0 +1,6 @@
+#ifndef __ALTERA_AVALON_SIERRA_NAME_COMPAT_H__
+#define __ALTERA_AVALON_SIERRA_NAME_COMPAT_H__
+
+#include <sierra_name.h>
+
+#endif /* __ALTERA_AVALON_SIERRA_NAME_COMPAT_H__ */

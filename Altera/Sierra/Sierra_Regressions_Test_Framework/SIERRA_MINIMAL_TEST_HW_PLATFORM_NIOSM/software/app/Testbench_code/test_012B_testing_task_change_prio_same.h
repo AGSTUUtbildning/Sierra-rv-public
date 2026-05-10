@@ -1,0 +1,6 @@
+#ifndef TEST_012B_TESTING_CHANGE_PRIO_SAME_H_
+#define TEST_012B_TESTING_CHANGE_PRIO_SAME_H_
+
+int test_012B_testing_change_prio_same();
+
+#endif

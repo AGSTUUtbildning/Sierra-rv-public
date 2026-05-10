@@ -1,0 +1,120 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"jsonFile" : "directory-.-Release-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						3
+					]
+				},
+				{
+					"build" : "hal_bsp",
+					"jsonFile" : "directory-hal_bsp-Release-e1e00c8df42eff1a7b45.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.13"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "C:/AGSTU/sierra_niosvg_archive_restored/software/hal_bsp",
+					"targetIndexes" : 
+					[
+						2
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "app",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						3
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "bsp",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "app.elf::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-app.elf-Release-2d896b04a595c962c78f.json",
+					"name" : "app.elf",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "create-objdump::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-create-objdump-Release-ab7b5af92ddae5d68f91.json",
+					"name" : "create-objdump",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "hal2_bsp::@1cbadb1d2583371ff3e0",
+					"jsonFile" : "target-hal2_bsp-Release-99d8cd3419d282d9721d.json",
+					"name" : "hal2_bsp",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "niosv-stack-report::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-niosv-stack-report-Release-303e210d3dcf2e5c5c0f.json",
+					"name" : "niosv-stack-report",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/AGSTU/sierra_niosvg_archive_restored/software/app/build-win-release-make",
+		"source" : "C:/AGSTU/sierra_niosvg_archive_restored/software/app"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}
