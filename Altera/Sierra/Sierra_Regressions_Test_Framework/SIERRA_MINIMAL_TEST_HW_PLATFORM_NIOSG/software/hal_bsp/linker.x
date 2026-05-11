@@ -2,9 +2,9 @@
  * linker.x - Linker script
  *
  * Machine generated for CPU 'cpu' in SOPC Builder design 'sierra_minimal_niosvg_hw'
- * SOPC Builder design path: /home/ludvig/fpga/altera/projects/sierra/SIERRA_MINIMAL_TEST_HW_PLATFORM_NIOSG/sierra_niosvg_archive_restored/sierra_minimal_niosvg_hw.sopcinfo
+ * SOPC Builder design path: C:/AGSTU/SIERRA_MINIMAL_TEST_HW_PLATFORM_NIOSG/sierra_minimal_niosvg_hw.sopcinfo
  *
- * Generated: Sun May 10 09:43:55 CEST 2026
+ * Generated: Mon May 11 13:38:02 CEST 2026
  */
 
 /*
@@ -51,13 +51,13 @@
 MEMORY
 {
     reset : ORIGIN = 0x0, LENGTH = 32
-    onchip_memoy : ORIGIN = 0x20, LENGTH = 65504
-    log_memory : ORIGIN = 0x20000, LENGTH = 8192
+    onchip_memoy : ORIGIN = 0x20, LENGTH = 131040
+    log_memory : ORIGIN = 0x30000, LENGTH = 8192
 }
 
 /* Define symbols for each memory base-address */
 __alt_mem_onchip_memoy = 0x0;
-__alt_mem_log_memory = 0x20000;
+__alt_mem_log_memory = 0x30000;
 
 OUTPUT_FORMAT( "elf32-littleriscv",
                "elf32-littleriscv",
@@ -353,7 +353,7 @@ SECTIONS
      *
      */
 
-    .log_memory (NOLOAD) :
+    .log_memory : AT ( LOADADDR (.onchip_memoy) + SIZEOF (.onchip_memoy) )
     {
         PROVIDE (_alt_partition_log_memory_start = ABSOLUTE(.));
         *(.log_memory .log_memory. log_memory.*)
@@ -410,7 +410,7 @@ SECTIONS
 /*
  * Don't override this, override the __alt_stack_* symbols instead.
  */
-__alt_data_end = 0x10000;
+__alt_data_end = 0x20000;
 
 /*
  * The next two symbols define the location of the default stack.  You can
@@ -426,4 +426,4 @@ PROVIDE( __alt_stack_limit   = __alt_stack_base );
  * Override this symbol to put the heap in a different memory.
  */
 PROVIDE( __alt_heap_start    = end );
-PROVIDE( __alt_heap_limit    = 0x10000 );
+PROVIDE( __alt_heap_limit    = 0x20000 );

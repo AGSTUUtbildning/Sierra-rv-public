@@ -1,11 +1,14 @@
 /*!
  * \file       sierra_info.c
  * \details    Sierra information access functions
- * \version    11.00.00
- * \date       2026
- * \history    Modified 2026:
- *             - Removed sierra_backward_compatibility.h
- *             - Changed logging system.
+ * \author     Lennart Lindh
+ * \version    10.03.15
+ * \date       2006
+ * \history    Modified 2022:
+ *             - Function names changed to fit the prefix format
+ *             - Added function sierra_printf_version()
+ *             - sierra_task_info, changed printing of task numbers from %zu to %u and casting of variable i to uint
+ *             - sierra_task info, added char array for printing task state in words ("Blocked") instead of numbers ("2") 
  * \copyright  COPYRIGHT (C) AGSTU AB
  *
  *             All rights reserved. AGSTU's source code is an unpublished work, and the use of a copyright notice does not imply otherwise.
@@ -21,9 +24,9 @@
  *             designs and files) provided on this site.
  */
 
-#include <altera_avalon_sierra_io.h>
-#include <altera_avalon_sierra_ker.h>
-#include <altera_avalon_sierra_tcb.h>
+#include <sierra_io.h>
+#include <sierra_ker.h>
+#include <sierra_tcb.h>
 #include <sierra.h>
 #include <sierra_logging.h>
 
@@ -69,13 +72,13 @@ void sierra_task_info(void)
   info = sierra_get_task_info(0);
   SIERRA_INFO_PRINTF("Idle\n");
   SIERRA_INFO_PRINTF("  info.state_info = %s\n", task_state[info.state_info]);
-  SIERRA_INFO_PRINTF("  info.priority = %d\n", info.priority); 
+  SIERRA_INFO_PRINTF("  info.priority = %d\n", info.priority);
 
   for (size_t i = 1; i < N_TASKS; ++i)
   {
     if (TCB_LIST[i].taskID != INVALID_TASK_ID)
     {
-      SIERRA_INFO_PRINTF("Task %u\n", (unsigned int)i);
+      SIERRA_INFO_PRINTF("Task %d\n", (unsigned int)i);
       info = sierra_get_task_info(i);
       SIERRA_INFO_PRINTF("  info.state_info = %s\n", task_state[info.state_info]);
       SIERRA_INFO_PRINTF("  info.priority = %d\n", info.priority);

@@ -6,6 +6,8 @@
 #ifndef TEST_SETUP_H_
 #define TEST_SETUP_H_
 
+#include <system.h>
+
 /* -------------------------------------------------------
 SIERRA_FULL_TEST_HW_PLATFORM = 1
 All tests are enabled and the complete regression suite is executed.
@@ -16,6 +18,14 @@ Only the tests that do not require the dedicated hardware platform are executed.
 
 #ifndef SIERRA_FULL_TEST_HW_PLATFORM
 #define SIERRA_FULL_TEST_HW_PLATFORM 0
+#endif
+
+#ifndef SIERRA_USE_LIGHTWEIGHT_UART    // placeholder for testing UART logging. Should not be included in final version
+#if defined(JTAG_UART_BASE)
+#define SIERRA_USE_LIGHTWEIGHT_UART 1
+#else
+#define SIERRA_USE_LIGHTWEIGHT_UART 0
+#endif
 #endif
 
 
@@ -76,7 +86,6 @@ extern char task_7_stack[];
 /* -------------------------------------------------------
    Mailbox configuration (Extended API)
 ------------------------------------------------------- */
-#include <sierra_extension/sierra_mbox.h>
 
 #define MBOX_MAX_MESSAGES 2
 #define MBOX_MAX_SIZE 8
@@ -87,10 +96,12 @@ void time_delay(volatile int loops);
 #define delay_test_constant 10 
 // Adjust this value to increase or decrease in all tests before return
 
-#include <system.h>
-#include <io.h>
-const char* agstu_int_to_string(int nr);
-void agstu_print_char(char c);
-void agstu_print_string(const char* str);
+#if SIERRA_USE_LIGHTWEIGHT_UART        // Should agstu_print_*-functions be used when running on a FULL_TEST_HW_PLATFORM? Or is this condition useful for switching UART output?
+   #include <io.h>
+   #include <altera_avalon_jtag_uart_regs.h>
+   const char* agstu_int_to_string(int nr);
+   void agstu_print_char(char c);
+   void agstu_print_string(const char* str);
+#endif
 
 #endif /* TEST_SETUP_H_ */

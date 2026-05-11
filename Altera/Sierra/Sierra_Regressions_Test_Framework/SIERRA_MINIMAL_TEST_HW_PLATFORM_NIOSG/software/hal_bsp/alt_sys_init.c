@@ -2,9 +2,9 @@
  * alt_sys_init.c - HAL initialization source
  *
  * Machine generated for CPU 'cpu' in SOPC Builder design 'sierra_minimal_niosvg_hw'
- * SOPC Builder design path: /home/ludvig/fpga/altera/projects/sierra/SIERRA_MINIMAL_TEST_HW_PLATFORM_NIOSG/sierra_niosvg_archive_restored/sierra_minimal_niosvg_hw.sopcinfo
+ * SOPC Builder design path: C:/AGSTU/SIERRA_MINIMAL_TEST_HW_PLATFORM_NIOSG/sierra_minimal_niosvg_hw.sopcinfo
  *
- * Generated: Sun May 10 09:43:55 CEST 2026
+ * Generated: Mon May 11 13:38:02 CEST 2026
  */
 
 /*

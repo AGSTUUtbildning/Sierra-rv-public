@@ -23,8 +23,8 @@
  *             designs and files) provided on this site.
  */
 
-#include <altera_avalon_sierra_io.h>
-#include <altera_avalon_sierra_ker.h>
+#include <sierra_io.h>
+#include <sierra_ker.h>
 #include <sierra_logging.h>
 
 /*!-----------------------------------------------------------------------
@@ -41,7 +41,6 @@ void sierra_period_time_init(int per_time)
 
   // Logs data when a designated time period is set for a particular task
   sierra_logging_full(info_sierra_time_period, sierra_get_current_time(), RUNNING_TASKID, per_time);
-
 }
 
 //----------------------------------------------------------------------------

@@ -28,8 +28,8 @@ All code in this file are provided "as is" and without any warranties expressed 
 -----------------------------------------------------------------------*/
 
 /* Sierra Driver Includes, hardware base adresses and also C libary */
-#include <altera_avalon_sierra_ker.h>
-#include <sierra_logging.h>
+#include <sierra_ker.h>
+#include <sierra_info.h>
 #include <system.h> // for use of SOPC base-address definitons
 #include <io.h>
 #include <assert.h> //for testing, will print errors on Nios II Console if the conditions aren't met.
@@ -51,27 +51,7 @@ All code in this file are provided "as is" and without any warranties expressed 
 #include "test_012B_testing_task_change_prio_same.h"
 #include "test_014A_testing_mbox_peek.h"
 #include "test_014B_testing_mbox_read.h"
-
 #include "test_setup.h"
-#include <sierra_info.h>
-
-
-#ifdef ALT_INCLUDE_INSTRUCTION_RELATED_EXCEPTION_API
-	#include <sys/alt_exceptions.h>
-	#include <sys/alt_stdio.h>
-	#include <inttypes.h>
-    // Ifall hårdvaru exception api är igång kan hårdvaru fel hämta. 
-    alt_exception_result instr_exception_handler(alt_exception_cause cause,
-    alt_u32 epc, alt_u32 tval)
-    {
-        alt_printf("Instruction exception!\n");
-        alt_printf(" * cause: %d\n", cause);
-        alt_printf(" * epc: 0x%" PRIx32 "\n", epc);
-        alt_printf(" * tval: 0x%" PRIx32 "\n", tval);
-        while (1) {};
-        return NIOSV_EXCEPTION_RETURN_REISSUE_INST; 
-    }
-#endif
 
 
 // HW beroende tester ska inte kompileras utan korrekt platform. 
@@ -106,27 +86,6 @@ __attribute__ ((aligned (4))) char task_5_stack[STACK_SIZE];
 __attribute__ ((aligned (4))) char task_6_stack[STACK_SIZE];
 __attribute__ ((aligned (4))) char task_7_stack[STACK_SIZE];
 
-static void print_hw_version_banner(void)
-{
-	const version_register_union version = sierra_HW_version();
-
-	agstu_print_string("Version = ");
-	agstu_print_string(agstu_int_to_string(version.version_register.MAJOR_version));
-	agstu_print_char('.');
-	agstu_print_string(agstu_int_to_string(version.version_register.MINOR_version));
-	agstu_print_char('.');
-	agstu_print_string(agstu_int_to_string(version.version_register.PATCH_version));
-	agstu_print_char('\n');
-
-	agstu_print_string("Number of tasks bits = ");
-	agstu_print_string(agstu_int_to_string(version.version_register.number_of_tasks));
-	agstu_print_char('\n');
-
-	agstu_print_string("Number of semaphore bits = ");
-	agstu_print_string(agstu_int_to_string(version.version_register.number_of_semaphores));
-	agstu_print_char('\n');
-}
-
 
 //All tests runs from the idle task. Comment out the ones you don't want to run.
 void idle_task_code(void){
@@ -134,8 +93,8 @@ void idle_task_code(void){
 
 	int counter = 0;
 
-	// Skriva ut SW version!! 
-	print_hw_version_banner();
+	// Skriva ut HW version.
+	Printf_sierra_HW_version();
 
 	while(1){
 		print_test_result("Test 1", test_001_testing_task_create());
@@ -159,7 +118,6 @@ void idle_task_code(void){
 		print_test_result("Test 14A", test_014A_testing_mbox_peek());
 		print_test_result("Test 14B", test_014B_testing_mbox_read());
 		counter++;
-		sierra_print_log();
 		agstu_print_string("\nLoop nr ");
 		agstu_print_string(agstu_int_to_string(counter));
 		agstu_print_char('\n');
@@ -172,16 +130,6 @@ void idle_task_code(void){
 
 void sierra_main(void)
 {
-
-	#ifdef ALT_INCLUDE_INSTRUCTION_RELATED_EXCEPTION_API
-#if SIERRA_FULL_TEST_HW_PLATFORM
-        agstu_print_string("Register HW exception handler...\n");
-#else
-        agstu_print_string("Register HW exception handler...\n");
-#endif
-        alt_instruction_exception_register (instr_exception_handler);
-    #endif
-
 	Sierra_Initiation_HW_and_SW();
 	/*********************************************************************
 	 * Initialize time base register.

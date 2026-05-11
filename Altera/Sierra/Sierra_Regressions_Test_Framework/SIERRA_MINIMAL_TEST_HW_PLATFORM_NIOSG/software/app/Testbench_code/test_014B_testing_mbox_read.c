@@ -29,8 +29,8 @@
 
 #include "test_014B_testing_mbox_read.h"
 
-#include <altera_avalon_sierra_ker.h>
-#include <altera_avalon_sierra_name.h>
+#include <sierra_ker.h>
+#include <sierra_name.h>
 #include <assert.h>
 #include <stdint.h>
 #include <string.h>
@@ -67,9 +67,7 @@ assert(step == 0);
     header.size = sizeof(message); 
     header.data = (void*)message; 
 
-    if (sierra_mbox_send(&mbox, &header) != MBOX_OK) {    // send message to mailbox
-        task_delete();
-    }
+    assert(sierra_mbox_send(&mbox, &header) == MBOX_OK);    // send message to mailbox
 
 
     task_start(task_2);
@@ -86,18 +84,12 @@ static void task_2_code(void)
 
     memset(buffer, 0, sizeof(buffer));
     header.data = buffer; // load buffer into mbox
-    if (sierra_mbox_read(&mbox, &header) != MBOX_OK) {    // read from the mailbox
-        task_delete();
-    }
-    if (memcmp(buffer, message, sizeof(message)) != 0) {  // check that the message is correct
-        task_delete();
-    }
+    assert(sierra_mbox_read(&mbox, &header) == MBOX_OK);    // read from the mailbox
+    assert(memcmp(buffer, message, sizeof(message)) == 0);  // check that the message is correct
 
     memset(buffer, 0, sizeof(buffer));
     header.data = buffer;
-    if (sierra_mbox_read(&mbox, &header) != MBOX_EMPTY) { // check if empty
-        task_delete();
-    }
+    assert(sierra_mbox_read(&mbox, &header) == MBOX_EMPTY); // check if empty
 
     shared_pas_variable = 0;
 

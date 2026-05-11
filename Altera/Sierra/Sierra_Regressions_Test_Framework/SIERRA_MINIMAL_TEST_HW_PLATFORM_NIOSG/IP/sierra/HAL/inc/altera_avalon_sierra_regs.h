@@ -1,6 +1,0 @@
-#ifndef __ALTERA_AVALON_SIERRA_REGS_COMPAT_H__
-#define __ALTERA_AVALON_SIERRA_REGS_COMPAT_H__
-
-#include <sierra_regs.h>
-
-#endif /* __ALTERA_AVALON_SIERRA_REGS_COMPAT_H__ */

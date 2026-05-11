@@ -9,7 +9,7 @@
  * \version    10.03.15
  * \date       2006
  * \history    Modified 2022:
- *             - Moved SW version number declaration from sierra_ker.h to this file
+ *             - Moved SW version number declaration from altera_avalon_sierra_ker.h to this file
  *             - Included sierra_info.h
  *             - Modified sierra_SW_driver_version() to return sw_version_union structure
  *             - Added sierra_ prefix for external functions
@@ -32,19 +32,25 @@
 
 #include <io.h>
 #include <system.h>
+#include "sierra.h"
 #include <sys/alt_irq.h>
+#include <sierra_logging.h>
+
+#if SIERRA_LOGGING == 1
+  #include <stdio.h>
+#else
+  #include <sys/alt_log_printf.h>
+#endif
 
 /*!----------------------------------------------------------------------------
-    Include Sierra driver files
+    Include Sierra driver files specific to Altera
 -----------------------------------------------------------------------------*/
-#include "sierra.h"
-#include <sierra_logging.h>
-#include <sys/alt_log_printf.h>
-#include <altera_avalon_sierra_ker.h>
-#include <altera_avalon_sierra_tcb.h>
-#include <altera_avalon_sierra_regs.h>
-#include <altera_avalon_sierra_io.h>
-#include <altera_avalon_sierra_name.h>
+#include <sierra_ker.h>
+#include <sierra_tcb.h>
+#include <sierra_regs.h>
+#include <sierra_io.h>
+#include <sierra_name.h>
+//#include <priv/alt_legacy_irq.h> NIOS V
 #include <sierra_info.h>
 
 //! Global variable used in interrupt handling assembler code
@@ -81,7 +87,11 @@ static void init_interrupt(void)
         // Registrera ISR för Sierran, behövs inte, eftersom den tas om han i trap_vecktor
     int rc = alt_ic_isr_register(0, SIERRA_RTOS_IRQ, dummy_isr, NULL, NULL);
     if (rc != 0) {
+    #if SIERRA_LOGGING == 1
+        printf("error registration Sierra irq (rc=%d)\n", rc);
+    #else
         ALT_LOG_PRINTF("error registration Sierra irq (rc=%d)\n", rc);
+    #endif
     }
 }
 
@@ -95,9 +105,6 @@ volatile tcb_t *current_tcb = 0;
 
 //! SW version number.
 #define C_Sierra_SW_driver_version 100315
-
-#define SIERRA_CPU_FREQUENCY_MHZ (ALT_CPU_CPU_FREQ / 1000000u)
-static uint32_t sierra_ms_per_tick = 1u;
 
 //----------------------------------------------------------------------------
 sw_version_union sierra_SW_driver_version(void)
@@ -127,20 +134,21 @@ uint32_t sierra_time_base_reg(void)
 //----------------------------------------------------------------------------
 uint32_t sierra_ticks_to_ms(uint32_t ticks)
 {
-  return ticks * sierra_ms_per_tick;
+  const uint32_t time_base = sierra_time_base_reg();
+  const uint32_t cpu_freq_mhz = ALT_CPU_FREQ / 1000000;
+
+  if (cpu_freq_mhz == 0) {
+    return 0;
+  }
+
+  return (uint32_t)(((uint64_t)ticks * time_base) / cpu_freq_mhz);
 }
 
 //----------------------------------------------------------------------------
 void sierra_set_timebase(uint32_t hex)
 {
-  sierra_ms_per_tick = hex / SIERRA_CPU_FREQUENCY_MHZ;
-  if (sierra_ms_per_tick == 0u) {
-    sierra_ms_per_tick = 1u;
-  }
-
   // Logs the set time base
   sierra_logging_medium(info_sierra_time_timebase_set, sierra_get_current_time(), hex);
-
   M_IOWR_SierraTime_base_reg(hex);
 
   if (hex > SIERRA_MAX_TIMEBASE)
@@ -173,7 +181,7 @@ void sierra_initiation_HW_and_SW(void)
   init_interrupt();
 
   // Prints status of logging
-  //sierra_print_logging_status();
+ // sierra_print_logging_status();
 }
 
 //----------------------------------------------------------------------------
@@ -223,9 +231,10 @@ void sierra_tsw_on_internal(void)
 //----------------------------------------------------------------------------
 void sierra_tsw_on(void)
 {
+  sierra_tsw_on_internal();
+
   // Logs data when tsw is turned on
   sierra_logging_short(info_sierra_tsw_switching_on, sierra_get_current_time());
-  sierra_tsw_on_internal();
 }
 
 //----------------------------------------------------------------------------
@@ -242,21 +251,21 @@ void sierra_tsw_off_internal(void)
 //----------------------------------------------------------------------------
 void sierra_tsw_off(void)
 {
+  sierra_tsw_off_internal();
+
   // Logs data when tsw is turned off
   sierra_logging_short(info_sierra_tsw_switching_off, sierra_get_current_time());
-
-  sierra_tsw_off_internal();
 }
 
 //----------------------------------------------------------------------------
 void get_new_task(void)
 {
-  // Logs data about the next running task
-  sierra_logging_medium(info_sierra_task_next_requested, sierra_get_current_time(), RUNNING_TASKID);
-
   // New task to start is fetched from NEXT_TASKID
   RUNNING_TASKID = NEXT_TASKID;
   current_tcb = &TCB_LIST[RUNNING_TASKID];
+
+  // Logs data about the next running task
+  sierra_logging_medium(info_sierra_task_next_requested, sierra_get_current_time(), RUNNING_TASKID);
 }
 
 //----------------------------------------------------------------------------
@@ -277,14 +286,15 @@ statusA_union handle_service_call(const svc_t* pSVC)
 //----------------------------------------------------------------------------
 void sierra_await_irq(int IRQ_number)
 {
-  // Logs data when an interrupt service task is ready to process to wait for an external interrupt
-  sierra_logging_full(info_sierra_irq_task_wait_irq, sierra_get_current_time(), RUNNING_TASKID, IRQ_number);
-
   sierra_tsw_off_internal();
+
   svc_t svc;
   svc.irq_wait_t.type = sierra_irq_wait;
   svc.irq_wait_t.irq_type = IRQ_number;
   const statusA_union statusA = handle_service_call(&svc);
+
+  // Logs data when an interrupt service task is ready to process to wait for an external interrupt
+  sierra_logging_full(info_sierra_irq_task_wait_irq, sierra_get_current_time(), RUNNING_TASKID, IRQ_number);
 
   NEXT_TASKID = constant_task_mask & statusA.statusA_t.svc_return;
   sierra_tsw_on_internal();

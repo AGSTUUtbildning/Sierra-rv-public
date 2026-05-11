@@ -2,9 +2,9 @@
  * system.h - SOPC Builder system and BSP software package information
  *
  * Machine generated for CPU 'cpu' in SOPC Builder design 'sierra_minimal_niosvg_hw'
- * SOPC Builder design path: /home/ludvig/fpga/altera/projects/sierra/SIERRA_MINIMAL_TEST_HW_PLATFORM_NIOSG/sierra_niosvg_archive_restored/sierra_minimal_niosvg_hw.sopcinfo
+ * SOPC Builder design path: C:/AGSTU/SIERRA_MINIMAL_TEST_HW_PLATFORM_NIOSG/sierra_minimal_niosvg_hw.sopcinfo
  *
- * Generated: Sun May 10 09:43:55 CEST 2026
+ * Generated: Mon May 11 13:38:02 CEST 2026
  */
 
 /*
@@ -75,7 +75,7 @@
 #define ALT_CPU_ICACHE_SIZE 0
 #define ALT_CPU_INST_ADDR_WIDTH 0x20
 #define ALT_CPU_INT_MODE 0
-#define ALT_CPU_MTIME_OFFSET 0x00022400
+#define ALT_CPU_MTIME_OFFSET 0x00032400
 #define ALT_CPU_NAME "cpu"
 #define ALT_CPU_NIOSV_CORE_VARIANT 3
 #define ALT_CPU_NUM_GPR 32
@@ -103,7 +103,7 @@
 #define BANTAMLAKE_ICACHE_SIZE 0
 #define BANTAMLAKE_INST_ADDR_WIDTH 0x20
 #define BANTAMLAKE_INT_MODE 0
-#define BANTAMLAKE_MTIME_OFFSET 0x00022400
+#define BANTAMLAKE_MTIME_OFFSET 0x00032400
 #define BANTAMLAKE_NIOSV_CORE_VARIANT 3
 #define BANTAMLAKE_NUM_GPR 32
 #define BANTAMLAKE_NUM_SRF_BANKS 1
@@ -132,7 +132,7 @@
 #define ALT_ENHANCED_INTERRUPT_API_PRESENT
 #define ALT_IRQ_BASE NULL
 #define ALT_LOG_PORT "/dev/jtag_uart_for_log"
-#define ALT_LOG_PORT_BASE 0x22440
+#define ALT_LOG_PORT_BASE 0x32440
 #define ALT_LOG_PORT_DEV jtag_uart_for_log
 #define ALT_LOG_PORT_IS_JTAG_UART
 #define ALT_LOG_PORT_PRESENT
@@ -141,19 +141,19 @@
 #define ALT_NUM_INTERNAL_INTERRUPT_CONTROLLERS 1
 #define ALT_NUM_INTERRUPT_CONTROLLERS 1
 #define ALT_STDERR "/dev/jtag_uart"
-#define ALT_STDERR_BASE 0x22448
+#define ALT_STDERR_BASE 0x32448
 #define ALT_STDERR_DEV jtag_uart
 #define ALT_STDERR_IS_JTAG_UART
 #define ALT_STDERR_PRESENT
 #define ALT_STDERR_TYPE "altera_avalon_jtag_uart"
 #define ALT_STDIN "/dev/jtag_uart"
-#define ALT_STDIN_BASE 0x22448
+#define ALT_STDIN_BASE 0x32448
 #define ALT_STDIN_DEV jtag_uart
 #define ALT_STDIN_IS_JTAG_UART
 #define ALT_STDIN_PRESENT
 #define ALT_STDIN_TYPE "altera_avalon_jtag_uart"
 #define ALT_STDOUT "/dev/jtag_uart"
-#define ALT_STDOUT_BASE 0x22448
+#define ALT_STDOUT_BASE 0x32448
 #define ALT_STDOUT_DEV jtag_uart
 #define ALT_STDOUT_IS_JTAG_UART
 #define ALT_STDOUT_PRESENT
@@ -169,7 +169,7 @@
  */
 
 #define ALT_MODULE_CLASS_cpu_dm_agent intel_niosv_g
-#define CPU_DM_AGENT_BASE 0x10000
+#define CPU_DM_AGENT_BASE 0x20000
 #define CPU_DM_AGENT_CLIC_EN 0
 #define CPU_DM_AGENT_CPU_FREQ 50000000u
 #define CPU_DM_AGENT_DATA_ADDR_WIDTH 0x20
@@ -186,7 +186,7 @@
 #define CPU_DM_AGENT_INT_MODE 0
 #define CPU_DM_AGENT_IRQ -1
 #define CPU_DM_AGENT_IRQ_INTERRUPT_CONTROLLER_ID -1
-#define CPU_DM_AGENT_MTIME_OFFSET 0x00022400
+#define CPU_DM_AGENT_MTIME_OFFSET 0x00032400
 #define CPU_DM_AGENT_NAME "/dev/cpu_dm_agent"
 #define CPU_DM_AGENT_NIOSV_CORE_VARIANT 3
 #define CPU_DM_AGENT_NUM_GPR 32
@@ -204,7 +204,7 @@
  */
 
 #define ALT_MODULE_CLASS_cpu_timer_sw_agent intel_niosv_g
-#define CPU_TIMER_SW_AGENT_BASE 0x22400
+#define CPU_TIMER_SW_AGENT_BASE 0x32400
 #define CPU_TIMER_SW_AGENT_CLIC_EN 0
 #define CPU_TIMER_SW_AGENT_CPU_FREQ 50000000u
 #define CPU_TIMER_SW_AGENT_DATA_ADDR_WIDTH 0x20
@@ -221,7 +221,7 @@
 #define CPU_TIMER_SW_AGENT_INT_MODE 0
 #define CPU_TIMER_SW_AGENT_IRQ -1
 #define CPU_TIMER_SW_AGENT_IRQ_INTERRUPT_CONTROLLER_ID -1
-#define CPU_TIMER_SW_AGENT_MTIME_OFFSET 0x00022400
+#define CPU_TIMER_SW_AGENT_MTIME_OFFSET 0x00032400
 #define CPU_TIMER_SW_AGENT_NAME "/dev/cpu_timer_sw_agent"
 #define CPU_TIMER_SW_AGENT_NIOSV_CORE_VARIANT 3
 #define CPU_TIMER_SW_AGENT_NUM_GPR 32
@@ -238,6 +238,7 @@
  *
  */
 
+#define ALT_INCLUDE_INSTRUCTION_RELATED_EXCEPTION_API
 #define ALT_MAX_FD 32
 #define ALT_SYS_CLK CPU
 #define ALT_TIMESTAMP_CLK CPU
@@ -259,7 +260,7 @@
  */
 
 #define ALT_MODULE_CLASS_jtag_uart altera_avalon_jtag_uart
-#define JTAG_UART_BASE 0x22448
+#define JTAG_UART_BASE 0x32448
 #define JTAG_UART_IRQ 1
 #define JTAG_UART_IRQ_INTERRUPT_CONTROLLER_ID 0
 #define JTAG_UART_NAME "/dev/jtag_uart"
@@ -277,7 +278,7 @@
  */
 
 #define ALT_MODULE_CLASS_jtag_uart_for_log altera_avalon_jtag_uart
-#define JTAG_UART_FOR_LOG_BASE 0x22440
+#define JTAG_UART_FOR_LOG_BASE 0x32440
 #define JTAG_UART_FOR_LOG_IRQ 2
 #define JTAG_UART_FOR_LOG_IRQ_INTERRUPT_CONTROLLER_ID 0
 #define JTAG_UART_FOR_LOG_NAME "/dev/jtag_uart_for_log"
@@ -297,7 +298,7 @@
 #define ALT_MODULE_CLASS_log_memory altera_avalon_onchip_memory2
 #define LOG_MEMORY_ALLOW_IN_SYSTEM_MEMORY_CONTENT_EDITOR 0
 #define LOG_MEMORY_ALLOW_MRAM_SIM_CONTENTS_ONLY_FILE 0
-#define LOG_MEMORY_BASE 0x20000
+#define LOG_MEMORY_BASE 0x30000
 #define LOG_MEMORY_CONTENTS_INFO ""
 #define LOG_MEMORY_DUAL_PORT 0
 #define LOG_MEMORY_GUI_RAM_BLOCK_TYPE "AUTO"
@@ -341,8 +342,8 @@
 #define ONCHIP_MEMOY_READ_DURING_WRITE_MODE "DONT_CARE"
 #define ONCHIP_MEMOY_SINGLE_CLOCK_OP 0
 #define ONCHIP_MEMOY_SIZE_MULTIPLE 1
-#define ONCHIP_MEMOY_SIZE_VALUE 65536
-#define ONCHIP_MEMOY_SPAN 65536
+#define ONCHIP_MEMOY_SIZE_VALUE 131072
+#define ONCHIP_MEMOY_SPAN 131072
 #define ONCHIP_MEMOY_TYPE "altera_avalon_onchip_memory2"
 #define ONCHIP_MEMOY_WRITABLE 1
 
@@ -353,7 +354,7 @@
  */
 
 #define ALT_MODULE_CLASS_sierra_0 sierra
-#define SIERRA_0_BASE 0x22000
+#define SIERRA_0_BASE 0x32000
 #define SIERRA_0_IRQ 0
 #define SIERRA_0_IRQ_INTERRUPT_CONTROLLER_ID 0
 #define SIERRA_0_NAME "/dev/sierra_0"

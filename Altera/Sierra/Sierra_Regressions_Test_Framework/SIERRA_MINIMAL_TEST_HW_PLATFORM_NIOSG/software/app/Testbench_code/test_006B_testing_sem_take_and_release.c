@@ -47,8 +47,7 @@
 
 #include "test_006B_testing_sem_take_and_release.h"
 
-#include <altera_avalon_sierra_ker.h>
-#include <altera_avalon_sierra_name.h>
+#include <sierra_ker.h>
 #include <assert.h>
 #include "test_setup.h"
 
@@ -66,41 +65,41 @@ static volatile int result = 1;   /* default FAIL */
 /* Highest priority waiter */
 static void task_1_code(void)
 {
-    sierra_take_sem(SEM1);
-    sierra_take_sem(SEM2);
-    sierra_take_sem(SEM3);
+    sem_take(SEM1);
+    sem_take(SEM2);
+    sem_take(SEM3);
  
     assert(test_failed_variable == 0);
 
     test_failed_variable = 1;
 
-    sierra_delete_task();
+    task_delete();
 }
 
 /* Third priority waiter */
 static void task_3_code(void)
 {
-    sierra_take_sem(SEM3);
+    sem_take(SEM3);
 
     /* Must wake third */
     assert(test_failed_variable == 2);
 
     test_failed_variable = 3;
 
-    sierra_delete_task();
+    task_delete();
 }
 
 /* Second priority waiter */
 static void task_2_code(void)
 {
-    sierra_take_sem(SEM2);
+    sem_take(SEM2);
 
     /* Must wake second */
     assert(test_failed_variable == 1);
 
     test_failed_variable = 2;
 
-    sierra_delete_task();
+    task_delete();
 }
 
 
@@ -110,13 +109,13 @@ static void task_4_code(void)
 
     /* Release semaphore three times */
 
-    sierra_release_sem(SEM1);
+   sem_release(SEM1);
     time_delay(200000);
 
-    sierra_release_sem(SEM2);
+    sem_release(SEM2);
     time_delay(200000);
 
-    sierra_release_sem(SEM3);
+    sem_release(SEM3);
     time_delay(200000);
 
     /* After all wakeups we expect state = 3 */
@@ -124,7 +123,7 @@ static void task_4_code(void)
 
     result = 0;   /* PASS */
 
-    sierra_delete_task();
+    task_delete();
 }
 
 /* ----------------------------------------------------
@@ -135,21 +134,21 @@ int test_006B_testing_sem_take_and_release(void)
 {
     result = 1;
     test_failed_variable = 0;
-    sierra_release_sem(SEM1);
-    sierra_release_sem(SEM2);
-    sierra_release_sem(SEM3);
+    sem_release(SEM1);
+    sem_release(SEM2);
+    sem_release(SEM3);
 
  //   sem_release(SEM1);  // om den den är tagen från början, så att task 1, 2 och 3 inte kan ta den innan task 4 har släppt den
 
-    sierra_tsw_off();
+    tsw_off();
 
-    sierra_create_task(task_1, 6, READY_TASK_STATE, task_1_code, task_1_stack, STACK_SIZE);
-    sierra_create_task(task_2, 4, READY_TASK_STATE, task_2_code, task_2_stack, STACK_SIZE);
-    sierra_create_task(task_3, 5, READY_TASK_STATE, task_3_code, task_3_stack, STACK_SIZE);
+    task_create(task_1, 6, READY_TASK_STATE, task_1_code, task_1_stack, STACK_SIZE);
+    task_create(task_2, 4, READY_TASK_STATE, task_2_code, task_2_stack, STACK_SIZE);
+    task_create(task_3, 5, READY_TASK_STATE, task_3_code, task_3_stack, STACK_SIZE);
 
-    sierra_create_task(task_4, 3, READY_TASK_STATE, task_4_code, task_4_stack, STACK_SIZE);
+    task_create(task_4, 3, READY_TASK_STATE, task_4_code, task_4_stack, STACK_SIZE);
 
-    sierra_tsw_on();
+    tsw_on();
 
     time_delay(delay_test_constant);
 

@@ -132,6 +132,19 @@ uint32_t sierra_time_base_reg(void)
 }
 
 //----------------------------------------------------------------------------
+uint32_t sierra_ticks_to_ms(uint32_t ticks)
+{
+  const uint32_t time_base = sierra_time_base_reg();
+  const uint32_t cpu_freq_mhz = ALT_CPU_FREQ / 1000000;
+
+  if (cpu_freq_mhz == 0) {
+    return 0;
+  }
+
+  return (uint32_t)(((uint64_t)ticks * time_base) / cpu_freq_mhz);
+}
+
+//----------------------------------------------------------------------------
 void sierra_set_timebase(uint32_t hex)
 {
   // Logs the set time base

@@ -37,8 +37,7 @@
 
 #include "test_011_testing_task_block.h"
 
-#include <altera_avalon_sierra_ker.h>
-#include <altera_avalon_sierra_name.h>
+#include <sierra_ker.h>
 #include <assert.h>
 
 #include "test_setup.h"
@@ -58,15 +57,15 @@ static volatile int shared_pas_variable = 1;  /* 0=PASS, 1=FAIL */
 static void task_1_code(void)
 {
     /* Current task must be RUNNING */
-    info = sierra_get_task_info(task_1);
+    info = task_getinfo(task_1);
     assert(info.state_info == 0);
 
     /* Optional: read info for other tasks (debug / side effects) */
-    (void)sierra_get_task_info(task_2);
-    (void)sierra_get_task_info(task_3);
+    (void)task_getinfo(task_2);
+    (void)task_getinfo(task_3);
 
     /* Block self */
-    sierra_block_task(task_1);
+    task_block(task_1);
 
     /* If task_block() causes immediate reschedule, code below might never run.
        That is OK for this test. */
@@ -77,24 +76,24 @@ static void task_1_code(void)
 static void task_2_code(void)
 {
     /* task_1 should be BLOCKED after task_1 blocked itself */
-    info = sierra_get_task_info(task_1);
+    info = task_getinfo(task_1);
     assert(info.state_info == 1);
 
     /* Current task must be RUNNING */
-    info = sierra_get_task_info(task_2);
+    info = task_getinfo(task_2);
     assert(info.state_info == 0);
 
     /* task_3 expected to be NOT READY (as in original test) */
-    info = sierra_get_task_info(task_3);
+    info = task_getinfo(task_3);
     assert(info.state_info == 2);
 
     /* Block task_3 (not current) and verify it becomes BLOCKED */
-    sierra_block_task(task_3);
-    info = sierra_get_task_info(task_3);
+    task_block(task_3);
+    info = task_getinfo(task_3);
     assert(info.state_info == 1);
 
     /* Finally block self */
-    sierra_block_task(task_2);
+    task_block(task_2);
 }
 
 /* ----------------------------------------------------- */
@@ -102,7 +101,7 @@ static void task_2_code(void)
 static void task_3_code(void)
 {
     /* Debug helper (if implemented in sierra_info.h) */
-    sierra_task_info();
+    task_info();
 
     /* Original code had:
          info = task_getinfo(task_2);
@@ -110,14 +109,14 @@ static void task_3_code(void)
        That looks like a deliberate "should never happen" assert.
        We keep the intent but express it clearly:
     */
-    info = sierra_get_task_info(task_2);
+    info = task_getinfo(task_2);
 
     /* If task_3 runs, task_2 should NOT be in an invalid/error state.
        Adjust expected value if you know the correct state here. */
     assert(info.state_info != 7);
 
     /* Block self */
-    sierra_block_task(task_3);
+    task_block(task_3);
 }
 
 /* ----------------------------------------------------- */
@@ -125,58 +124,58 @@ static void task_3_code(void)
 static void task_4_code(void)
 {
     /* task_3 should be BLOCKED (depending on prior sequence) */
-    info = sierra_get_task_info(task_3);
+    info = task_getinfo(task_3);
     assert(info.state_info == 1);
 
     /* Current task must be RUNNING */
-    info = sierra_get_task_info(task_4);
+    info = task_getinfo(task_4);
     assert(info.state_info == 0);
 
     /* Block task_5 (not current), then block self */
-    sierra_block_task(task_5);
-    sierra_block_task(task_4);
+    task_block(task_5);
+    task_block(task_4);
 }
 
 /* ----------------------------------------------------- */
 
 static void task_5_code(void)
 {
-    info = sierra_get_task_info(task_4);
+    info = task_getinfo(task_4);
     assert(info.state_info == 1);
 
-    info = sierra_get_task_info(task_5);
+    info = task_getinfo(task_5);
     assert(info.state_info == 0);
 
-    sierra_block_task(task_5);
+    task_block(task_5);
 }
 
 /* ----------------------------------------------------- */
 
 static void task_6_code(void)
 {
-    info = sierra_get_task_info(task_5);
+    info = task_getinfo(task_5);
     assert(info.state_info == 1);
 
-    info = sierra_get_task_info(task_6);
+    info = task_getinfo(task_6);
     assert(info.state_info == 0);
 
-    sierra_block_task(task_6);
+    task_block(task_6);
 }
 
 /* ----------------------------------------------------- */
 
 static void task_7_code(void)
 {
-    info = sierra_get_task_info(task_6);
+    info = task_getinfo(task_6);
     assert(info.state_info == 1);
 
-    info = sierra_get_task_info(task_7);
+    info = task_getinfo(task_7);
     assert(info.state_info == 0);
 
     shared_pas_variable = 0;  /* PASS */
 
     /* End by blocking itself (as original) */
-    sierra_block_task(task_7);
+    task_block(task_7);
 }
 
 /* -------------------------------------------------------
@@ -187,17 +186,17 @@ int test_011_testing_task_block(void)
 {
     shared_pas_variable = 1;
 
-    sierra_tsw_off();
+    tsw_off();
 
-    sierra_create_task(task_1, 7, READY_TASK_STATE, task_1_code, task_1_stack, STACK_SIZE);
-    sierra_create_task(task_2, 6, READY_TASK_STATE, task_2_code, task_2_stack, STACK_SIZE);
-    sierra_create_task(task_3, 5, READY_TASK_STATE, task_3_code, task_3_stack, STACK_SIZE);
-    sierra_create_task(task_4, 4, READY_TASK_STATE, task_4_code, task_4_stack, STACK_SIZE);
-    sierra_create_task(task_5, 3, READY_TASK_STATE, task_5_code, task_5_stack, STACK_SIZE);
-    sierra_create_task(task_6, 2, READY_TASK_STATE, task_6_code, task_6_stack, STACK_SIZE);
-    sierra_create_task(task_7, 1, READY_TASK_STATE, task_7_code, task_7_stack, STACK_SIZE);
+    task_create(task_1, 7, READY_TASK_STATE, task_1_code, task_1_stack, STACK_SIZE);
+    task_create(task_2, 6, READY_TASK_STATE, task_2_code, task_2_stack, STACK_SIZE);
+    task_create(task_3, 5, READY_TASK_STATE, task_3_code, task_3_stack, STACK_SIZE);
+    task_create(task_4, 4, READY_TASK_STATE, task_4_code, task_4_stack, STACK_SIZE);
+    task_create(task_5, 3, READY_TASK_STATE, task_5_code, task_5_stack, STACK_SIZE);
+    task_create(task_6, 2, READY_TASK_STATE, task_6_code, task_6_stack, STACK_SIZE);
+    task_create(task_7, 1, READY_TASK_STATE, task_7_code, task_7_stack, STACK_SIZE);
 
-    sierra_tsw_on();
+    tsw_on();
 
     /* Allow time for sequence to execute */
     time_delay(delay_test_constant);

@@ -40,12 +40,12 @@ add_sw_property c_source HAL/src/sierra_time.c
 add_sw_property c_source HAL/src/sierra_extension/sierra_mbox.c
 
 # Include files # /* PN 200320 */
-add_sw_property include_source HAL/inc/altera_avalon_sierra_io.h
-add_sw_property include_source HAL/inc/altera_avalon_sierra_ker.h
-add_sw_property include_source HAL/inc/altera_avalon_sierra_name.h
-add_sw_property include_source HAL/inc/altera_avalon_sierra_regs.h
-add_sw_property include_source HAL/inc/altera_avalon_sierra_tcb.h
-add_sw_property include_source HAL/inc/altera_avalon_sierra_tcb_offset.h
+add_sw_property include_source HAL/inc/sierra_io.h
+add_sw_property include_source HAL/inc/sierra_ker.h
+add_sw_property include_source HAL/inc/sierra_name.h
+add_sw_property include_source HAL/inc/sierra_regs.h
+add_sw_property include_source HAL/inc/sierra_tcb.h
+add_sw_property include_source HAL/inc/sierra_tcb_offset.h
 add_sw_property include_source HAL/inc/sierra.h
 add_sw_property include_source HAL/inc/sierra_backward_compatibility.h
 add_sw_property include_source HAL/inc/sierra_info.h

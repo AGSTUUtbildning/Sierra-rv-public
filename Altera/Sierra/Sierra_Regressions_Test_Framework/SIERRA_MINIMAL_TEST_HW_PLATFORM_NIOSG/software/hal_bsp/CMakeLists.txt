@@ -1,12 +1,11 @@
 cmake_minimum_required(VERSION 3.13)
 
-if(NOT CMAKE_PROJECT_NAME AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
-    set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_LIST_DIR}/toolchain.cmake"
-        CACHE FILEPATH "Sierra BSP/app CMake toolchain file.")
-endif()
+include(toolchain.cmake)
 
-project(bsp C ASM)
+project(bsp)
 
+enable_language(ASM)
+enable_language(C)
 
 set(BspLibraryName "hal2_bsp" CACHE STRING "The BSP library name.")
 set(BspLinkerScript "${CMAKE_CURRENT_SOURCE_DIR}/linker.x" CACHE STRING
@@ -145,12 +144,6 @@ target_sources("${BspLibraryName}"
         HAL/inc/priv/alt_irq_table.h
         HAL/inc/priv/alt_no_error.h
         HAL/inc/priv/intel_niosv_gmon_data.h
-        HAL/inc/altera_avalon_sierra_io.h
-        HAL/inc/altera_avalon_sierra_ker.h
-        HAL/inc/altera_avalon_sierra_name.h
-        HAL/inc/altera_avalon_sierra_regs.h
-        HAL/inc/altera_avalon_sierra_tcb.h
-        HAL/inc/altera_avalon_sierra_tcb_offset.h
         HAL/inc/sierra.h
         HAL/inc/sierra_backward_compatibility.h
         HAL/inc/sierra_extension/sierra_mbox.h
@@ -163,6 +156,7 @@ target_sources("${BspLibraryName}"
         HAL/inc/sierra_sem.h
         HAL/inc/sierra_task.h
         HAL/inc/sierra_tcb.h
+        HAL/inc/sierra_tcb_offset.h
         HAL/inc/sierra_time.h
         HAL/inc/sys/alt_alarm.h
         HAL/inc/sys/alt_cache.h

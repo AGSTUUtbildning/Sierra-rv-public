@@ -29,19 +29,19 @@
 /* Include header for logging subsystem. */
 #include <sierra_logging.h>
 
-#if SIERRA_LOGGING > 0 // logging funktionerna finns inte ifall logging är av. 
+#if SIERRA_LOGGING > 0 // logging funktionerna finns inte ifall logging ar av.
 
   // For every log_id there is a message.
   // .str -> Full string with format specifiers.
   // .nr_of_vars -> how many format specifiers for this message.
   // .aktive -> If 1 then it will be printed. If 0 it will be ignored.
   const message_list_struct message_list[log_count] = {
-      [info_sierra_time_timebase_set]     = {.str = "info  -> SIERRA_TIME -> Timebase is set to %lu.\n",                             .nr_of_vars = 1, .aktive = 1}, 
-      [warn_sierra_time_timebase_exc]     = {.str = "warn  -> SIERRA_TIME -> Timebase value %lu exceeds %d!\n",                      .nr_of_vars = 2, .aktive = 1}, 
+      [info_sierra_time_timebase_set]     = {.str = "info  -> SIERRA_TIME -> Timebase is set to %lu.\n",                             .nr_of_vars = 1, .aktive = 1},
+      [warn_sierra_time_timebase_exc]     = {.str = "warn  -> SIERRA_TIME -> Timebase value %lu exceeds %d!\n",                      .nr_of_vars = 2, .aktive = 1},
       [info_sierra_task_preemted_task]    = {.str = "info  -> SIERRA_TASK -> Task %d preempted task %d.\n",                          .nr_of_vars = 2, .aktive = 1},
       [info_sierra_tsw_switching_on]      = {.str = "info  -> SIERRA_TSW  -> Task switching was turned on.\n",                       .nr_of_vars = 0, .aktive = 1},
       [info_sierra_tsw_switching_off]     = {.str = "info  -> SIERRA_TSW  -> Task switching was turned off.\n",                      .nr_of_vars = 0, .aktive = 1},
-      [info_sierra_task_next_requested]   = {.str = "info  -> SIERRA_TASK -> Next task requested.\n",                                .nr_of_vars = 0, .aktive = 1},
+      [info_sierra_task_next_requested]   = {.str = "info  -> SIERRA_TASK -> Next task requested.\n",                                .nr_of_vars = 1, .aktive = 1},
       [info_sierra_irq_task_wait_irq]     = {.str = "info  -> SIERRA_IRQ  -> Task %d will now wait for IRQ %d.\n",                   .nr_of_vars = 2, .aktive = 1},
       [info_sierra_svc_task_wait_sem]     = {.str = "info  -> SIERRA_SVC  -> Task %d waits for semaphore %d.\n",                     .nr_of_vars = 2, .aktive = 1},
       [info_sierra_svc_task_take_sem]     = {.str = "info  -> SIERRA_SVC  -> Task %d takes semaphore %d.\n",                         .nr_of_vars = 2, .aktive = 1},
@@ -60,7 +60,7 @@
       [info_sierra_time_delay]            = {.str = "info  -> SIERRA_TIME -> Task %d will be delayed with %d ticks.\n",              .nr_of_vars = 2, .aktive = 1},
   };
 
-  #if SIERRA_LOGGING >= 2
+  #if SIERRA_LOGGING == 3 // This mode is only for sierra test platform
 
   // Data structure for logging message.
   typedef struct {
@@ -82,33 +82,23 @@
   // log_memory Is a separate on-chip memory or a memory region named log_memory.
   log_memory sierra_log __attribute__((section(".log_memory")));
 
-  static uint32_t next_log_index(uint32_t index) {
-      index++;
-      return (index >= 511u) ? 0u : index;
-  }
-
   // Save_log data into log_memory.
   static void save_log(uint32_t message, uint32_t time, uint32_t var1, uint32_t var2) {
-      const uint32_t index = sierra_log.head;
-      const uint32_t next = next_log_index(index);
+      sierra_log.log_entry[sierra_log.head].message_code = message;
+      sierra_log.log_entry[sierra_log.head].time_stamp   = time;
+      sierra_log.log_entry[sierra_log.head].var1         = var1;
+      sierra_log.log_entry[sierra_log.head].var2         = var2;
 
-      sierra_log.log_entry[index].message_code = message;
-      sierra_log.log_entry[index].time_stamp   = time;
-      sierra_log.log_entry[index].var1         = var1;
-      sierra_log.log_entry[index].var2         = var2;
-
-      sierra_log.head = next;
-      if (sierra_log.head == sierra_log.tail) {
-          sierra_log.tail = next_log_index(sierra_log.tail);
-      }
+      sierra_log.head = (sierra_log.head + 1) & 511; // Uppdatera head
   }
 
   // Write all buffered messages into log_port.
   static void read_log(void) {
-      while(sierra_log.tail != sierra_log.head) {
+      ALT_LOG_PRINTF("\nPrint log:\n");
+      while(1) {
           uint32_t index = sierra_log.tail;
           if (message_list[sierra_log.log_entry[index].message_code].aktive == 1){
-            ALT_LOG_PRINTF("Time: %d ms : ", sierra_ticks_to_ms(sierra_log.log_entry[index].time_stamp));
+            ALT_LOG_PRINTF("Time: %lu ms : ", (unsigned long)sierra_ticks_to_ms(sierra_log.log_entry[index].time_stamp));
             uint32_t nr_vars = message_list[sierra_log.log_entry[index].message_code].nr_of_vars;
             if(nr_vars == 0)
               ALT_LOG_PRINTF(message_list[sierra_log.log_entry[index].message_code].str);
@@ -117,7 +107,8 @@
             else if(nr_vars == 2)
               ALT_LOG_PRINTF(message_list[sierra_log.log_entry[index].message_code].str, sierra_log.log_entry[index].var1, sierra_log.log_entry[index].var2);
           }
-          sierra_log.tail = next_log_index(sierra_log.tail);
+          if(sierra_log.tail == sierra_log.head) break;
+          sierra_log.tail = (sierra_log.tail + 1) & 511; // Uppdatera tail.
       }
   }
   #endif
@@ -127,10 +118,18 @@
   // Log message depending on SIERRA_LOGGING mode.
   void sierra_logging(uint32_t message, uint32_t time, uint32_t var1, uint32_t var2)
   {
-  #if SIERRA_LOGGING >= 2
-    save_log(message, time, var1, var2);
+  #if SIERRA_LOGGING == 3
+    save_log(message, time, var1, var2); // Save inte logging buffert.
+  #elif SIERRA_LOGGING == 2 // Write to log_port
+    ALT_LOG_PRINTF("Time: %lu ms : ", (unsigned long)sierra_ticks_to_ms(time));
+    if(message_list[message].nr_of_vars == 0)
+      ALT_LOG_PRINTF("%s", message_list[message].str);
+    else if(message_list[message].nr_of_vars == 1)
+      ALT_LOG_PRINTF(message_list[message].str, var1);
+    else if(message_list[message].nr_of_vars == 2)
+      ALT_LOG_PRINTF(message_list[message].str, var1, var2);
   #elif SIERRA_LOGGING == 1 // Write into normal jtag UART.
-    printf("Time: %ld ms : ", sierra_ticks_to_ms(time));
+    printf("Time: %lu ms : ", (unsigned long)sierra_ticks_to_ms(time));
     if(message_list[message].nr_of_vars == 0)
       printf("%s", message_list[message].str);
     else if(message_list[message].nr_of_vars == 1)
@@ -142,9 +141,9 @@
   #endif
   }
 
-  // If there are logg data in the buffert. Print it all out. 
+  // If there are logg data in the buffert. Print it all out.
   void sierra_print_log(void){
-    #if SIERRA_LOGGING >= 2
+    #if SIERRA_LOGGING > 2
       read_log();
     #else
       ;

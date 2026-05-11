@@ -36,8 +36,7 @@
 
 #include "test_005_testing_task_start.h"
 
-#include <altera_avalon_sierra_ker.h>
-#include <altera_avalon_sierra_name.h>
+#include <sierra_ker.h>
 #include "test_setup.h"
 
 /* -------------------------------------------------------
@@ -53,45 +52,45 @@ static volatile int shared_pas_variable = 1;
 
 static void task_1_code(void)
 {
-    sierra_start_task(task_2);
-    sierra_delete_task();
+    task_start(task_2);
+    task_delete();
 }
 
 static void task_2_code(void)
 {
-    sierra_start_task(task_3);
-    sierra_delete_task();
+    task_start(task_3);
+    task_delete();
 }
 
 static void task_3_code(void)
 {
-    sierra_start_task(task_4);
-    sierra_delete_task();
+    task_start(task_4);
+    task_delete();
 }
 
 static void task_4_code(void)
 {
-    sierra_start_task(task_5);
-    sierra_delete_task();
+    task_start(task_5);
+    task_delete();
 }
 
 static void task_5_code(void)
 {
-    sierra_start_task(task_6);
-    sierra_delete_task();
+    task_start(task_6);
+    task_delete();
 }
 
 static void task_6_code(void)
 {
-    sierra_start_task(task_7);
-    sierra_delete_task();
+    task_start(task_7);
+    task_delete();
 }
 
 static void task_7_code(void)
 {
     /* If we reach task_7, the chain worked -> PASS */
     shared_pas_variable = 0;
-    sierra_delete_task();
+    task_delete();
 }
 
 /* -------------------------------------------------------
@@ -108,19 +107,19 @@ int test_005_testing_task_start(void)
        - task_1 is READY and starts the chain.
     */
 
-    sierra_tsw_off();
+    tsw_off();
 
-    sierra_create_task(task_2, 6, BLOCKED_TASK_STATE, task_2_code, task_2_stack, STACK_SIZE);
-    sierra_create_task(task_3, 5, BLOCKED_TASK_STATE, task_3_code, task_3_stack, STACK_SIZE);
-    sierra_create_task(task_4, 4, BLOCKED_TASK_STATE, task_4_code, task_4_stack, STACK_SIZE);
-    sierra_create_task(task_5, 3, BLOCKED_TASK_STATE, task_5_code, task_5_stack, STACK_SIZE);
-    sierra_create_task(task_6, 2, BLOCKED_TASK_STATE, task_6_code, task_6_stack, STACK_SIZE);
-    sierra_create_task(task_7, 1, BLOCKED_TASK_STATE, task_7_code, task_7_stack, STACK_SIZE);
+    task_create(task_2, 6, BLOCKED_TASK_STATE, task_2_code, task_2_stack, STACK_SIZE);
+    task_create(task_3, 5, BLOCKED_TASK_STATE, task_3_code, task_3_stack, STACK_SIZE);
+    task_create(task_4, 4, BLOCKED_TASK_STATE, task_4_code, task_4_stack, STACK_SIZE);
+    task_create(task_5, 3, BLOCKED_TASK_STATE, task_5_code, task_5_stack, STACK_SIZE);
+    task_create(task_6, 2, BLOCKED_TASK_STATE, task_6_code, task_6_stack, STACK_SIZE);
+    task_create(task_7, 1, BLOCKED_TASK_STATE, task_7_code, task_7_stack, STACK_SIZE);
 
     /* Start point of the chain */
-    sierra_create_task(task_1, 7, READY_TASK_STATE, task_1_code, task_1_stack, STACK_SIZE);
+    task_create(task_1, 7, READY_TASK_STATE, task_1_code, task_1_stack, STACK_SIZE);
 
-    sierra_tsw_on();
+    tsw_on();
 
     /* Allow scheduler to execute test chain */
    time_delay(delay_test_constant);

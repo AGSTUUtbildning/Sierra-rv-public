@@ -29,8 +29,8 @@
 
 #include "test_014A_testing_mbox_peek.h"
 
-#include <altera_avalon_sierra_ker.h>
-#include <altera_avalon_sierra_name.h>
+#include <sierra_ker.h>
+#include <sierra_name.h>
 #include <assert.h>
 #include <stdint.h>
 
@@ -68,9 +68,7 @@ static void task_1_code(void)
     header.size = sizeof(mbox_value); 
     header.data = (void*)&mbox_value; 
 
-    if (sierra_mbox_send(&mbox, &header) != MBOX_OK) { // send message to mailbox
-        task_delete();
-    }
+    assert(sierra_mbox_send(&mbox, &header) == MBOX_OK); // send message to mailbox
 
     
 
@@ -86,23 +84,15 @@ static void task_2_code(void)
     uint32_t buffer = 0u;
 
     header.data = &buffer; // load buffer into header for peek 
-    if (sierra_mbox_peek(&mbox, &header) != MBOX_OK) { // peek into the mailbox without removing the content
-        task_delete();
-    }
-    if (buffer != mbox_value) { // check that the value is correct
-        task_delete();
-    }
+    assert(sierra_mbox_peek(&mbox, &header) == MBOX_OK); // peek into the mailbox without removing the content
+    assert(buffer == mbox_value); // check that the value is correct
 
     step = 2;
 
     buffer = 0u;           // reset buffer 
     header.data = &buffer; // load buffer into header for peek again
-    if (sierra_mbox_peek(&mbox, &header) != MBOX_OK) { // same value should still be available
-        task_delete();
-    }
-    if (buffer != mbox_value) { // check that peeked value is still the same
-        task_delete();
-    }
+    assert(sierra_mbox_peek(&mbox, &header) == MBOX_OK); // same value should still be available
+    assert(buffer == mbox_value); // check that peeked value is still the same
 
     shared_pas_variable = 0;
 
@@ -134,3 +124,4 @@ int test_014A_testing_mbox_peek(void)
 }
 
 /* Back to idle task in main_test_file */
+

@@ -35,8 +35,7 @@
 
 #include "test_004_testing_priority.h"
 
-#include <altera_avalon_sierra_ker.h>
-#include <altera_avalon_sierra_name.h>
+#include <sierra_ker.h>
 #include <assert.h>
 #include "test_setup.h"
 
@@ -60,42 +59,42 @@ static void task_1_code(void)
 {
     assert(test_priority_004 == 1);
     test_priority_004++;
-    sierra_delete_task();
+    task_delete();
 }
 
 static void task_2_code(void)
 {
     assert(test_priority_004 == 2);
     test_priority_004++;
-    sierra_delete_task();
+    task_delete();
 }
 
 static void task_3_code(void)
 {
     assert(test_priority_004 == 3);
     test_priority_004++;
-    sierra_delete_task();
+    task_delete();
 }
 
 static void task_4_code(void)
 {
     assert(test_priority_004 == 4);
     test_priority_004++;
-    sierra_delete_task();
+    task_delete();
 }
 
 static void task_5_code(void)
 {
     assert(test_priority_004 == 5);
     test_priority_004++;
-    sierra_delete_task();
+    task_delete();
 }
 
 static void task_6_code(void)
 {
     assert(test_priority_004 == 6);
     test_priority_004++;
-    sierra_delete_task();
+    task_delete();
 }
 
 static void task_7_code(void)
@@ -106,7 +105,7 @@ static void task_7_code(void)
     shared_pas_variable = 0;
 
     test_priority_004++;
-    sierra_delete_task();
+    task_delete();
 }
 
 /* -------------------------------------------------------
@@ -122,17 +121,17 @@ int test_004_testing_priority(void)
        Create tasks with priorities so task_1 is expected to run first
        and task_7 last (depending on Sierra priority semantics).
     */
-    sierra_tsw_off();
+    tsw_off();
 
-    sierra_create_task(task_1, 7, READY_TASK_STATE, task_1_code, task_1_stack, STACK_SIZE);
-    sierra_create_task(task_2, 6, READY_TASK_STATE, task_2_code, task_2_stack, STACK_SIZE);
-    sierra_create_task(task_3, 5, READY_TASK_STATE, task_3_code, task_3_stack, STACK_SIZE);
-    sierra_create_task(task_4, 4, READY_TASK_STATE, task_4_code, task_4_stack, STACK_SIZE);
-    sierra_create_task(task_5, 3, READY_TASK_STATE, task_5_code, task_5_stack, STACK_SIZE);
-    sierra_create_task(task_6, 2, READY_TASK_STATE, task_6_code, task_6_stack, STACK_SIZE);
-    sierra_create_task(task_7, 1, READY_TASK_STATE, task_7_code, task_7_stack, STACK_SIZE);
+    task_create(task_1, 7, READY_TASK_STATE, task_1_code, task_1_stack, STACK_SIZE);
+    task_create(task_2, 6, READY_TASK_STATE, task_2_code, task_2_stack, STACK_SIZE);
+    task_create(task_3, 5, READY_TASK_STATE, task_3_code, task_3_stack, STACK_SIZE);
+    task_create(task_4, 4, READY_TASK_STATE, task_4_code, task_4_stack, STACK_SIZE);
+    task_create(task_5, 3, READY_TASK_STATE, task_5_code, task_5_stack, STACK_SIZE);
+    task_create(task_6, 2, READY_TASK_STATE, task_6_code, task_6_stack, STACK_SIZE);
+    task_create(task_7, 1, READY_TASK_STATE, task_7_code, task_7_stack, STACK_SIZE);
 
-    sierra_tsw_on();
+    tsw_on();
 
     /* Allow scheduler to execute sequence */
    time_delay(delay_test_constant);

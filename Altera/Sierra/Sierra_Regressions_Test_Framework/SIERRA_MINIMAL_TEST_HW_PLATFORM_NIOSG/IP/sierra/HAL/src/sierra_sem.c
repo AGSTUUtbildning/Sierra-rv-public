@@ -3,11 +3,12 @@
  * \details    This file contains:
  *             - Semaphore handling
  *             - Flag handling
- * \version    11.00.00
+ * \author     Lennart Lindh
+ * \version    10.03.15
  * \date       2006
- * \history    Modified 2026:
- *             - Removed sierra_backward_compatibility.h
- *             - Changed logging system.
+ * \history    Modified 2022:
+ *             - Added sierra_ prefix for external functions.
+ *             - Added probes for the logging interface
  * \copyright  COPYRIGHT (C) AGSTU AB
  *
  *             All rights reserved. AGSTU's source code is an unpublished work, and the use of a copyright notice does not imply otherwise.
@@ -23,8 +24,8 @@
  *             designs and files) provided on this site.
  */
  
-#include <altera_avalon_sierra_io.h>
-#include <altera_avalon_sierra_ker.h>
+#include <sierra_io.h>
+#include <sierra_ker.h>
 #include <stdio.h>
 #include <sierra_logging.h>
 

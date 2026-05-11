@@ -1,13 +1,14 @@
 /*!
- * \file       sierra_regs.h
- * \details    Hardware-specific register access.
+ * \file       sierra_info.h
+ * \details    Sierra information access functions
+ * \author     Lennart Lindh
  * \version    11.0.0
  * \date       2026
  * \history    Modified 2026:
  *             - Removed sierra_backward_compatibility.h
  *             - Changed logging system.
  *             - RISC-V support
- * \copyright  COPYRIGHT (C) 2006 - 2026 AGSTU AB
+ * \copyright  COPYRIGHT (C) AGSTU AB
  *
  *             All rights reserved. AGSTU's source code is an unpublished work, and the use of a copyright notice does not imply otherwise.
  *             This source code contains confidential, trade-secret material of AGSTU AB. Any attempt at or participation in deciphering,
@@ -22,22 +23,40 @@
  *             designs and files) provided on this site.
  */
 
-#ifndef ___SIERRA_REGS_H__
-#define ___SIERRA_REGS_H__
+#ifndef __SIERRA_INFO_H__
+#define __SIERRA_INFO_H__
 
-#include <sierra_name.h>
-#include <io.h>
+#include <stdint.h>
 
-// HAL Macros for NIOS
-#define M_Sierra_HW_Version_reg             IORD_32DIRECT(SIERRA_RTOS_BASE,0);
-#define M_RD_SierraTime_base_reg            IORD_32DIRECT(SIERRA_RTOS_BASE,0x10);
-#define M_IOWR_SierraTime_base_reg(data)    IOWR_32DIRECT(SIERRA_RTOS_BASE,0x10, data); // Not yet verified!
-#define M_RD_Sierra_statusA_reg             IORD_32DIRECT(SIERRA_RTOS_BASE,0x20);
-#define M_RD_Sierra_statusB_reg             IORD_32DIRECT(SIERRA_RTOS_BASE,0x30);
-#define M_RD_Sierra_statusB_reg_utan        IORD_32DIRECT(SIERRA_RTOS_BASE,0x30) // utan att acka på IRQ, används i get_next_task
-#define IOWR_ALT_SVC_REGISTER(data)         IOWR_32DIRECT(SIERRA_RTOS_BASE,0x40, data);
-#define IOWR_ALT_CTRL_REGISTER(data)        IOWR_32DIRECT(SIERRA_RTOS_BASE,0x50, data);
-#define M_WD_SW_RESET_REGISTER(data)        IOWR_32DIRECT(SIERRA_RTOS_BASE,0x60, data);
-#define M_RD_TIME_LOGGING_REGISTER          IORD_32DIRECT(SIERRA_RTOS_BASE,0x70);
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-#endif /* __SIERRA_REGS_H__ */
+/*! Structure used for dividing the software version number into following sections:
+    -MAJOR version when you make incompatible changes,
+    -MINOR version when you add functionality in a backwards-compatible manner
+    -PATCH version when you make backwards-compatible bug fixes
+ */
+typedef union {
+  struct{
+    uint32_t PATCH_SW : 10;
+    uint32_t MINOR_SW : 10;
+    uint32_t MAJOR_SW : 12;
+  } sw_version;
+  uint32_t sw_version_int;
+} sw_version_union;
+
+//! Logs out (using printf) Sierra hw version from hardware register and software version.
+extern void sierra_print_versions(void);
+
+//! Logs out (using printf) Sierra information from hardware register.
+extern void sierra_printf_HW_version(void);
+
+//! Logs out (using printf) state and priority information about all created tasks.
+extern void sierra_task_info(void);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // __SIERRA_INFO_H__

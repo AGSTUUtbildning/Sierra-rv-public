@@ -13,13 +13,13 @@ set(ToolchainObjdump riscv32-unknown-elf-objdump CACHE STRING "Objdump executabl
 set(ToolchainObjdumpFlags -Sdtx CACHE STRING "Objdump flags." FORCE)
 
 if(NOT CMAKE_BUILD_TYPE)
-    message(STATUS "Defaulting build type to Release.")
-    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build." FORCE)
+    message(STATUS "Defaulting build type to Debug.")
+    set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Choose the type of build." FORCE)
 endif()
 
 set(CMAKE_C_FLAGS_DEBUG "-g")
 
-set(CMAKE_C_FLAGS_RELEASE "-Os -DNDEBUG")
+set(CMAKE_C_FLAGS_RELEASE "-O2")
 
 add_compile_options(
     $<$<COMPILE_LANGUAGE:ASM>:-Wa,-gdwarf2>
@@ -27,15 +27,13 @@ add_compile_options(
     -Wall -Wformat-security
     -Wformat
     -Wformat-security
-    -ffunction-sections
-    -fdata-sections
+    -fstack-protector-strong
     -march=rv32imf_zicbom -mabi=ilp32f
 )
 
 add_link_options(
     -march=rv32imf_zicbom -mabi=ilp32f
     -nostdlib
-    -Wl,--gc-sections
 )
 
 add_compile_definitions(

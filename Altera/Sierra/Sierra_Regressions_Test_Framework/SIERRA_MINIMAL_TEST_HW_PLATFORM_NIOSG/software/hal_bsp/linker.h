@@ -2,9 +2,9 @@
  * linker.h - Linker script mapping information
  *
  * Machine generated for CPU 'cpu' in SOPC Builder design 'sierra_minimal_niosvg_hw'
- * SOPC Builder design path: /home/ludvig/fpga/altera/projects/sierra/SIERRA_MINIMAL_TEST_HW_PLATFORM_NIOSG/sierra_niosvg_archive_restored/sierra_minimal_niosvg_hw.sopcinfo
+ * SOPC Builder design path: C:/AGSTU/SIERRA_MINIMAL_TEST_HW_PLATFORM_NIOSG/sierra_minimal_niosvg_hw.sopcinfo
  *
- * Generated: Sun May 10 09:43:55 CEST 2026
+ * Generated: Mon May 11 13:38:02 CEST 2026
  */
 
 /*
@@ -65,10 +65,10 @@
  *
  */
 
-#define LOG_MEMORY_REGION_BASE 0x20000
+#define LOG_MEMORY_REGION_BASE 0x30000
 #define LOG_MEMORY_REGION_SPAN 8192
 #define ONCHIP_MEMOY_REGION_BASE 0x20
-#define ONCHIP_MEMOY_REGION_SPAN 65504
+#define ONCHIP_MEMOY_REGION_SPAN 131040
 #define RESET_REGION_BASE 0x0
 #define RESET_REGION_SPAN 32
 

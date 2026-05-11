@@ -37,11 +37,7 @@
 
 #include "test_006_testing_sem_take_and_release.h"
 
-#include <altera_avalon_sierra_ker.h>
-#include <altera_avalon_sierra_io.h>
-#include <altera_avalon_sierra_regs.h>
-#include <altera_avalon_sierra_name.h>
-#include <altera_avalon_sierra_tcb.h>
+#include <sierra_ker.h>
 
 #include <system.h>
 #include <stdio.h>
@@ -69,10 +65,10 @@ static void task_1_code(void)
     test_failed_variable = 1;
 
     /* Must block until released */
-    sierra_take_sem(SEM1);
-    sierra_take_sem(SEM2);
+    sem_take(SEM1);
+    sem_take(SEM2);
 
-    sierra_delete_task();
+    task_delete();
 }
 
 static void task_2_code(void)
@@ -83,13 +79,13 @@ static void task_2_code(void)
     test_failed_variable = 2;
 
     /* Must block until released */
-    sierra_take_sem(SEM1);
-    sierra_take_sem(SEM2);
+    sem_take(SEM1);
+    sem_take(SEM2);
 
     /* Must only continue after Task 4 has set state=4 */
     assert(test_failed_variable == 4);
 
-    sierra_delete_task();
+    task_delete();
 }
 
 static void task_3_code(void)
@@ -100,11 +96,11 @@ static void task_3_code(void)
     test_failed_variable = 3;
 
     /* Release SEM1 to allow waiting tasks to proceed (first stage) */
-    sierra_release_sem(SEM1);
+    sem_release(SEM1);
 
  //   test_delay(1000000);
 
-    sierra_delete_task();
+    task_delete();
 }
 
 static void task_4_code(void)
@@ -115,9 +111,9 @@ static void task_4_code(void)
     test_failed_variable = 4;
 
     /* Release SEM2 to allow waiting tasks to proceed (second stage) */
-    sierra_release_sem(SEM2);
+    sem_release(SEM2);
 
-    sierra_delete_task();
+    task_delete();
 }
 
 static void task_5_code(void)
@@ -128,7 +124,7 @@ static void task_5_code(void)
     /* PASS */
     shared_pas_variable = 0;
 
-    sierra_delete_task();
+    task_delete();
 }
 
 /* -------------------------------------------------------
@@ -140,15 +136,15 @@ int test_006_testing_sem_take_and_release(void)
     test_failed_variable = 0;
     shared_pas_variable  = 1;
 
-    sierra_tsw_off();
+    tsw_off();
 
-    sierra_create_task(task_1, 7, READY_TASK_STATE, task_1_code, task_1_stack, STACK_SIZE);
-    sierra_create_task(task_2, 6, READY_TASK_STATE, task_2_code, task_2_stack, STACK_SIZE);
-    sierra_create_task(task_3, 5, READY_TASK_STATE, task_3_code, task_3_stack, STACK_SIZE);
-    sierra_create_task(task_4, 4, READY_TASK_STATE, task_4_code, task_4_stack, STACK_SIZE);
-    sierra_create_task(task_5, 3, READY_TASK_STATE, task_5_code, task_5_stack, STACK_SIZE);
+    task_create(task_1, 7, READY_TASK_STATE, task_1_code, task_1_stack, STACK_SIZE);
+    task_create(task_2, 6, READY_TASK_STATE, task_2_code, task_2_stack, STACK_SIZE);
+    task_create(task_3, 5, READY_TASK_STATE, task_3_code, task_3_stack, STACK_SIZE);
+    task_create(task_4, 4, READY_TASK_STATE, task_4_code, task_4_stack, STACK_SIZE);
+    task_create(task_5, 3, READY_TASK_STATE, task_5_code, task_5_stack, STACK_SIZE);
 
-    sierra_tsw_on();
+    tsw_on();
 
     /* Let scheduler run the test sequence */
    time_delay(delay_test_constant);

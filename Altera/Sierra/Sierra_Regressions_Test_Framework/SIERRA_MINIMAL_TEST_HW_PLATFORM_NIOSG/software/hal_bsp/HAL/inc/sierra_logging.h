@@ -32,7 +32,7 @@
 // Sierra logging = 2 är Rekomenderat använder printf gjord för logging och skriver till jtag UART som angivits i BSP för logging. Kan också överbelasta jtag UART bufferten.
 // sierra logging = 3 special logging som kräver sierra test platform. Mindre belastning och sparar logg tillfälligt i ett separat minne. 
 
-#define SIERRA_LOGGING 0
+#define SIERRA_LOGGING 2
 
 #if SIERRA_LOGGING > 0
 

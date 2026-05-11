@@ -2,12 +2,12 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal2</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>May 10, 2026 9:43:54 AM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1778399034940</BspGeneratedUnixTimeStamp>
-        <BspGeneratedLocation>./</BspGeneratedLocation>
-        <BspSettingsFile>/home/ludvig/fpga/altera/projects/sierra/SIERRA_MINIMAL_TEST_HW_PLATFORM_NIOSG/sierra_niosvg_archive_restored/software/hal_bsp/settings.bsp</BspSettingsFile>
-        <SopcDesignFile>../../sierra_minimal_niosvg_hw.sopcinfo</SopcDesignFile>
-        <SystemFileHash>631a46e036114c19f898569de4625f23ca57379bdc1bca5b31249baf0afca3</SystemFileHash>
+        <BspGeneratedTimeStamp>May 11, 2026 1:38:02 PM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1778499482323</BspGeneratedUnixTimeStamp>
+        <BspGeneratedLocation>.\</BspGeneratedLocation>
+        <BspSettingsFile>C:\AGSTU\SIERRA_MINIMAL_TEST_HW_PLATFORM_NIOSG\software\hal_bsp\settings.bsp</BspSettingsFile>
+        <SopcDesignFile>..\..\sierra_minimal_niosvg_hw.sopcinfo</SopcDesignFile>
+        <SystemFileHash>1aed6bd2653de9ed3557cd1ede3c17b51a9f88bcfc62952f46c979aec4aa</SystemFileHash>
         <JdiFile>default</JdiFile>
         <Cpu>cpu</Cpu>
         <SchemaVersion>1.9</SchemaVersion>
@@ -51,7 +51,7 @@
                 <SettingName>hal.enable_instruction_related_exceptions_api</SettingName>
                 <Identifier>ALT_INCLUDE_INSTRUCTION_RELATED_EXCEPTION_API</Identifier>
                 <Type>BooleanDefineOnly</Type>
-                <Value>false</Value>
+                <Value>true</Value>
                 <DefaultValue>false</DefaultValue>
                 <DestinationFile>system_h_define</DestinationFile>
                 <Description>Enables API for registering handlers to service instruction-related exceptions. Enabling this setting increases the size of the exception entry code.</Description>
@@ -601,43 +601,43 @@
         </Setting>
         <MemoryMap>
                 <slaveDescriptor>onchip_memoy</slaveDescriptor>
-                <addressRange>0x00000000 - 0x0000FFFF</addressRange>
-                <addressSpan>65536</addressSpan>
+                <addressRange>0x00000000 - 0x0001FFFF</addressRange>
+                <addressSpan>131072</addressSpan>
                 <attributes>memory</attributes>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>cpu_dm_agent</slaveDescriptor>
-                <addressRange>0x00010000 - 0x0001FFFF</addressRange>
+                <addressRange>0x00020000 - 0x0002FFFF</addressRange>
                 <addressSpan>65536</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>log_memory</slaveDescriptor>
-                <addressRange>0x00020000 - 0x00021FFF</addressRange>
+                <addressRange>0x00030000 - 0x00031FFF</addressRange>
                 <addressSpan>8192</addressSpan>
                 <attributes>memory</attributes>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>sierra_0</slaveDescriptor>
-                <addressRange>0x00022000 - 0x000223FF</addressRange>
+                <addressRange>0x00032000 - 0x000323FF</addressRange>
                 <addressSpan>1024</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>cpu_timer_sw_agent</slaveDescriptor>
-                <addressRange>0x00022400 - 0x0002243F</addressRange>
+                <addressRange>0x00032400 - 0x0003243F</addressRange>
                 <addressSpan>64</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>jtag_uart_for_log</slaveDescriptor>
-                <addressRange>0x00022440 - 0x00022447</addressRange>
+                <addressRange>0x00032440 - 0x00032447</addressRange>
                 <addressSpan>8</addressSpan>
                 <attributes>printable</attributes>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>jtag_uart</slaveDescriptor>
-                <addressRange>0x00022448 - 0x0002244F</addressRange>
+                <addressRange>0x00032448 - 0x0003244F</addressRange>
                 <addressSpan>8</addressSpan>
                 <attributes>printable</attributes>
         </MemoryMap>

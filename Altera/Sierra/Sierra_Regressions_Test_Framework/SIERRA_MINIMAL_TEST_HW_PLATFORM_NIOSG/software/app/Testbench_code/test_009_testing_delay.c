@@ -40,8 +40,7 @@
 
 #include "test_009_testing_delay.h"
 
-#include <altera_avalon_sierra_ker.h>
-#include <altera_avalon_sierra_name.h>
+#include <sierra_ker.h>
 #include <assert.h>
 
 #include "test_setup.h"
@@ -60,32 +59,32 @@ static volatile int shared_pas_variable = 1;  /* 0=PASS, 1=FAIL */
 static void task_1_code(void)
 {
     /* Without any extra delay, this task would normally start later */
-    sierra_period_time_init(100);
-    sierra_await_next_period();
+    init_period_time(100);
+    wait_for_next_period();
 
     /* Must run before task_2 (because task_2 is delayed) */
     assert(test_variable == 0);
 
     test_variable = 1;
 
-    sierra_delete_task();
+    task_delete();
 }
 
 static void task_2_code(void)
 {
     /* Without delay(), this task would normally start first */
-    sierra_period_time_init(90);
-    sierra_await_next_period();
+    init_period_time(90);
+    wait_for_next_period();
 
     /* Delay this task so task_1 gets to run first */
-    sierra_delay_task(20);
+    delay(20);
 
     /* Must run after task_1 has set test_variable = 1 */
     assert(test_variable == 1);
 
     test_variable = 2;
 
-    sierra_delete_task();
+    task_delete();
 }
 
 /*
@@ -99,7 +98,7 @@ static void task_3_code(void)
         if (test_variable == 2)
         {
             shared_pas_variable = 0; /* PASS */
-            sierra_delete_task();
+            task_delete();
         }
 
         /* Optional small NOP loop to reduce tight spinning */
@@ -116,13 +115,13 @@ int test_009_testing_delay(void)
     test_variable = 0;
     shared_pas_variable = 1;
 
-    sierra_tsw_off();
+    tsw_off();
 
-    sierra_create_task(task_1, 7, READY_TASK_STATE, task_1_code, task_1_stack, STACK_SIZE);
-    sierra_create_task(task_2, 6, READY_TASK_STATE, task_2_code, task_2_stack, STACK_SIZE);
-    sierra_create_task(task_3, 5, READY_TASK_STATE, task_3_code, task_3_stack, STACK_SIZE);
+    task_create(task_1, 7, READY_TASK_STATE, task_1_code, task_1_stack, STACK_SIZE);
+    task_create(task_2, 6, READY_TASK_STATE, task_2_code, task_2_stack, STACK_SIZE);
+    task_create(task_3, 5, READY_TASK_STATE, task_3_code, task_3_stack, STACK_SIZE);
 
-    sierra_tsw_on();
+    tsw_on();
 
     /* Allow time for the periodic tasks to run and the idle task to finish */
     time_delay(delay_test_constant);

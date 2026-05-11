@@ -24,12 +24,7 @@ All code in this file are provided "as is" and without any warranties expressed 
 -----------------------------------------------------------------------*/
 
 #include "test_012_testing_task_change_prio_same.h"
-#include <altera_avalon_sierra_ker.h>
-#include <altera_avalon_sierra_io.h>
-#include <altera_avalon_sierra_regs.h>
-#include <altera_avalon_sierra_name.h>
-#include <altera_avalon_sierra_tcb.h>
-#include <altera_avalon_sierra_tcb.h>
+#include <sierra_ker.h>
 #include <system.h> // for use of SOPC base-address definitions
 #include <stdio.h>
 #include <io.h>
@@ -46,7 +41,7 @@ static void task_1_code(void){
 	assert(test_priority_012==0);
 
 	test_priority_012=1;
-	sierra_change_task_prio(task_2, 7); //change task_2 to higher priority then task_1, should cause a task switch and task_2 should start running
+	task_change_prio(task_2, 7); //change task_2 to higher priority then task_1, should cause a task switch and task_2 should start running
 
 	for(i=0; i<500000; i++);
 	for(i=0; i<500000; i++);
@@ -54,24 +49,24 @@ static void task_1_code(void){
 	assert(test_priority_012==2); // Coming back from task_2
 	shared_pas_variable=0; 
 
-	sierra_delete_task();			//deleting the task to free it up for other tests
+	task_delete();			//deleting the task to free it up for other tests
 }
 //-----------------------------------------------------
 
 static void task_2_code(void){
 	assert(test_priority_012==1);
 	test_priority_012=2;
-	sierra_delete_task();
+	task_delete();
 }
 
 
 int test_012_testing_change_prio_same(){
 	test_priority_012=0;
 
-	sierra_tsw_off(); //shut down the scheduler to create all new tests
-	sierra_create_task(task_1, 6, READY_TASK_STATE, task_1_code, task_1_stack, STACK_SIZE);
-	sierra_create_task(task_2, 3, READY_TASK_STATE, task_2_code, task_2_stack, STACK_SIZE);
-	sierra_tsw_on(); //start the scheduler again
+	tsw_off(); //shut down the scheduler to create all new tests
+	task_create(task_1, 6, READY_TASK_STATE, task_1_code, task_1_stack, STACK_SIZE);
+	task_create(task_2, 3, READY_TASK_STATE, task_2_code, task_2_stack, STACK_SIZE);
+	tsw_on(); //start the scheduler again
 
 	time_delay(delay_test_constant);
 	

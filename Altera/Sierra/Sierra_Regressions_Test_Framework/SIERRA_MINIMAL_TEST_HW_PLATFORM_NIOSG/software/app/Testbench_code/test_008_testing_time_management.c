@@ -38,8 +38,7 @@
 
 #include "test_008_testing_time_management.h"
 
-#include <altera_avalon_sierra_ker.h>
-#include <altera_avalon_sierra_name.h>
+#include <sierra_ker.h>
 #include <assert.h>
 
 #include "test_setup.h"
@@ -61,76 +60,76 @@ static volatile int shared_pas_variable = 1;
 static void task_1_code(void)
 {
     /* Longest period -> expected to run last */
-    sierra_period_time_init(100);
-    sierra_await_next_period();
+    init_period_time(100);
+    wait_for_next_period();
 
     assert(test_variable_008 == 5);
     test_variable_008 = 6;   /* Signal test completion to task_7 */
 
     /* Push periodic timer far into future before deletion */
-    sierra_period_time_init(0xFFFF);
-    sierra_delete_task();
+    init_period_time(0xFFFF);
+    task_delete();
 }
 
 static void task_2_code(void)
 {
-    sierra_period_time_init(90);
-    sierra_await_next_period();
+    init_period_time(90);
+    wait_for_next_period();
 
     assert(test_variable_008 == 4);
     test_variable_008 = 5;
 
-    sierra_period_time_init(0xFFFF);
-    sierra_delete_task();
+    init_period_time(0xFFFF);
+    task_delete();
 }
 
 static void task_3_code(void)
 {
-    sierra_period_time_init(80);
-    sierra_await_next_period();
+    init_period_time(80);
+    wait_for_next_period();
 
     assert(test_variable_008 == 3);
     test_variable_008 = 4;
 
-    sierra_period_time_init(0xFFFF);
-    sierra_delete_task();
+    init_period_time(0xFFFF);
+    task_delete();
 }
 
 static void task_4_code(void)
 {
-    sierra_period_time_init(70);
-    sierra_await_next_period();
+    init_period_time(70);
+    wait_for_next_period();
 
     assert(test_variable_008 == 2);
     test_variable_008 = 3;
 
-    sierra_period_time_init(0xFFFF);
-    sierra_delete_task();
+    init_period_time(0xFFFF);
+    task_delete();
 }
 
 static void task_5_code(void)
 {
-    sierra_period_time_init(60);
-    sierra_await_next_period();
+    init_period_time(60);
+    wait_for_next_period();
 
     assert(test_variable_008 == 1);
     test_variable_008 = 2;
 
-    sierra_period_time_init(0xFFFF);
-    sierra_delete_task();
+    init_period_time(0xFFFF);
+    task_delete();
 }
 
 static void task_6_code(void)
 {
     /* Shortest period -> expected to run first */
-    sierra_period_time_init(50);
-    sierra_await_next_period();
+    init_period_time(50);
+    wait_for_next_period();
 
     /* First periodic task sets the chain */
     test_variable_008 = 1;
 
-    sierra_period_time_init(0xFFFF);
-    sierra_delete_task();
+    init_period_time(0xFFFF);
+    task_delete();
 }
 
 /*
@@ -146,7 +145,7 @@ static void task_7_code(void)
         asm volatile ("nop");
     }
 
-    sierra_delete_task();
+    task_delete();
 }
 
 /* -------------------------------------------------------
@@ -163,19 +162,19 @@ int test_008_testing_time_management(void)
        - task_1..task_6 are periodic tasks with different period times.
        - task_7 is an idle-like task that waits until test completes.
     */
-    sierra_tsw_off();
+    tsw_off();
 
-    sierra_create_task(task_2, 6, READY_TASK_STATE, task_2_code, task_2_stack, STACK_SIZE);
-    sierra_create_task(task_3, 5, READY_TASK_STATE, task_3_code, task_3_stack, STACK_SIZE);
-    sierra_create_task(task_4, 4, READY_TASK_STATE, task_4_code, task_4_stack, STACK_SIZE);
-    sierra_create_task(task_5, 3, READY_TASK_STATE, task_5_code, task_5_stack, STACK_SIZE);
-    sierra_create_task(task_6, 2, READY_TASK_STATE, task_6_code, task_6_stack, STACK_SIZE);
-    sierra_create_task(task_7, 1, READY_TASK_STATE, task_7_code, task_7_stack, STACK_SIZE);
+    task_create(task_2, 6, READY_TASK_STATE, task_2_code, task_2_stack, STACK_SIZE);
+    task_create(task_3, 5, READY_TASK_STATE, task_3_code, task_3_stack, STACK_SIZE);
+    task_create(task_4, 4, READY_TASK_STATE, task_4_code, task_4_stack, STACK_SIZE);
+    task_create(task_5, 3, READY_TASK_STATE, task_5_code, task_5_stack, STACK_SIZE);
+    task_create(task_6, 2, READY_TASK_STATE, task_6_code, task_6_stack, STACK_SIZE);
+    task_create(task_7, 1, READY_TASK_STATE, task_7_code, task_7_stack, STACK_SIZE);
 
     /* Highest priority task created last (optional style) */
-    sierra_create_task(task_1, 7, READY_TASK_STATE, task_1_code, task_1_stack, STACK_SIZE);
+    task_create(task_1, 7, READY_TASK_STATE, task_1_code, task_1_stack, STACK_SIZE);
 
-    sierra_tsw_on();
+    tsw_on();
 
     /* Give enough time for all periods to elapse and tasks to finish */
    time_delay(delay_test_constant);

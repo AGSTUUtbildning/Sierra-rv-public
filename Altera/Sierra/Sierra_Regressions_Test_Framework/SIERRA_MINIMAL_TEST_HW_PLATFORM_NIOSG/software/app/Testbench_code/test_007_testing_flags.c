@@ -27,12 +27,7 @@ All code in this file are provided "as is" and without any warranties expressed 
 -----------------------------------------------------------------------*/
 
 #include "test_007_testing_flags.h"
-#include <altera_avalon_sierra_ker.h>
-#include <altera_avalon_sierra_io.h>
-#include <altera_avalon_sierra_regs.h>
-#include <altera_avalon_sierra_name.h>
-#include <altera_avalon_sierra_tcb.h>
-#include <altera_avalon_sierra_tcb.h>
+#include <sierra_ker.h>
 #include <system.h> // for use of SOPC base-address definitons
 #include <stdio.h>
 #include <io.h>
@@ -50,11 +45,11 @@ static volatile int shared_pas_variable=1;
 //----------------------------------------------------- Task code
 static void task_1_code()
 {
-	sierra_await_flag(7);   //wait for flags to be 0111 /* PN 200322 */
+	flag_wait(7);   //wait for flags to be 0111 /* PN 200322 */
 	assert(test_variable==4);  //for stopping test if tasks do not start in right order
         shared_pas_variable=0; // 0: passed, 1:faild
-	sierra_clear_flag(7);  //clear all flags for future use
-	sierra_delete_task();  //deletes the task for next test to use
+	flag_clear(7);  //clear all flags for future use
+	task_delete();  //deletes the task for next test to use
 
 
 }
@@ -62,22 +57,22 @@ static void task_1_code()
 
 static void task_2_code(void){
 
-	sierra_await_flag(4);  //wait for flags 0100
+	flag_wait(4);  //wait for flags 0100
 	assert(test_variable==3); //for stopping test if tasks do not start in right order
-	sierra_clear_flag(4);  //clear flags
+	flag_clear(4);  //clear flags
 	test_variable=4; //change test variable
-	sierra_set_flag(7);  //set flags 0111 /* PN 200322 */
-	sierra_delete_task();  //delete task for future tests
+	flag_set(7);  //set flags 0111 /* PN 200322 */
+	task_delete();  //delete task for future tests
 
 }
 //-----------------------------------------------------
 
 static void task_3_code(void){
 
-	sierra_await_flag(2); //wait for flags 0010
+	flag_wait(2); //wait for flags 0010
 	assert(test_variable==2);  //for stopping test if tasks do not start in right order
-	sierra_clear_flag(2);  //clear flags
-	sierra_delete_task();	//delete task for future tests
+	flag_clear(2);  //clear flags
+	task_delete();	//delete task for future tests
 
 }
 
@@ -85,46 +80,46 @@ static void task_3_code(void){
 
 static void task_4_code(void){
 
-	sierra_await_flag(1);  //wait for flag 0001
+	flag_wait(1);  //wait for flag 0001
 	assert(test_variable==1); //to stop the test if tasks start in wrong order
-	sierra_clear_flag(1);	//clear flags
-	sierra_delete_task();	//delete task
+	flag_clear(1);	//clear flags
+	task_delete();	//delete task
 }
 
 //-----------------------------------------------------
 
 static void task_5_code(void){
 	test_variable=1;  //set test variable
-	sierra_set_flag(1); //set flags 0001
-	sierra_delete_task(); //delete task
+	flag_set(1); //set flags 0001
+	task_delete(); //delete task
 }
 //-----------------------------------------------------
 
 static void task_6_code(void){
 	test_variable=2; //set test variable
-	sierra_set_flag(2); //set flags to 0010
-	sierra_delete_task(); 	//delete task
+	flag_set(2); //set flags to 0010
+	task_delete(); 	//delete task
 }
 //-----------------------------------------------------
 
 static void task_7_code(void){
 	test_variable=3; //set test variable
-	sierra_set_flag(4);  //set flags to 0100
-	sierra_delete_task(); //delete task for future tests
+	flag_set(4);  //set flags to 0100
+	task_delete(); //delete task for future tests
 }
 //-----------------------------------------------------
 
 int test_007_testing_flags(){
 	//Create all tasks for testing
-	sierra_tsw_off();
-	sierra_create_task(task_2, 6, READY_TASK_STATE, task_2_code, task_2_stack, STACK_SIZE);
-	sierra_create_task(task_3, 5, READY_TASK_STATE, task_3_code, task_3_stack, STACK_SIZE);
-	sierra_create_task(task_4, 4, READY_TASK_STATE, task_4_code, task_4_stack, STACK_SIZE);
-	sierra_create_task(task_5, 3, READY_TASK_STATE, task_5_code, task_5_stack, STACK_SIZE);
-	sierra_create_task(task_6, 2, READY_TASK_STATE, task_6_code, task_6_stack, STACK_SIZE);
-	sierra_create_task(task_7, 1, READY_TASK_STATE, task_7_code, task_7_stack, STACK_SIZE);
-	sierra_create_task(task_1, 7, READY_TASK_STATE, task_1_code, task_1_stack, STACK_SIZE);
-	sierra_tsw_on();
+	tsw_off();
+	task_create(task_2, 6, READY_TASK_STATE, task_2_code, task_2_stack, STACK_SIZE);
+	task_create(task_3, 5, READY_TASK_STATE, task_3_code, task_3_stack, STACK_SIZE);
+	task_create(task_4, 4, READY_TASK_STATE, task_4_code, task_4_stack, STACK_SIZE);
+	task_create(task_5, 3, READY_TASK_STATE, task_5_code, task_5_stack, STACK_SIZE);
+	task_create(task_6, 2, READY_TASK_STATE, task_6_code, task_6_stack, STACK_SIZE);
+	task_create(task_7, 1, READY_TASK_STATE, task_7_code, task_7_stack, STACK_SIZE);
+	task_create(task_1, 7, READY_TASK_STATE, task_1_code, task_1_stack, STACK_SIZE);
+	tsw_on();
 	time_delay(delay_test_constant);
 	return shared_pas_variable;
 }

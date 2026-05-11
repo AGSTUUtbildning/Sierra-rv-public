@@ -1,53 +1,60 @@
-260510 - v1.0	Första upplaga skapad i Linux. Fick kämpa en del för att få software att kompilera i windows 11. Risk för lustiga kompileringsinställningar...
-		- Se över makefiler och toolchain. 
-		- Rensa bort skräp. 
-		- Jämför med Nios V/m. Kompatibel mjukvara för båda?
+260511 - v1.0	Minimal version av Sierra för Nios V/g. Är kompatibel med samma testkod och Sierra IP som för Nios V/m
+		Stödjer loggning för sierra_logging 2. Allt får plats på 128 kb onchip-ram + 8 kb log_memory (onchip-ram).
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 ///                            Optimal memory linker regions                                    //
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-.bss        -> on-chip ram
-.entry      -> on-chip ram
-.exceptions -> on-chip ram
-.heap       -> on-chip ram
-.rodata     -> on-chip ram
-.rwdata     -> on-chip ram
-.stack      -> on-chip ram
-.text       -> on-chip ram
+.bss        -> onchip_memoy
+.entry      -> reset (Kan bara ändras i HW)
+.exceptions -> onchip_memoy
+.heap       -> onchip_memoy
+.rodata     -> onchip_memoy
+.rwdata     -> onchip_memoy
+.stack      -> onchip_memoy
+.text       -> onchip_memoy
 
 
+Allt kan finnas i sdram. Men rekomenderat att .exceptions bör vara uncachad (on-chip memory i detta fall är icke uncached).
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 ///                                          HW                                                 //
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
  * Nios V/g processor
+    - Data Cache          0  kb
+    - Instruction Cache   0  kb
+    - Peripheral Region A 128  kb (on-chip ram)
+    - Peripheral Region B 0 kb (IO)
     - Interrupt Mode Direct
     - Enabled Branch Prediction
     - Enabled Floaring point Unit
-    - on-chip ram            65 kb
-    - TMC instruction        0  kb
-    - TMC Data               0  kb 
+    - TMC instruction        0 kb
+    - TMC Data               0 kb 
+    - on-chip ram            128 kb
+    
 
- * JTAG_UART 
+---------- Peripheral Region A ---------------
 
- * Sierra IP
+ * on-chip ram
+    - 128 kb chacheble
+
 
 ---------- Peripheral Region B ---------------
 
  * log_memory
     - 8 kb
 
- * JTAG UART (jtag_uart_for_log)
+ * JTAG UART
 
+ * Sierra 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 ///                                           SW                                                //
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 Testar varje testfall en efter en i en loop. Ifall något testfall misslyckas stannar processor med en asser.
-Varje testfall skrivs ut ifall den lyckas eller misslyckas till UART terminalen.
+Varje testfall skrivs ut ifall den lyckas eller misslyckas till UART terminalen. Även nummer av loopar som har passerat.
 
 I test_setup.h är test hw specific testplatform inaktiv.
 SIERRA_FULL_TEST_HW_PLATFORM -> 0

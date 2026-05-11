@@ -74,8 +74,7 @@
 
 #include "test_013_manual_irq_trigger.h"
 
-#include <altera_avalon_sierra_ker.h>
-#include <altera_avalon_sierra_name.h>
+#include <sierra_ker.h>
 #include <assert.h>
 #include "test_setup.h"
 #include <system.h>
@@ -104,19 +103,19 @@ static volatile int test_var = 0;
 
 static void task_1_code(void)
 {
-    sierra_await_irq(0);
+    irq_wait(0);
     IOWR_32DIRECT(PIO_SIERRA_EXTRIQ_BASE, 0, 3); // Reset PIO to non-trigger state.
     test_var = 1;
 
-    sierra_await_irq(0);
+    irq_wait(0);
     IOWR_32DIRECT(PIO_SIERRA_EXTRIQ_BASE, 0, 3); // Reset PIO to non-trigger state.
     test_var = 2;
 
-    sierra_await_irq(0);
+    irq_wait(0);
     IOWR_32DIRECT(PIO_SIERRA_EXTRIQ_BASE, 0, 3); // Reset PIO to non-trigger state.
    shared_pas_variable = 0; // testen fungerar
 
-    sierra_delete_task();
+    task_delete();
 }
 
 
@@ -131,9 +130,9 @@ int test_013_manual_irq_trigger(void)
 
    IOWR_32DIRECT(PIO_SIERRA_EXTRIQ_BASE, 0, 3); // Set PIO to its none trigger state.
 
-   sierra_tsw_off();
-   sierra_create_task(task_1, 3, READY_TASK_STATE, task_1_code, task_1_stack, STACK_SIZE);
-   sierra_tsw_on();
+   tsw_off();
+   task_create(task_1, 3, READY_TASK_STATE, task_1_code, task_1_stack, STACK_SIZE);
+   tsw_on();
 
    time_delay(delay_test_constant);
    IOWR_32DIRECT(PIO_SIERRA_EXTRIQ_BASE, 0, 0); // Invoke PIO connected to extirq and start task_0

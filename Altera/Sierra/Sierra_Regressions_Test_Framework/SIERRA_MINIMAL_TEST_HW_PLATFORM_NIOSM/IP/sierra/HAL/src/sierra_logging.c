@@ -98,7 +98,7 @@
       while(1) {
           uint32_t index = sierra_log.tail;
           if (message_list[sierra_log.log_entry[index].message_code].aktive == 1){
-            ALT_LOG_PRINTF("Time: %d : ", sierra_log.log_entry[index].time_stamp);
+            ALT_LOG_PRINTF("Time: %lu ms : ", (unsigned long)sierra_ticks_to_ms(sierra_log.log_entry[index].time_stamp));
             uint32_t nr_vars = message_list[sierra_log.log_entry[index].message_code].nr_of_vars;
             if(nr_vars == 0)
               ALT_LOG_PRINTF(message_list[sierra_log.log_entry[index].message_code].str);
@@ -121,7 +121,7 @@
   #if SIERRA_LOGGING == 3
     save_log(message, time, var1, var2); // Save inte logging buffert.
   #elif SIERRA_LOGGING == 2 // Write to log_port
-    ALT_LOG_PRINTF("Time: %d : ", time);
+    ALT_LOG_PRINTF("Time: %lu ms : ", (unsigned long)sierra_ticks_to_ms(time));
     if(message_list[message].nr_of_vars == 0)
       ALT_LOG_PRINTF("%s", message_list[message].str);
     else if(message_list[message].nr_of_vars == 1)
@@ -129,7 +129,7 @@
     else if(message_list[message].nr_of_vars == 2)
       ALT_LOG_PRINTF(message_list[message].str, var1, var2);
   #elif SIERRA_LOGGING == 1 // Write into normal jtag UART.
-    printf("Time: %ld : ", time);
+    printf("Time: %lu ms : ", (unsigned long)sierra_ticks_to_ms(time));
     if(message_list[message].nr_of_vars == 0)
       printf("%s", message_list[message].str);
     else if(message_list[message].nr_of_vars == 1)
