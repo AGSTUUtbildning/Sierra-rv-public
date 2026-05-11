@@ -1,12 +1,13 @@
 /*!
- * \file       altera_avalon_sierra_regs.h
+ * \file       sierra_regs.h
  * \details    Hardware-specific register access.
- * \author     Lennart Lindh
- * \version    9.4.1
- * \date       2006
- * \history    Modified 2022:
- *             - Added macro for logging time register
- * \copyright  COPYRIGHT (C) 2006 - 2021 AGSTU AB
+ * \version    11.0.0
+ * \date       2026
+ * \history    Modified 2026:
+ *             - Removed sierra_backward_compatibility.h
+ *             - Changed logging system.
+ *             - RISC-V support
+ * \copyright  COPYRIGHT (C) 2006 - 2026 AGSTU AB
  *
  *             All rights reserved. AGSTU's source code is an unpublished work, and the use of a copyright notice does not imply otherwise.
  *             This source code contains confidential, trade-secret material of AGSTU AB. Any attempt at or participation in deciphering,
@@ -21,13 +22,13 @@
  *             designs and files) provided on this site.
  */
 
-#ifndef __ALTERA_AVALON_SIERRA_REGS_H__
-#define __ALTERA_AVALON_SIERRA_REGS_H__
+#ifndef ___SIERRA_REGS_H__
+#define ___SIERRA_REGS_H__
 
-#include <altera_avalon_sierra_name.h>
+#include <sierra_name.h>
 #include <io.h>
 
-// Altera HAL Macros for NIOS
+// HAL Macros for NIOS
 #define M_Sierra_HW_Version_reg             IORD_32DIRECT(SIERRA_RTOS_BASE,0);
 #define M_RD_SierraTime_base_reg            IORD_32DIRECT(SIERRA_RTOS_BASE,0x10);
 #define M_IOWR_SierraTime_base_reg(data)    IOWR_32DIRECT(SIERRA_RTOS_BASE,0x10, data); // Not yet verified!
@@ -39,21 +40,4 @@
 #define M_WD_SW_RESET_REGISTER(data)        IOWR_32DIRECT(SIERRA_RTOS_BASE,0x60, data);
 #define M_RD_TIME_LOGGING_REGISTER          IORD_32DIRECT(SIERRA_RTOS_BASE,0x70);
 
-/*
- * Memory mapped reigisters, can perhaps use in the most systems
- * For Native bus sizing
- * 0x80000000 = set bit 32 to bypass cache in NIOS
- */
- 
-//#include <altera_avalon_sierra_io.h>
-//volatile unsigned int *SierraVersion_reg    = (volatile unsigned int *) (0x80000000 | SIERRA_RTOS_BASE);
-//volatile unsigned int *SierraTime_base_reg_point  = (volatile unsigned int *) (0x80000000 | (SIERRA_RTOS_BASE+0x10) );
-//#define M_RD_Sierra_statusA_reg (volatile int*)(0x80000000|(SIERRA_RTOS_BASE+0x20)) 
-//volatile statusA_t    *CPUstatusA_reg       = (volatile statusA_t *)    (0x80000000 | (SIERRA_RTOS_BASE+0x20) );
-//volatile statusB_t    *CPUstatusB_reg       = (volatile statusB_t *)    (0x80000000 | (SIERRA_RTOS_BASE+0x30) );
-//volatile svc_t        *CPUsvc_request_reg   = (volatile svc_t *)        (0x80000000 | (SIERRA_RTOS_BASE+0x40) );
-//volatile ctrl_t       *CPUctrl_reg          = (volatile ctrl_t*)        (0x80000000 | (SIERRA_RTOS_BASE+0x50) );
-//volatile unsigned int *CPUctrl_sw_reset_reg  = (volatile unsigned int *) (0x80000000 | (SIERRA_RTOS_BASE+0x60) );
-//volatile  int *CPUctrl_sw_reset_reg  = (volatile  int *) (0x80000000 | (SIERRA_RTOS_BASE+0x50) );
-
-#endif /* __ALTERA_AVALON_SIERRA_REGS_H__ */
+#endif /* __SIERRA_REGS_H__ */

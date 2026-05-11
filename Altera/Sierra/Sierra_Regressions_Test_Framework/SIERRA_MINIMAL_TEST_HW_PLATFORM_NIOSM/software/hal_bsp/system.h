@@ -1,10 +1,10 @@
 /*
  * system.h - SOPC Builder system and BSP software package information
  *
- * Machine generated for CPU 'cpu' in SOPC Builder design 'sierra_nios_vm_64kb'
- * SOPC Builder design path: C:/AGSTU/Sierra_small_hw_64kb/SIERRA_MINIMAL_TEST_HW_PLATFORM_NIOSM/sierra_nios_vm_64kb.sopcinfo
+ * Machine generated for CPU 'cpu' in SOPC Builder design 'sierra_minimal_system_nios_v_m'
+ * SOPC Builder design path: C:/AGSTU/SIERRA_MINIMAL_TEST_HW_PLATFORM_NIOSM/sierra_minimal_system_nios_v_m.sopcinfo
  *
- * Generated: Tue May 05 07:38:30 CEST 2026
+ * Generated: Mon May 11 10:46:09 CEST 2026
  */
 
 /*
@@ -127,12 +127,10 @@
 #define ALT_DEVICE_FAMILY "MAX 10"
 #define ALT_ENHANCED_INTERRUPT_API_PRESENT
 #define ALT_IRQ_BASE NULL
-#define ALT_LOG_PORT "/dev/jtag_uart"
-#define ALT_LOG_PORT_BASE 0x40440
-#define ALT_LOG_PORT_DEV jtag_uart
-#define ALT_LOG_PORT_IS_JTAG_UART
-#define ALT_LOG_PORT_PRESENT
-#define ALT_LOG_PORT_TYPE ALTERA_AVALON_JTAG_UART
+#define ALT_LOG_PORT "/dev/null"
+#define ALT_LOG_PORT_BASE 0x0
+#define ALT_LOG_PORT_DEV null
+#define ALT_LOG_PORT_TYPE ""
 #define ALT_NUM_EXTERNAL_INTERRUPT_CONTROLLERS 0
 #define ALT_NUM_INTERNAL_INTERRUPT_CONTROLLERS 1
 #define ALT_NUM_INTERRUPT_CONTROLLERS 1
@@ -154,7 +152,7 @@
 #define ALT_STDOUT_IS_JTAG_UART
 #define ALT_STDOUT_PRESENT
 #define ALT_STDOUT_TYPE "altera_avalon_jtag_uart"
-#define ALT_SYSTEM_NAME "sierra_nios_vm_64kb"
+#define ALT_SYSTEM_NAME "sierra_minimal_system_nios_v_m"
 #define ALT_SYS_CLK_TICKS_PER_SEC ALT_CPU_TICKS_PER_SEC
 #define ALT_TIMESTAMP_CLK_TIMER_DEVICE_TYPE ALT_CPU_TIMER_DEVICE_TYPE
 
@@ -275,7 +273,7 @@
 #define ONCHIP_MEMOY_CONTENTS_INFO ""
 #define ONCHIP_MEMOY_DUAL_PORT 0
 #define ONCHIP_MEMOY_GUI_RAM_BLOCK_TYPE "AUTO"
-#define ONCHIP_MEMOY_INIT_CONTENTS_FILE "sierra_nios_vm_64kb_onchip_memoy"
+#define ONCHIP_MEMOY_INIT_CONTENTS_FILE "sierra_minimal_system_nios_v_m_onchip_memoy"
 #define ONCHIP_MEMOY_INIT_MEM_CONTENT 0
 #define ONCHIP_MEMOY_INSTANCE_ID "NONE"
 #define ONCHIP_MEMOY_IRQ -1

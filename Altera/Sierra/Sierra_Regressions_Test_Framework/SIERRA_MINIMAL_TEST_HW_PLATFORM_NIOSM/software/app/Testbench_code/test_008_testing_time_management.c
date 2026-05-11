@@ -38,7 +38,7 @@
 
 #include "test_008_testing_time_management.h"
 
-#include <altera_avalon_sierra_ker.h>
+#include <sierra_ker.h>
 #include <assert.h>
 
 #include "test_setup.h"

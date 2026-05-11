@@ -1,15 +1,17 @@
 /*!
- * \file       altera_avalon_sierra_io.h
+ * \file       sierra_io.h
  * \details    This file contains:
  *             - defines used by service call functions
  *             - CPU dependent structures
  *             - task control block structure (tcb)
  *             - structures for service call communication over CPU bus
  *             Encoding of service calls ( 6 bits; 15 downto 10)
- * \author     Lennart Lindh
- * \version    9.4.1
- * \date       2006
- * \copyright  COPYRIGHT (C) 2006 - 2021 AGSTU AB
+ * \version    11.0.0
+ * \date       2026
+ * \history    Modified 2026:
+ *             - Removed sierra_backward_compatibility.h
+ *             - Changed logging system.
+ *             - RISC-V support
  *
  *             All rights reserved. AGSTU's source code is an unpublished work, and the use of a copyright notice does not imply otherwise.
  *             This source code contains confidential, trade-secret material of AGSTU AB. Any attempt at or participation in deciphering,
@@ -24,8 +26,8 @@
  *             designs and files) provided on this site.
  */
 
-#ifndef __ALTERA_AVALON_SIERRA_IO_H__
-#define __ALTERA_AVALON_SIERRA_IO_H__
+#ifndef __SIERRA_IO_H__
+#define __SIERRA_IO_H__
 
 #include <stdint.h>
 
@@ -322,5 +324,5 @@ typedef union {
 }
 #endif
 
-#endif /* __ALTERA_AVALON_SIERRA_IO_H__ */
+#endif /* _SIERRA_IO_H__ */
 

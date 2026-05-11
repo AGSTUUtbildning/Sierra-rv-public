@@ -1,10 +1,10 @@
 /*
  * linker.x - Linker script
  *
- * Machine generated for CPU 'cpu' in SOPC Builder design 'sierra_nios_vm_64kb'
- * SOPC Builder design path: C:/AGSTU/Sierra_small_hw_64kb/SIERRA_MINIMAL_TEST_HW_PLATFORM_NIOSM/sierra_nios_vm_64kb.sopcinfo
+ * Machine generated for CPU 'cpu' in SOPC Builder design 'sierra_minimal_system_nios_v_m'
+ * SOPC Builder design path: C:/AGSTU/SIERRA_MINIMAL_TEST_HW_PLATFORM_NIOSM/sierra_minimal_system_nios_v_m.sopcinfo
  *
- * Generated: Tue May 05 07:38:30 CEST 2026
+ * Generated: Mon May 11 10:46:09 CEST 2026
  */
 
 /*
@@ -406,5 +406,5 @@ PROVIDE( __alt_stack_limit   = __alt_stack_base );
  * allocated to the heap.
  * Override this symbol to put the heap in a different memory.
  */
-__alt_heap_start = end;
-__alt_heap_limit = 0x30000;
+PROVIDE( __alt_heap_start    = end );
+PROVIDE( __alt_heap_limit    = 0x30000 );

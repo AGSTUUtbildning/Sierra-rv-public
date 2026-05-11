@@ -27,7 +27,7 @@ All code in this file are provided "as is" and without any warranties expressed 
 -----------------------------------------------------------------------*/
 
 #include "test_007_testing_flags.h"
-#include <altera_avalon_sierra_ker.h>
+#include <sierra_ker.h>
 #include <system.h> // for use of SOPC base-address definitons
 #include <stdio.h>
 #include <io.h>

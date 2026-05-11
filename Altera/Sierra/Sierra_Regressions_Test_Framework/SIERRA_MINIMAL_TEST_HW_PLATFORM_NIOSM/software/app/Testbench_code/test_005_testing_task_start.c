@@ -36,7 +36,7 @@
 
 #include "test_005_testing_task_start.h"
 
-#include <altera_avalon_sierra_ker.h>
+#include <sierra_ker.h>
 #include "test_setup.h"
 
 /* -------------------------------------------------------

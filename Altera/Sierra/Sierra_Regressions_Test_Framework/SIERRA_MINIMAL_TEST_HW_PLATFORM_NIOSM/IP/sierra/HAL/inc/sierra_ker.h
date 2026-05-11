@@ -1,5 +1,5 @@
 /*!
- * \file       altera_avalon_sierra_ker.h
+ * \file       sierra_ker.h
  * \details    This section describes the functionality of the Interrupt Manager. The interrupts are associated with an
  *             interrupt task, which is scheduled as an ordinary task in the system. External interrupt is connected to
  *             Sierras external IRQ pins. Each IRQ input is level sensitivity and active-high.
@@ -10,12 +10,12 @@
  *             If several external interrupts occur simultaneously, the task associated with highest interrupt pins will
  *             be the first one sent to the ready queue.
  *             \image rtf irq.png SW RTK and HW based Sierra solution, two low priority irq.
- * \author     Lennart Lindh
- * \version    10.03.15
- * \date       2006
- * \history    Modified 2022:
- *             - Moved SW version number to sierra.c
- *             - #include "sierra_backward_compatibility.h"
+ * \version    11.0.0
+ * \date       2026
+ * \history    Modified 2026:
+ *             - Removed sierra_backward_compatibility.h
+ *             - Changed logging system.
+ *             - RISC-V support
  * \copyright  COPYRIGHT (C) AGSTU AB
  *
  *             All rights reserved. AGSTU's source code is an unpublished work, and the use of a copyright notice does not imply otherwise.
@@ -31,8 +31,8 @@
  *             designs and files) provided on this site.
  */
 
-#ifndef __ALTERA_AVALON_SIERRA_KER_H__
-#define __ALTERA_AVALON_SIERRA_KER_H__
+#ifndef __SIERRA_KER_H__
+#define __SIERRA_KER_H__
 
 #include <stdint.h>
 #include "sierra.h"
@@ -63,8 +63,8 @@ extern "C" {
 /*------------------------------------------------------------------------
     DONT MAKE CHANGES BEYOND THIS LINE
 ------------------------------------------------------------------------*/
-#include <altera_avalon_sierra_tcb.h>  // Include TCB description
-#include <altera_avalon_sierra_io.h>   // Include RTU I/O description
+#include <sierra_tcb.h>  // Include TCB description
+#include <sierra_io.h>   // Include RTU I/O description
 
 //! Thread context (TCB) data
 extern tcb_t TCB_LIST[N_TASKS];
@@ -118,4 +118,4 @@ extern void sierra_await_irq(int IRQ_number);
 }
 #endif
 
-#endif /* __ALTERA_AVALON_SIERRA_KER_H__ */
+#endif /* __SIERRA_KER_H__ */

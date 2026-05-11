@@ -24,8 +24,8 @@
  *             designs and files) provided on this site.
  */
  
-#include <altera_avalon_sierra_io.h>
-#include <altera_avalon_sierra_ker.h>
+#include <sierra_io.h>
+#include <sierra_ker.h>
 #include <stdio.h>
 #include <sierra_logging.h>
 

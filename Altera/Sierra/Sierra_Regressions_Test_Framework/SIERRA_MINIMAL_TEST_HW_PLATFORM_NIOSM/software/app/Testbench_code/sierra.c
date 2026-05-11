@@ -28,7 +28,7 @@ All code in this file are provided "as is" and without any warranties expressed 
 -----------------------------------------------------------------------*/
 
 /* Sierra Driver Includes, hardware base adresses and also C libary */
-#include <altera_avalon_sierra_ker.h>
+#include <sierra_ker.h>
 #include <sierra_info.h>
 #include <system.h> // for use of SOPC base-address definitons
 #include <io.h>

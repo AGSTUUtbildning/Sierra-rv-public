@@ -41,7 +41,7 @@
       [info_sierra_task_preemted_task]    = {.str = "info  -> SIERRA_TASK -> Task %d preempted task %d.\n",                          .nr_of_vars = 2, .aktive = 1},
       [info_sierra_tsw_switching_on]      = {.str = "info  -> SIERRA_TSW  -> Task switching was turned on.\n",                       .nr_of_vars = 0, .aktive = 1},
       [info_sierra_tsw_switching_off]     = {.str = "info  -> SIERRA_TSW  -> Task switching was turned off.\n",                      .nr_of_vars = 0, .aktive = 1},
-      [info_sierra_task_next_requested]   = {.str = "info  -> SIERRA_TASK -> Next task requested, task %d moved to Running state.\n",  .nr_of_vars = 1, .aktive = 1},
+      [info_sierra_task_next_requested]   = {.str = "info  -> SIERRA_TASK -> Next task requested.\n",                                .nr_of_vars = 1, .aktive = 1},
       [info_sierra_irq_task_wait_irq]     = {.str = "info  -> SIERRA_IRQ  -> Task %d will now wait for IRQ %d.\n",                   .nr_of_vars = 2, .aktive = 1},
       [info_sierra_svc_task_wait_sem]     = {.str = "info  -> SIERRA_SVC  -> Task %d waits for semaphore %d.\n",                     .nr_of_vars = 2, .aktive = 1},
       [info_sierra_svc_task_take_sem]     = {.str = "info  -> SIERRA_SVC  -> Task %d takes semaphore %d.\n",                         .nr_of_vars = 2, .aktive = 1},

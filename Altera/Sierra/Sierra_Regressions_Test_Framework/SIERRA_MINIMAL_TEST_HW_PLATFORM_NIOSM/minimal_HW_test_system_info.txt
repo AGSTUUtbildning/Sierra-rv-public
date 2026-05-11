@@ -1,4 +1,7 @@
-OBS!!! Första version. Risk för att linker/Makefiler innehåller fel. WIP
+ * 260506 - v1.0	Första version. Skapad på Linux. Risk för kompileringsfel. WIP
+ * 260511 - v1.1	Stabil version kompilerad med Ashling i VS Code på Windows 11. På gränsen att app.elf ryms i minnet, men detta kan ökas i hårdvaran vid behov.
+			Stödjer ej loggning för tillfället, då den använder samma Sierra IP som Nios V/g. 
+			   - Annan typ av loggning för Nios V/m?
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 ///                                    memory linker regions                                    //
@@ -14,10 +17,10 @@ OBS!!! Första version. Risk för att linker/Makefiler innehåller fel. WIP
 .text       -> onchip_memory
 
 
-Denna version bygger på en hårdvara med en minnesstorlek på 65536 bytes (~65 kb). 
-Använd versionen av Sierra som ligger i IP-mappen.
-Regressionstest-applikationen tar upp ca 40 - 50 kb av minnet, beroende på inställningar i BSP. 
-Går säkert att optimera minnesstorleken med flaggor i make-filerna, eller utöka det i HW vid behov.
+Denna version bygger på en hårdvara med ett onchip-ram-minne med 65536 bytes (~65 kb, kan utökas vid behov). 
+Regressionstest-applikationen tar i nuläget upp 56 kb av minnet. Använd versionen av Sierra som ligger i IP-mappen.
+Nuvarande Sierra IP använder sierra_logging-filerna för Nios V/g, vilket ej stöds av denna hårdvara.
+Osäker på om logging är nödvändigt/relevant för Nios V/m? Alternativ för val av logging-metod?
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 ///                                          HW                                                 //
@@ -43,8 +46,8 @@ Testar varje testfall en efter en i en loop. Ifall något testfall misslyckas st
 Varje testfall skrivs ut ifall den lyckas eller misslyckas till UART terminalen. Även nummer av loopar som har passerat.
 Nummer av loopar som har passerat skrivs ut på den fysiska hex display på FPGA kortet också.
 
-I test_setup.h är test hw specific testplatform aktiv.
-SIERRA_FULL_TEST_HW_PLATFORM -> 1
+I test_setup.h är test hw specific testplatform inaktiv.
+SIERRA_FULL_TEST_HW_PLATFORM -> 0
 
 Testfall :
  - test 001   -> task creation
@@ -61,7 +64,7 @@ Testfall :
  - test 011   -> task blocking 2
  - test 012   -> task prioritet 2. Kontrollerar att verkligen prioriteten ändrades.
  - test 012b  -> task prioritet 3. Stress test. Måste ändra prioritet snabbt.
- - test 013*  -> Kontrollerar att manuell task switch via sierrans fysiska extriq port. 
+ - test 013*  -> Kontrollerar att manuell task switch via sierrans fysiska extriq port. (OBS. körs ej i denna hw)
  - test 014A  -> Testar mailbox_peek-funktionen.
  - test 014B  -> Testar mailbox_read-funktionen.
 

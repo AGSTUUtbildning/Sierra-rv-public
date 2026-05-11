@@ -24,7 +24,7 @@ All code in this file are provided "as is" and without any warranties expressed 
 -----------------------------------------------------------------------*/
 
 #include "test_012_testing_task_change_prio_same.h"
-#include <altera_avalon_sierra_ker.h>
+#include <sierra_ker.h>
 #include <system.h> // for use of SOPC base-address definitions
 #include <stdio.h>
 #include <io.h>

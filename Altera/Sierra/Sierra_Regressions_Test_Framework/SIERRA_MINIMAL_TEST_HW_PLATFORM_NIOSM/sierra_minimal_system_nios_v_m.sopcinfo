@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport
- name="sierra_nios_vm_64kb"
- kind="sierra_nios_vm_64kb"
+ name="sierra_minimal_system_nios_v_m"
+ kind="sierra_minimal_system_nios_v_m"
  version="1.0"
  fabric="QSYS">
  <!-- Format version 25.1 1129 (Future versions may contain additional information.) -->
- <!-- 2026.05.08.16:41:59 -->
+ <!-- 2026.05.11.10:42:43 -->
  <!-- A collection of modules and connections -->
  <parameter name="AUTO_GENERATION_ID">
   <type>java.lang.Integer</type>
-  <value>1778251319</value>
+  <value>1778488963</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -36,7 +36,7 @@
  </parameter>
  <parameter name="AUTO_DEVICE">
   <type>java.lang.String</type>
-  <value>10M50DAF484C7G</value>
+  <value>10M50DAF484C8G</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -45,7 +45,7 @@
  </parameter>
  <parameter name="AUTO_DEVICE_SPEEDGRADE">
   <type>java.lang.String</type>
-  <value>7</value>
+  <value>8</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -693,7 +693,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="AUTO_DEVICE">
    <type>java.lang.String</type>
-   <value>10M50DAF484C7G</value>
+   <value>10M50DAF484C8G</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -702,7 +702,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="AUTO_DEVICE_SPEEDGRADE">
    <type>java.lang.String</type>
-   <value>7</value>
+   <value>8</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -3191,7 +3191,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.INIT_CONTENTS_FILE</name>
-   <value>sierra_nios_vm_64kb_onchip_memoy</value>
+   <value>sierra_minimal_system_nios_v_m_onchip_memoy</value>
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.INIT_MEM_CONTENT</name>
@@ -3255,7 +3255,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.memoryInfo.MEM_INIT_FILENAME</name>
-   <value>sierra_nios_vm_64kb_onchip_memoy</value>
+   <value>sierra_minimal_system_nios_v_m_onchip_memoy</value>
   </assignment>
   <assignment>
    <name>postgeneration.simulation.init_file.param_name</name>
@@ -3467,7 +3467,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="autoInitializationFileName">
    <type>java.lang.String</type>
-   <value>sierra_nios_vm_64kb_onchip_memoy</value>
+   <value>sierra_minimal_system_nios_v_m_onchip_memoy</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -3542,7 +3542,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="derived_init_file_name">
    <type>java.lang.String</type>
-   <value>sierra_nios_vm_64kb_onchip_memoy.hex</value>
+   <value>sierra_minimal_system_nios_v_m_onchip_memoy.hex</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>

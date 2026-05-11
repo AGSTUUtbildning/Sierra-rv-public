@@ -32,7 +32,7 @@
 
 #include "test_012B_testing_task_change_prio_same.h"
 
-#include <altera_avalon_sierra_ker.h>
+#include <sierra_ker.h>
 #include <assert.h>
 #include "test_setup.h"
 

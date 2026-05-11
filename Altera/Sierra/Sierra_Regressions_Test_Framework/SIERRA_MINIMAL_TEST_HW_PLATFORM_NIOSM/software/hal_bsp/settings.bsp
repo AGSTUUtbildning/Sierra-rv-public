@@ -2,12 +2,12 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal2</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>May 5, 2026 7:38:29 AM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1777959509988</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>May 11, 2026 10:46:08 AM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1778489168776</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>.\</BspGeneratedLocation>
-        <BspSettingsFile>C:\AGSTU\Sierra_small_hw_64kb\SIERRA_MINIMAL_TEST_HW_PLATFORM_NIOSM\software\hal_bsp\settings.bsp</BspSettingsFile>
-        <SopcDesignFile>..\..\sierra_nios_vm_64kb.sopcinfo</SopcDesignFile>
-        <SystemFileHash>85c2794992b9267dab1e41b59812eb9b5271981db441baab43ddb7e4195c72</SystemFileHash>
+        <BspSettingsFile>C:\AGSTU\SIERRA_MINIMAL_TEST_HW_PLATFORM_NIOSM\software\hal_bsp\settings.bsp</BspSettingsFile>
+        <SopcDesignFile>..\..\sierra_minimal_system_nios_v_m.sopcinfo</SopcDesignFile>
+        <SystemFileHash>80e4eb20201222273beb30b482e4745e1397e986c4de7b748c91c07d8f45ff</SystemFileHash>
         <JdiFile>default</JdiFile>
         <Cpu>cpu</Cpu>
         <SchemaVersion>1.9</SchemaVersion>
@@ -231,7 +231,7 @@
                 <SettingName>hal.log_port</SettingName>
                 <Identifier>ALT_LOG_ENABLE</Identifier>
                 <Type>UnquotedString</Type>
-                <Value>jtag_uart</Value>
+                <Value>none</Value>
                 <DefaultValue>none</DefaultValue>
                 <DestinationFile>public_mk_define</DestinationFile>
                 <Description>Slave descriptor of debug logging character-mode device. If defined, it enables extra debug messages in the HAL source. This setting is used by the ALT_LOG_PORT family of defines in system.h.</Description>
@@ -591,7 +591,7 @@
                 <SettingName>altera_avalon_jtag_uart_driver.enable_jtag_uart_ignore_fifo_full_error</SettingName>
                 <Identifier>ALTERA_AVALON_JTAG_UART_IGNORE_FIFO_FULL_ERROR</Identifier>
                 <Type>BooleanDefineOnly</Type>
-                <Value>true</Value>
+                <Value>false</Value>
                 <DefaultValue>false</DefaultValue>
                 <DestinationFile>public_mk_define</DestinationFile>
                 <Description>Enable JTAG UART driver to recover when host is inactive causing buffer to full without returning error. Printf will not fail with this recovery.</Description>

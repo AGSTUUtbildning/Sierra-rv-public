@@ -26,7 +26,7 @@
 #ifndef __SIERRA_H__
 #define __SIERRA_H__
 
-#include <altera_avalon_sierra_io.h>
+#include <sierra_io.h>
 #include <sierra_info.h>
 
 #ifdef __cplusplus
@@ -61,6 +61,12 @@ extern sw_version_union sierra_SW_driver_version(void);
  *  \return 32-bit integer with time base information.
  */
 extern uint32_t sierra_time_base_reg(void);
+
+/*! \brief Converts Sierra hardware tick counts to milliseconds.
+ *  \param ticks Sierra time logging register value.
+ *  \return Time in milliseconds based on the last sierra_set_timebase() call.
+ */
+extern uint32_t sierra_ticks_to_ms(uint32_t ticks);
 
 /*! \brief   Sets the internal clock-tick timebase for the Sierra.
  *  \details \par Description

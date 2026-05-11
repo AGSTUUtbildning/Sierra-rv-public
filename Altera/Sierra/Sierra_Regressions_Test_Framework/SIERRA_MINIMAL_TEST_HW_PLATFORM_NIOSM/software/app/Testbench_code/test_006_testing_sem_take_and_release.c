@@ -37,7 +37,7 @@
 
 #include "test_006_testing_sem_take_and_release.h"
 
-#include <altera_avalon_sierra_ker.h>
+#include <sierra_ker.h>
 
 #include <system.h>
 #include <stdio.h>

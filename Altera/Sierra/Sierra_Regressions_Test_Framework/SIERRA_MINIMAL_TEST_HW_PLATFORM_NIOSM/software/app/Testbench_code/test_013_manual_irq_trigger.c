@@ -74,7 +74,7 @@
 
 #include "test_013_manual_irq_trigger.h"
 
-#include <altera_avalon_sierra_ker.h>
+#include <sierra_ker.h>
 #include <assert.h>
 #include "test_setup.h"
 #include <system.h>

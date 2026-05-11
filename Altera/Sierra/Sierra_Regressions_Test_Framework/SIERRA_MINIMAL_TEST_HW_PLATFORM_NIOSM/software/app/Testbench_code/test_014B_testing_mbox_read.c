@@ -29,8 +29,8 @@
 
 #include "test_014B_testing_mbox_read.h"
 
-#include <altera_avalon_sierra_ker.h>
-#include <altera_avalon_sierra_name.h>
+#include <sierra_ker.h>
+#include <sierra_name.h>
 #include <assert.h>
 #include <stdint.h>
 #include <string.h>

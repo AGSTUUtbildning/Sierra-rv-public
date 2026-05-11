@@ -33,7 +33,7 @@ Only the tests that do not require the dedicated hardware platform are executed.
    Task stack size
 ------------------------------------------------------- */
 #ifndef STACK_SIZE
-#define STACK_SIZE 2048
+#define STACK_SIZE 1024
 #endif
 
 /* -------------------------------------------------------

@@ -45,11 +45,11 @@
 /*!----------------------------------------------------------------------------
     Include Sierra driver files specific to Altera
 -----------------------------------------------------------------------------*/
-#include <altera_avalon_sierra_ker.h>
-#include <altera_avalon_sierra_tcb.h>
-#include <altera_avalon_sierra_regs.h>
-#include <altera_avalon_sierra_io.h>
-#include <altera_avalon_sierra_name.h>
+#include <sierra_ker.h>
+#include <sierra_tcb.h>
+#include <sierra_regs.h>
+#include <sierra_io.h>
+#include <sierra_name.h>
 //#include <priv/alt_legacy_irq.h> NIOS V
 #include <sierra_info.h>
 

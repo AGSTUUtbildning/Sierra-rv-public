@@ -25,7 +25,7 @@
 #define task_delete() sierra_delete_task()
 #define task_change_prio(taskID, priority) sierra_change_task_prio(taskID, priority)
 #define change_task_prio(taskID, priority) sierra_change_task_prio(taskID, priority)
-#define task_yield(void) sierra_yield_task(void)
+#define task_yield() sierra_yield_task()
 
 #define init_period_time(per_time) sierra_period_time_init(per_time)
 #define period_time_init(per_time) sierra_period_time_init(per_time)

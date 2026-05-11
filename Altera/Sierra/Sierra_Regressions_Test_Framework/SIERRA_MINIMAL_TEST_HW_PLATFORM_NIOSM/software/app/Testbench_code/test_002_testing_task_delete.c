@@ -40,7 +40,7 @@
 
 #include "test_002_testing_task_delete.h"
 
-#include <altera_avalon_sierra_ker.h>
+#include <sierra_ker.h>
 #include <assert.h>
 #include "test_setup.h"
 

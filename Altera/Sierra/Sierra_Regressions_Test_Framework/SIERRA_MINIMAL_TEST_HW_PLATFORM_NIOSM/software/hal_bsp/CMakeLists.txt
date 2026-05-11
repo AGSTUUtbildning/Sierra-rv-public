@@ -2,9 +2,10 @@ cmake_minimum_required(VERSION 3.13)
 
 include(toolchain.cmake)
 
-set(CMAKE_ASM_COMPILER ${CMAKE_C_COMPILER})
+project(bsp)
 
-project(bsp LANGUAGES C ASM)
+enable_language(ASM)
+enable_language(C)
 
 set(BspLibraryName "hal2_bsp" CACHE STRING "The BSP library name.")
 set(BspLinkerScript "${CMAKE_CURRENT_SOURCE_DIR}/linker.x" CACHE STRING
@@ -12,12 +13,6 @@ set(BspLinkerScript "${CMAKE_CURRENT_SOURCE_DIR}/linker.x" CACHE STRING
 
 # HAL library
 add_library("${BspLibraryName}" STATIC "")
-
-target_compile_options("${BspLibraryName}" PRIVATE
-    -Os
-    -ffunction-sections
-    -fdata-sections
-)
 
 target_include_directories("${BspLibraryName}" PUBLIC
     .
@@ -128,12 +123,6 @@ target_sources("${BspLibraryName}"
     PUBLIC
         HAL/inc/alt_niosv_int_mode.h
         HAL/inc/alt_types.h
-        HAL/inc/altera_avalon_sierra_io.h
-        HAL/inc/altera_avalon_sierra_ker.h
-        HAL/inc/altera_avalon_sierra_name.h
-        HAL/inc/altera_avalon_sierra_regs.h
-        HAL/inc/altera_avalon_sierra_tcb.h
-        HAL/inc/altera_avalon_sierra_tcb_offset.h
         HAL/inc/intel_fpga_api.h
         HAL/inc/intel_fpga_platform.h
         HAL/inc/intel_fpga_platform_api.h
@@ -159,9 +148,15 @@ target_sources("${BspLibraryName}"
         HAL/inc/sierra_backward_compatibility.h
         HAL/inc/sierra_extension/sierra_mbox.h
         HAL/inc/sierra_info.h
+        HAL/inc/sierra_io.h
+        HAL/inc/sierra_ker.h
         HAL/inc/sierra_logging.h
+        HAL/inc/sierra_name.h
+        HAL/inc/sierra_regs.h
         HAL/inc/sierra_sem.h
         HAL/inc/sierra_task.h
+        HAL/inc/sierra_tcb.h
+        HAL/inc/sierra_tcb_offset.h
         HAL/inc/sierra_time.h
         HAL/inc/sys/alt_alarm.h
         HAL/inc/sys/alt_cache.h
