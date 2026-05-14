@@ -3,7 +3,6 @@
  * \details    This file contains:
  *             - Mapping functions names of previous version for backward compatibility.
  *             - New names written for Sierras internal functions and commented out, if decided eligible in future development.
- * \author     Eddie Malm
  * \version    10.03.15
  * \date       2022
  * \copyright  COPYRIGHT (C) AGSTU AB

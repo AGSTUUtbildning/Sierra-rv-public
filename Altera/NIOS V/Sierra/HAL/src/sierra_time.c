@@ -23,9 +23,9 @@
  *             designs and files) provided on this site.
  */
 
-#include <altera_avalon_sierra_io.h>
-#include <altera_avalon_sierra_ker.h>
-#include "sierra_logging.h"
+#include <sierra_io.h>
+#include <sierra_ker.h>
+#include <sierra_logging.h>
 
 /*!-----------------------------------------------------------------------
   Time management
@@ -34,20 +34,21 @@
 //----------------------------------------------------------------------------
 void sierra_period_time_init(int per_time)
 {
+  // Logs data when a designated time period is set for a particular task
+  sierra_logging_full(info_sierra_time_period, sierra_get_current_time(), RUNNING_TASKID, per_time);
+
   svc_t svc;
   svc.init_period_time.type =  sierra_init_period_time;
   svc.init_period_time.period =  per_time;
   handle_service_call(&svc);
 
-  // Logs data when a designated time period is set for a particular task
-  SIERRA_LOG_INFO("SIERRA_TIME, Task %d has time period %d", RUNNING_TASKID, per_time);
 }
 
 //----------------------------------------------------------------------------
 task_periodic_start_union sierra_await_next_period(void)
 {
   // Logs data when a task is suspended until the start of the next time period
-  SIERRA_LOG_INFO("SIERRA_TIME, Task %d is suspended until next time period.", RUNNING_TASKID);
+  sierra_logging_medium(info_sierra_time_suspended, sierra_get_current_time(), RUNNING_TASKID);
 
   // Silently disable task switching
   extern void sierra_tsw_off_internal(void);
@@ -86,7 +87,7 @@ void sierra_delay_task(int delay_time)
   NEXT_TASKID = constant_task_mask & statusA.statusA_t.svc_return;
 
   // Logs data when a task is delayed with a specified number of ticks
-  SIERRA_LOG_INFO("SIERRA_TIME, Task %d will be delayed with %d ticks.", NEXT_TASKID, delay_time);
+  sierra_logging_full(info_sierra_time_delay, sierra_get_current_time(), NEXT_TASKID, delay_time);
 
   taskswitch; // perform manual contextswitch
 }

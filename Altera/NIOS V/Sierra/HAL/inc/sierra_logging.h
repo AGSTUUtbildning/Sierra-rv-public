@@ -4,9 +4,8 @@
  *             - logging macros and functions for the Sierra logging interface.
  *             - the user can choose logging level by enabling the desired logging macro.
  *             - the maximum number of characters for each level is 100.
- * \author     Alexander Eriksson & Jens Lind
  * \version    1.0
- * \date       2022
+ * \date       2026
  * \copyright  COPYRIGHT (C) AGSTU AB
  *
  *             All rights reserved. AGSTU's source code is an unpublished work, and the use of a copyright notice does not imply otherwise.
@@ -27,82 +26,80 @@
 
 #include <stdio.h>
 
-/*!
- * #SIERRA_LOGGING macro turns on/off the logging interface.
- * The user can additionally add timestamps from sierra_get_current_time() to the log by setting the macro to 2 or higher.
- */
+
+// Sierra logging = 0 är att logging är avstänkt. Logg funktionerna i koden optimeras bort. 
+// Sierra logging = 1 är inte rekomenderat. Med vanlig printf men jtag UART blir väldigt lätt överbelastad. Rekomenderat att använda pooling till jtag UART.
+// Sierra logging = 2 är Rekomenderat använder printf gjord för logging och skriver till jtag UART som angivits i BSP för logging. Kan också överbelasta jtag UART bufferten.
+// sierra logging = 3 special logging som kräver sierra test platform. Mindre belastning och sparar logg tillfälligt i ett separat minne. 
+
 #define SIERRA_LOGGING 0
 
 #if SIERRA_LOGGING > 0
 
-#define SIERRA_MAX_LOG_CHARACTERS 100
+  // Struct for mlogging message list.
+  typedef struct {
+      const char* str;
+      uint8_t nr_of_vars;
+      uint8_t aktive;
+  } message_list_struct;
 
-/*!
- * #SIERRA_LOG_INFO is the default level for the logging interface.
- * The macro logs events during normal execution of a library.
- * The level provides descriptive data of how the system operates.
- */
-#define SIERRA_LOG_INFO(...)\
-{\
-  char formatMsg[SIERRA_MAX_LOG_CHARACTERS];\
-  sprintf(formatMsg, __VA_ARGS__);\
-  sierra_log_info(formatMsg);\
-}
+  // List of possible logging messages.
+  // When adding a new possible message add its id here.
+  typedef enum {
+      info_sierra_time_timebase_set = 0,
+      warn_sierra_time_timebase_exc,
+      info_sierra_task_preemted_task,
+      info_sierra_tsw_switching_on,
+      info_sierra_tsw_switching_off,
+      info_sierra_task_next_requested,
+      info_sierra_irq_task_wait_irq,
+      info_sierra_svc_task_wait_sem,
+      info_sierra_svc_task_take_sem,
+      info_sierra_svc_task_releas_sem,
+      info_sierra_svc_wait_flag_set,
+      info_sierra_svc_task_set_flag,
+      info_sierra_svc_task_clear_flag,
+      info_sierra_task_create_w_p_s,
+      info_sierra_task_started,
+      info_sierra_task_blocking,
+      info_sierra_task_deleted,
+      info_sierra_task_change_prio,
+      info_sierra_task_yields,
+      info_sierra_time_period,
+      info_sierra_time_suspended,
+      info_sierra_time_delay,
 
-/*!
- * #SIERRA_LOG_WARN alerts the user about abnormal events and potential problems.
- * The macro logs incidents prior to execution and during runtime.
- * The system will continue to operate as normal even after a warning is generated.
- * A warning will prompt the user to take action before it turns into an error.
- */
-#define SIERRA_LOG_WARN(...)\
-{\
-  char formatMsg[SIERRA_MAX_LOG_CHARACTERS];\
-  sprintf(formatMsg, __VA_ARGS__);\
-  sierra_log_warn(formatMsg);\
-}
+      log_count // Number of logging messages.
+  }log_id;
 
-/*!
- * #SIERRA_LOG_ERROR alerts the user that the system has encountered an error from which it cannot recover.
- * Error messages notify the user of problems that need to be addressed immediately.
- */
-#define SIERRA_LOG_ERROR(...)\
-{\
-  char formatMsg[SIERRA_MAX_LOG_CHARACTERS];\
-  sprintf(formatMsg, __VA_ARGS__);\
-  sierra_log_error(formatMsg);\
-}
+  // Hardcoded list of messages.
+  extern const message_list_struct message_list[]; // prototype see sierra_logging.c
 
-#else
+  /*! \brief   Logging funktion. Diffrent logic depending on SIERRA_LOGGING flag.
+  *  \details \par Description
+  *           SIERRA_LOGGING -> 0: This function is optimized away.
+  *           SIERRA_LOGGING -> 1: Will use printf to print the logging message into jtag UART.
+  *           SIERRA_LOGGING -> 2: Will use ALT_LOG_PRINTF. Need to set log_port in BSP To work properly.
+  *           SIERRA_LOGGING -> 3: Save logg information in a separate memory to be printed out later. 
+  *                                Reduce load of logging and cthe logg will be crach protected. 
+  *                                Logg need to be printed out later. Max 511 instances. 
+  */
+  void sierra_logging(uint32_t message, uint32_t time, uint32_t var1, uint32_t var2);
 
-///@{
-//! Defines empty macros if SIERRA_LOGGING is undefined
-#define SIERRA_LOG_INFO(...)
-#define SIERRA_LOG_WARN(...)
-#define SIERRA_LOG_ERROR(...)
-///@}
+  void sierra_print_log(void);
 
-#endif // 
-
-//! \brief Prints logging status.
-extern void sierra_print_logging_status(void);
-
-/*! \brief   Prints informative messages.
- *  \details \par Description
- *           The function prints data from Sierra functions during normal execution of a library.
- */
-extern void sierra_log_info(const char* szMsg);
-
-/*! \brief   Prints warning messages.
- *  \details \par Description
- *           This function prints metadata from functions that encounter abnormal activity.
- */
-extern void sierra_log_warn(const char* szMsg);
-
-/*! \brief   Prints error messages.
- *  \details \par Description
- *           This function prints metadata from functions that have encountered an erroneous event.
- */
-extern void sierra_log_error(const char* szMsg);
+  #else // If SIERRA_LOGGING is 0. Out optimize sierra_logging and sierra_print_log.
+    #define sierra_logging(message, time, var1, var2) ((void) 0)
+    #define sierra_print_log() ((void) 0)
+  #endif
+  
+  // Sierra_logging but with no extra vars.
+  #define sierra_logging_short(message, time)            (sierra_logging(message, time, 0, 0))
+  
+  // Sierra_logging with one extra var.
+  #define sierra_logging_medium(message, time, var1)     (sierra_logging(message, time, var1, 0))
+  
+  // Sierra_logging full with two vars.
+  #define sierra_logging_full(message, time, var1, var2) (sierra_logging(message, time, var1, var2))
 
 #endif /* __SIERRA_LOGGING_H__ */

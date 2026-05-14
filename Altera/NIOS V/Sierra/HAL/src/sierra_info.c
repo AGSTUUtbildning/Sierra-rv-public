@@ -1,14 +1,11 @@
 /*!
  * \file       sierra_info.c
  * \details    Sierra information access functions
- * \author     Lennart Lindh
- * \version    10.03.15
- * \date       2006
- * \history    Modified 2022:
- *             - Function names changed to fit the prefix format
- *             - Added function sierra_printf_version()
- *             - sierra_task_info, changed printing of task numbers from %zu to %u and casting of variable i to uint
- *             - sierra_task info, added char array for printing task state in words ("Blocked") instead of numbers ("2") 
+ * \version    11.00.00
+ * \date       2026
+ * \history    Modified 2026:
+ *             - Removed sierra_backward_compatibility.h
+ *             - Changed logging system.
  * \copyright  COPYRIGHT (C) AGSTU AB
  *
  *             All rights reserved. AGSTU's source code is an unpublished work, and the use of a copyright notice does not imply otherwise.
@@ -24,9 +21,9 @@
  *             designs and files) provided on this site.
  */
 
-#include <altera_avalon_sierra_io.h>
-#include <altera_avalon_sierra_ker.h>
-#include <altera_avalon_sierra_tcb.h>
+#include <sierra_io.h>
+#include <sierra_ker.h>
+#include <sierra_tcb.h>
 #include <sierra.h>
 #include <stdio.h>
 
