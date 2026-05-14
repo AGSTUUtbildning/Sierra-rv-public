@@ -2,14 +2,12 @@
  * \file       sierra.h
  * \details    This file contains:
  *             - the Sierra service calls
- * \author     Lennart Lindh
- * \version    10.03.15
- * \date       2006
- * \history    Modified 2022:
- *             - Included sierra_info.h
- *             - Updated brief/description of sierra_SW_driver_version
- *             - Added sierra_ prefix for external functions
- *             - Added new logging timer function
+ * \version    11.0.0
+ * \date       2026
+ * \history    Modified 2026:
+ *             - Removed sierra_backward_compatibility.h
+ *             - Changed logging system.
+ *             - RISC-V support
  * \copyright  COPYRIGHT (C) AGSTU AB
  *
  *             All rights reserved. AGSTU's source code is an unpublished work, and the use of a copyright notice does not imply otherwise.
@@ -28,7 +26,7 @@
 #ifndef __SIERRA_H__
 #define __SIERRA_H__
 
-#include <altera_avalon_sierra_io.h>
+#include <sierra_io.h>
 #include <sierra_info.h>
 
 #ifdef __cplusplus
@@ -86,6 +84,12 @@ extern void sierra_set_timebase(uint32_t hex);
  *  \return  32-bit integer with tick count information.
  */
 extern uint32_t sierra_get_current_time(void);
+
+/*! \brief Converts Sierra hardware tick counts to milliseconds.
+ *  \param ticks Sierra time logging register value.
+ *  \return Time in milliseconds based on the last sierra_set_timebase() call.
+ */
+extern uint32_t sierra_ticks_to_ms(uint32_t ticks);
 
 /*! \brief   Initializes all TCB's and CPUctrl_reg, also reset sierra HW.
  *  \details \par Description

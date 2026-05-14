@@ -19,11 +19,12 @@
  *
  *             Idle task must be created with task id 0 and lowest priority (0).
  *
- * \author     Lennart Lindh
- * \version    10.03.15
- * \date       2006
- * \history    Modified 2022:
- *             - Added sierra_ prefix for external functions
+ * \version    11.0.0
+ * \date       2026
+ * \history    Modified 2026:
+ *             - Removed sierra_backward_compatibility.h
+ *             - Changed logging system.
+ *             - RISC-V support
  * \copyright  COPYRIGHT (C) AGSTU AB
  *
  *             All rights reserved. AGSTU's source code is an unpublished work, and the use of a copyright notice does not imply otherwise.

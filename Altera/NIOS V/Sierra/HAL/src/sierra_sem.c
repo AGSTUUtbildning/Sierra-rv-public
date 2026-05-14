@@ -3,12 +3,11 @@
  * \details    This file contains:
  *             - Semaphore handling
  *             - Flag handling
- * \author     Lennart Lindh
- * \version    10.03.15
+ * \version    11.00.00
  * \date       2006
- * \history    Modified 2022:
- *             - Added sierra_ prefix for external functions.
- *             - Added probes for the logging interface
+ * \history    Modified 2026:
+ *             - Removed sierra_backward_compatibility.h
+ *             - Changed logging system.
  * \copyright  COPYRIGHT (C) AGSTU AB
  *
  *             All rights reserved. AGSTU's source code is an unpublished work, and the use of a copyright notice does not imply otherwise.
@@ -24,10 +23,10 @@
  *             designs and files) provided on this site.
  */
  
-#include <altera_avalon_sierra_io.h>
-#include <altera_avalon_sierra_ker.h>
+#include <sierra_io.h>
+#include <sierra_ker.h>
 #include <stdio.h>
-#include "sierra_logging.h"
+#include <sierra_logging.h>
 
 #include "sierra_sem.h"
 
@@ -47,18 +46,18 @@ void sierra_take_sem(int semID)
   const uint32_t retval = status.statusA_t.svc_return & 0x3f;
   if (0 != (retval & 0x1))
   {
-  	SIERRA_LOG_INFO("SIERRA_SVC, Task %d waits for semaphore %d.", RUNNING_TASKID, semID);
+  	sierra_logging_full(info_sierra_svc_task_wait_sem, sierra_get_current_time(), RUNNING_TASKID, semID);
     NEXT_TASKID = constant_task_mask & (retval >> 1);
     taskswitch; // perform manual contextswitch
   }
 
-  SIERRA_LOG_INFO("SIERRA_SVC, Task %d takes semaphore %d.", RUNNING_TASKID, semID);
+  sierra_logging_full(info_sierra_svc_task_take_sem, sierra_get_current_time(), RUNNING_TASKID, semID);
 }
 
 //----------------------------------------------------------------------------
 void sierra_release_sem(int semID)
 {
-  SIERRA_LOG_INFO("SIERRA_SVC, Task %d releasing semaphore %d.", RUNNING_TASKID, semID);
+  sierra_logging_full(info_sierra_svc_task_releas_sem, sierra_get_current_time(), RUNNING_TASKID, semID);
 
   svc_t svc;
   svc.release_sem.type = sierra_sem_release;
@@ -97,7 +96,7 @@ void sierra_await_flag(int flag_mask)
   const uint32_t retval = status.statusA_t.svc_return & 0x3f;
   if (0 != (retval & 0x1))
   {
-    SIERRA_LOG_INFO("SIERRA_SVC, Task %d waits for flag(s) 0x%04X to be set.", RUNNING_TASKID, flag_mask);
+    sierra_logging_full(info_sierra_svc_wait_flag_set, sierra_get_current_time(), RUNNING_TASKID, flag_mask);
     NEXT_TASKID = constant_task_mask & (retval >> 1);
     taskswitch; // perform manual contextswitch
   }
@@ -106,7 +105,7 @@ void sierra_await_flag(int flag_mask)
 //----------------------------------------------------------------------------
 void sierra_set_flag(int flag_mask)
 {
-  SIERRA_LOG_INFO("SIERRA_SVC, Task %d setting flag(s) 0x%04X.", RUNNING_TASKID, flag_mask);
+  sierra_logging_full(info_sierra_svc_task_set_flag, sierra_get_current_time(), RUNNING_TASKID, flag_mask);
 
   svc_t svc;
   svc.flag_set.type = sierra_flag_set;
@@ -117,7 +116,7 @@ void sierra_set_flag(int flag_mask)
 //----------------------------------------------------------------------------
 void sierra_clear_flag(int flag_mask)
 {
-  SIERRA_LOG_INFO("SIERRA_SVC, Task %d clearing flag(s) 0x%04X.", RUNNING_TASKID, flag_mask);
+  sierra_logging_full(info_sierra_svc_task_clear_flag, sierra_get_current_time(), RUNNING_TASKID, flag_mask);
 
   svc_t svc;
   svc.flag_clear.type = sierra_flag_clear;

@@ -24,11 +24,12 @@
  *
  *             If the Sierra is configured to support 4 flag bits, the flag bits can be used in 2^4-1 (=15) different combinations. 
  *
- * \author     Lennart Lindh
- * \version    10.03.15
- * \date       2006
- * \history    Modified 2022:
- *             - Added sierra_ prefix for external functions.
+ * \version    11.0.0
+ * \date       2026
+ * \history    Modified 2026:
+ *             - Removed sierra_backward_compatibility.h
+ *             - Changed logging system.
+ *             - RISC-V support
  * \copyright  COPYRIGHT (C) AGSTU AB
  *
  *             All rights reserved. AGSTU's source code is an unpublished work, and the use of a copyright notice does not imply otherwise.
