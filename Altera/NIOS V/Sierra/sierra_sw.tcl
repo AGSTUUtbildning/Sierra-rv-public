@@ -46,7 +46,7 @@ add_sw_property include_source HAL/inc/sierra_name.h
 add_sw_property include_source HAL/inc/sierra_regs.h
 add_sw_property include_source HAL/inc/sierra_tcb.h
 add_sw_property include_source HAL/inc/sierra.h
-add_sw_property include_source HAL/inc/sierra_backward_compatibility.h
+add_sw_property include_source HAL/inc/sierra_compatibility.h
 add_sw_property include_source HAL/inc/sierra_info.h
 add_sw_property include_source HAL/inc/sierra_logging.h
 add_sw_property include_source HAL/inc/sierra_sem.h

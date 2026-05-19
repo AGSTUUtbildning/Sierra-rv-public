@@ -35,7 +35,7 @@
 void sierra_period_time_init(int per_time)
 {
   // Logs data when a designated time period is set for a particular task
-  sierra_logging_full(info_sierra_time_period, sierra_get_current_time(), RUNNING_TASKID, per_time);
+  sierra_logging_full(info_sierra_time_period, RUNNING_TASKID, per_time);
 
   svc_t svc;
   svc.init_period_time.type =  sierra_init_period_time;
@@ -48,7 +48,7 @@ void sierra_period_time_init(int per_time)
 task_periodic_start_union sierra_await_next_period(void)
 {
   // Logs data when a task is suspended until the start of the next time period
-  sierra_logging_medium(info_sierra_time_suspended, sierra_get_current_time(), RUNNING_TASKID);
+  sierra_logging_medium(info_sierra_time_suspended, RUNNING_TASKID);
 
   // Silently disable task switching
   extern void sierra_tsw_off_internal(void);
@@ -87,7 +87,7 @@ void sierra_delay_task(int delay_time)
   NEXT_TASKID = constant_task_mask & statusA.statusA_t.svc_return;
 
   // Logs data when a task is delayed with a specified number of ticks
-  sierra_logging_full(info_sierra_time_delay, sierra_get_current_time(), NEXT_TASKID, delay_time);
+  sierra_logging_full(info_sierra_time_delay, NEXT_TASKID, delay_time);
 
   taskswitch; // perform manual contextswitch
 }

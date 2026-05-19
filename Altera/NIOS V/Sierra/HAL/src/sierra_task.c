@@ -101,7 +101,7 @@ void sierra_create_task(const uint8_t taskID,
   handle_service_call(&svc);
 
   // === Loggning ===
-  sierra_logging_full(info_sierra_task_create_w_p_s, sierra_get_current_time(), taskID, priority);
+  sierra_logging_full(info_sierra_task_create_w_p_s, taskID, priority);
 }
 
 
@@ -131,14 +131,14 @@ void sierra_start_task(const uint8_t taskID)
   handle_service_call(&svc);
 
   // Logs data when a task is started and placed in a ready state
-  sierra_logging_medium(info_sierra_task_started, sierra_get_current_time(), taskID);
+  sierra_logging_medium(info_sierra_task_started, taskID);
 }
 
 //----------------------------------------------------------------------------
 void sierra_block_task(const uint8_t taskID)
 {
   // Logs data when the running task is placed in a blocked state
-  sierra_logging_full(info_sierra_task_blocking, sierra_get_current_time(), RUNNING_TASKID, taskID);
+  sierra_logging_full(info_sierra_task_blocking, RUNNING_TASKID, taskID);
 
   svc_t svc;
   svc.task_block.type =  sierra_task_block;
@@ -158,7 +158,7 @@ void sierra_block_task(const uint8_t taskID)
 void sierra_delete_task(void)
 {
   // Logs data when a task is deleted
-  sierra_logging_medium(info_sierra_task_deleted, sierra_get_current_time(), RUNNING_TASKID);
+  sierra_logging_medium(info_sierra_task_deleted, RUNNING_TASKID);
 
   svc_t svc;
   svc.wait_for_next_period.type =  sierra_task_delete;
@@ -180,7 +180,7 @@ void sierra_change_task_prio(const uint8_t taskID, const int priority)
   handle_service_call(&svc);
 
   // Logs data when a task's priority is changed
-  sierra_logging_full(info_sierra_task_change_prio, sierra_get_current_time(), taskID, priority);
+  sierra_logging_full(info_sierra_task_change_prio, taskID, priority);
 }
 
 //----------------------------------------------------------------------------
@@ -197,7 +197,7 @@ void sierra_yield_task(void)
   NEXT_TASKID = constant_task_mask & statusB.statusB_t.running_taskID;
 
   // Logs data when a task yields
-  sierra_logging_medium(info_sierra_task_yields, sierra_get_current_time(), RUNNING_TASKID);
+  sierra_logging_medium(info_sierra_task_yields, RUNNING_TASKID);
 
   taskswitch; // perform manual context switch
 }

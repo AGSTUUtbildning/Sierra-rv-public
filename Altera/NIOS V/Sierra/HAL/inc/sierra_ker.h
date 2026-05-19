@@ -36,7 +36,7 @@
 
 #include <stdint.h>
 #include "sierra.h"
-#include "sierra_backward_compatibility.h"
+#include "sierra_compatibility.h"
 #include "sierra_info.h"
 #include "sierra_sem.h"
 #include "sierra_task.h"

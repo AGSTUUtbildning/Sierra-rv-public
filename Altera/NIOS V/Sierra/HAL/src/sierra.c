@@ -80,7 +80,7 @@ static void init_interrupt(void)
         // Registrera ISR för Sierran, behövs inte, eftersom den tas om han i trap_vecktor
    int rc = alt_ic_isr_register(0, SIERRA_RTOS_IRQ, dummy_isr, NULL, NULL);
     if (rc != 0) {
-        printf("error registration Sierra irq (rc=%d)\n", rc);
+        sierra_default_print("error registration Sierra irq (rc=%d)\n", rc);
     }
 }
 
@@ -137,14 +137,14 @@ uint32_t sierra_ticks_to_ms(uint32_t ticks)
 void sierra_set_timebase(uint32_t hex)
 {
   // Logs the set time base
-  sierra_logging_medium(info_sierra_time_timebase_set, sierra_get_current_time(), hex);
+  sierra_logging_medium(info_sierra_time_timebase_set, hex);
 
   M_IOWR_SierraTime_base_reg(hex);
 
   if (hex > SIERRA_MAX_TIMEBASE)
   {
     // Warns in case of abnormal values
-    sierra_logging_full(warn_sierra_time_timebase_exc, sierra_get_current_time(), hex, SIERRA_MAX_TIMEBASE);
+    sierra_logging_full(warn_sierra_time_timebase_exc, hex, SIERRA_MAX_TIMEBASE);
   }
 }
 
@@ -191,7 +191,7 @@ void get_next_task(void)
 
   // Get next task ID
   const uint8_t next_taskid = constant_task_mask & status.statusB_t.running_taskID;
-  sierra_logging_full(info_sierra_task_preemted_task, sierra_get_current_time(), next_taskid, RUNNING_TASKID);
+  sierra_logging_full(info_sierra_task_preemted_task, next_taskid, RUNNING_TASKID);
   RUNNING_TASKID = next_taskid;
   current_tcb = &TCB_LIST[RUNNING_TASKID];
  
@@ -222,7 +222,7 @@ void sierra_tsw_on_internal(void)
 void sierra_tsw_on(void)
 {
   // Logs data when tsw is turned on
-  sierra_logging_short(info_sierra_tsw_switching_on, sierra_get_current_time());
+  sierra_logging_short(info_sierra_tsw_switching_on);
   sierra_tsw_on_internal();
 }
 
@@ -241,7 +241,7 @@ void sierra_tsw_off_internal(void)
 void sierra_tsw_off(void)
 {
   // Logs data when tsw is turned off
-  sierra_logging_short(info_sierra_tsw_switching_off, sierra_get_current_time());
+  sierra_logging_short(info_sierra_tsw_switching_off);
 
   sierra_tsw_off_internal();
 }
@@ -250,7 +250,7 @@ void sierra_tsw_off(void)
 void get_new_task(void)
 {
   // Logs data about the next running task
-  sierra_logging_medium(info_sierra_task_next_requested, sierra_get_current_time(), RUNNING_TASKID);
+  sierra_logging_medium(info_sierra_task_next_requested, RUNNING_TASKID);
 
   // New task to start is fetched from NEXT_TASKID
   RUNNING_TASKID = NEXT_TASKID;
@@ -276,7 +276,7 @@ statusA_union handle_service_call(const svc_t* pSVC)
 void sierra_await_irq(int IRQ_number)
 {
   // Logs data when an interrupt service task is ready to process to wait for an external interrupt
-  sierra_logging_full(info_sierra_irq_task_wait_irq, sierra_get_current_time(), RUNNING_TASKID, IRQ_number);
+  sierra_logging_full(info_sierra_irq_task_wait_irq, RUNNING_TASKID, IRQ_number);
 
   sierra_tsw_off_internal();
   svc_t svc;

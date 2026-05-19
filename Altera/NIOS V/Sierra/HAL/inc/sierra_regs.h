@@ -25,8 +25,9 @@
 #ifndef ___SIERRA_REGS_H__
 #define ___SIERRA_REGS_H__
 
-#include <sierra_name.h>
 #include <io.h>
+#include "sierra_compatibility.h"
+#include "sierra_name.h"
 
 // HAL Macros for NIOS
 #define M_Sierra_HW_Version_reg             IORD_32DIRECT(SIERRA_RTOS_BASE,0);

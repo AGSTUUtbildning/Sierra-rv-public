@@ -22,6 +22,7 @@
 #define __SIERRA_NAME_H__
 
 #include <system.h>
+#include <sierra_compatibility.h>
 
 #define SIERRA_RTOS_IRQ SIERRA_0_IRQ 
 #define SIERRA_RTOS_BASE SIERRA_0_BASE 
