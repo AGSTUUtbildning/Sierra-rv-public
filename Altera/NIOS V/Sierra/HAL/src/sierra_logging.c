@@ -23,13 +23,15 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <sierra.h>
-#include <sys/alt_stdio.h>
-#include <sys/alt_log_printf.h>
 
 /* Include header for logging subsystem. */
 #include <sierra_logging.h>
 
 #if SIERRA_LOGGING > 0 // logging funktionerna finns inte ifall logging är av. 
+
+  sierra_func_ptr_print sierra_logg_defined_print = sierra_default_print;
+  sierra_func_ptr_void sierra_logg_defined_timer = sierra_get_current_time;
+  sierra_func_ptr_uint sierra_time_tick_converter = sierra_ticks_to_ms;
 
   // For every log_id there is a message.
   // .str -> Full string with format specifiers.
@@ -94,18 +96,18 @@
 
   // Write all buffered messages into log_port.
   static void read_log(void) {
-      ALT_LOG_PRINTF("\nPrint log:\n");
+      sierra_logg_defined_print("\nPrint log:\n");
       while(sierra_log.tail != sierra_log.head) {
           uint32_t index = sierra_log.tail;
           if (message_list[sierra_log.log_entry[index].message_code].aktive == 1){
-            ALT_LOG_PRINTF("Time: %lu ms : ", (unsigned long)sierra_ticks_to_ms(sierra_log.log_entry[index].time_stamp));
+            sierra_logg_defined_print("Time: %lu ms : ", (unsigned long)sierra_time_tick_converter(sierra_log.log_entry[index].time_stamp));
             uint32_t nr_vars = message_list[sierra_log.log_entry[index].message_code].nr_of_vars;
             if(nr_vars == 0)
-              ALT_LOG_PRINTF(message_list[sierra_log.log_entry[index].message_code].str);
+              sierra_logg_defined_print(message_list[sierra_log.log_entry[index].message_code].str);
             else if(nr_vars == 1)
-              ALT_LOG_PRINTF(message_list[sierra_log.log_entry[index].message_code].str, sierra_log.log_entry[index].var1);
+              sierra_logg_defined_print(message_list[sierra_log.log_entry[index].message_code].str, sierra_log.log_entry[index].var1);
             else if(nr_vars == 2)
-              ALT_LOG_PRINTF(message_list[sierra_log.log_entry[index].message_code].str, sierra_log.log_entry[index].var1, sierra_log.log_entry[index].var2);
+              sierra_logg_defined_print(message_list[sierra_log.log_entry[index].message_code].str, sierra_log.log_entry[index].var1, sierra_log.log_entry[index].var2);
           }
           sierra_log.tail = (sierra_log.tail + 1) & 511; // Uppdatera tail. 
       }
@@ -115,26 +117,23 @@
   //----------------------------------------------------------------------------
 
   // Log message depending on SIERRA_LOGGING mode.
-  void sierra_logging(uint32_t message, uint32_t time, uint32_t var1, uint32_t var2)
+  void sierra_logging(uint32_t message, uint32_t var1, uint32_t var2)
   {
-  #if SIERRA_LOGGING == 3
-    save_log(message, time, var1, var2); // Save inte logging buffert.
-  #elif SIERRA_LOGGING == 2 // Write to log_port
-    ALT_LOG_PRINTF("Time: %lu ms : ", (unsigned long)sierra_ticks_to_ms(time));
+  #if SIERRA_LOGGING == 3 // Do not use. In development.
+    save_log(message, sierra_time_tick_converter( sierra_logg_defined_timer() ), var1, var2); // Save inte logging buffert.
+
+  #elif SIERRA_LOGGING > 0 // When logging is on.
+    #if SIERRA_LOGGING > 1 // Timestamps on
+      sierra_logg_defined_print("Time: %lu ms : ", (unsigned long)sierra_time_tick_converter( sierra_logg_defined_timer() ));
+    #endif
+    
     if(message_list[message].nr_of_vars == 0)
-      ALT_LOG_PRINTF("%s", message_list[message].str);
+      sierra_logg_defined_print("%s", message_list[message].str);
     else if(message_list[message].nr_of_vars == 1)
-      ALT_LOG_PRINTF(message_list[message].str, var1);
+      sierra_logg_defined_print(message_list[message].str, var1);
     else if(message_list[message].nr_of_vars == 2)
-      ALT_LOG_PRINTF(message_list[message].str, var1, var2);
-  #elif SIERRA_LOGGING == 1 // Write into normal jtag UART.
-    printf("Time: %lu ms : ", (unsigned long)sierra_ticks_to_ms(time));
-    if(message_list[message].nr_of_vars == 0)
-      printf("%s", message_list[message].str);
-    else if(message_list[message].nr_of_vars == 1)
-      printf(message_list[message].str, var1);
-    else if(message_list[message].nr_of_vars == 2)
-      printf(message_list[message].str, var1, var2);
+      sierra_logg_defined_print(message_list[message].str, var1, var2);
+
   #else
     ;
   #endif

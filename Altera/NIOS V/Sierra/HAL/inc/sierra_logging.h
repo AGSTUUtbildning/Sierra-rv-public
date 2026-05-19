@@ -25,16 +25,23 @@
 #define __SIERRA_LOGGING_H__
 
 #include <stdio.h>
+#include <sierra_compatibility.h>
 
-
-// Sierra logging = 0 är att logging är avstänkt. Logg funktionerna i koden optimeras bort. 
-// Sierra logging = 1 är inte rekomenderat. Med vanlig printf men jtag UART blir väldigt lätt överbelastad. Rekomenderat att använda pooling till jtag UART.
-// Sierra logging = 2 är Rekomenderat använder printf gjord för logging och skriver till jtag UART som angivits i BSP för logging. Kan också överbelasta jtag UART bufferten.
-// sierra logging = 3 special logging som kräver sierra test platform. Mindre belastning och sparar logg tillfälligt i ett separat minne. 
-
+// Sierra logging = 0 logging är avstänkt. Logg funktionerna i koden optimeras bort. 
+// Sierra logging = 1 logging är på. Logg info skrivs ut via funktion definierat i sierra_backward_compatibility.h
+// Sierra logging = 2 logging med timestamps från sierran interna ticks.
 #define SIERRA_LOGGING 0
 
 #if SIERRA_LOGGING > 0
+
+  // Funktions pekare på villken print funktion som ska användas för logging. Kan dynamiskt ändras av användaren.
+  extern sierra_func_ptr_print sierra_logg_defined_print;
+
+  // Funktions pekare på villken timer funktion som ska användas till logging. Kan dynamiskt ändras av användaren.
+  extern sierra_func_ptr_void sierra_logg_defined_timer;
+
+  // Funktions pekare på villken tids konvertering till ms som ska användas till logging. Kan dynamiskt ändras av användaren.
+  extern sierra_func_ptr_uint sierra_time_tick_converter;
 
   // Struct for mlogging message list.
   typedef struct {
@@ -78,28 +85,26 @@
   /*! \brief   Logging funktion. Diffrent logic depending on SIERRA_LOGGING flag.
   *  \details \par Description
   *           SIERRA_LOGGING -> 0: This function is optimized away.
-  *           SIERRA_LOGGING -> 1: Will use printf to print the logging message into jtag UART.
-  *           SIERRA_LOGGING -> 2: Will use ALT_LOG_PRINTF. Need to set log_port in BSP To work properly.
-  *           SIERRA_LOGGING -> 3: Save logg information in a separate memory to be printed out later. 
-  *                                Reduce load of logging and cthe logg will be crach protected. 
-  *                                Logg need to be printed out later. Max 511 instances. 
+  *           SIERRA_LOGGING -> 1: Print out current log message.
+  *           SIERRA_LOGGING -> 2: Print out current log message with timestamp.
+  *           SIERRA_LOGGING -> 3: Do not use. Work in progress.
   */
-  void sierra_logging(uint32_t message, uint32_t time, uint32_t var1, uint32_t var2);
+  void sierra_logging(uint32_t message, uint32_t var1, uint32_t var2);
 
   void sierra_print_log(void);
 
   #else // If SIERRA_LOGGING is 0. Out optimize sierra_logging and sierra_print_log.
-    #define sierra_logging(message, time, var1, var2) ((void) 0)
+    #define sierra_logging(message, var1, var2) ((void) 0)
     #define sierra_print_log() ((void) 0)
   #endif
   
   // Sierra_logging but with no extra vars.
-  #define sierra_logging_short(message, time)            (sierra_logging(message, time, 0, 0))
+  #define sierra_logging_short(message)            (sierra_logging(message, 0, 0))
   
   // Sierra_logging with one extra var.
-  #define sierra_logging_medium(message, time, var1)     (sierra_logging(message, time, var1, 0))
+  #define sierra_logging_medium(message, var1)     (sierra_logging(message, var1, 0))
   
   // Sierra_logging full with two vars.
-  #define sierra_logging_full(message, time, var1, var2) (sierra_logging(message, time, var1, var2))
+  #define sierra_logging_full(message, var1, var2) (sierra_logging(message, var1, var2))
 
 #endif /* __SIERRA_LOGGING_H__ */

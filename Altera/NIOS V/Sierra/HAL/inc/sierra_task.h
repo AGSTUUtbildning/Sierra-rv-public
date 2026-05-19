@@ -47,6 +47,8 @@
 extern "C" {
 #endif
  
+#include <sierra_compatibility.h>
+
 /*! \brief   Create a new task and initialize its TCB.
  *  \details \par Description
  *           Creates a task with a unique task id. The task will be initialized to a state (blocked or ready) as

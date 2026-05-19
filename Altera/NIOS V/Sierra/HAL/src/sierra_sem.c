@@ -46,18 +46,18 @@ void sierra_take_sem(int semID)
   const uint32_t retval = status.statusA_t.svc_return & 0x3f;
   if (0 != (retval & 0x1))
   {
-  	sierra_logging_full(info_sierra_svc_task_wait_sem, sierra_get_current_time(), RUNNING_TASKID, semID);
+  	sierra_logging_full(info_sierra_svc_task_wait_sem, RUNNING_TASKID, semID);
     NEXT_TASKID = constant_task_mask & (retval >> 1);
     taskswitch; // perform manual contextswitch
   }
 
-  sierra_logging_full(info_sierra_svc_task_take_sem, sierra_get_current_time(), RUNNING_TASKID, semID);
+  sierra_logging_full(info_sierra_svc_task_take_sem, RUNNING_TASKID, semID);
 }
 
 //----------------------------------------------------------------------------
 void sierra_release_sem(int semID)
 {
-  sierra_logging_full(info_sierra_svc_task_releas_sem, sierra_get_current_time(), RUNNING_TASKID, semID);
+  sierra_logging_full(info_sierra_svc_task_releas_sem, RUNNING_TASKID, semID);
 
   svc_t svc;
   svc.release_sem.type = sierra_sem_release;
@@ -96,7 +96,7 @@ void sierra_await_flag(int flag_mask)
   const uint32_t retval = status.statusA_t.svc_return & 0x3f;
   if (0 != (retval & 0x1))
   {
-    sierra_logging_full(info_sierra_svc_wait_flag_set, sierra_get_current_time(), RUNNING_TASKID, flag_mask);
+    sierra_logging_full(info_sierra_svc_wait_flag_set, RUNNING_TASKID, flag_mask);
     NEXT_TASKID = constant_task_mask & (retval >> 1);
     taskswitch; // perform manual contextswitch
   }
@@ -105,7 +105,7 @@ void sierra_await_flag(int flag_mask)
 //----------------------------------------------------------------------------
 void sierra_set_flag(int flag_mask)
 {
-  sierra_logging_full(info_sierra_svc_task_set_flag, sierra_get_current_time(), RUNNING_TASKID, flag_mask);
+  sierra_logging_full(info_sierra_svc_task_set_flag, RUNNING_TASKID, flag_mask);
 
   svc_t svc;
   svc.flag_set.type = sierra_flag_set;
@@ -116,7 +116,7 @@ void sierra_set_flag(int flag_mask)
 //----------------------------------------------------------------------------
 void sierra_clear_flag(int flag_mask)
 {
-  sierra_logging_full(info_sierra_svc_task_clear_flag, sierra_get_current_time(), RUNNING_TASKID, flag_mask);
+  sierra_logging_full(info_sierra_svc_task_clear_flag, RUNNING_TASKID, flag_mask);
 
   svc_t svc;
   svc.flag_clear.type = sierra_flag_clear;

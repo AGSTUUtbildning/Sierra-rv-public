@@ -26,6 +26,7 @@
 #define __SIERRA_TCB_H__
 
 #include <stdint.h>
+#include "sierra_compatibility.h"
 
 #ifdef __cplusplus
 extern "C" {

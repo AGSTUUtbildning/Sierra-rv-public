@@ -26,8 +26,9 @@
 #ifndef __SIERRA_H__
 #define __SIERRA_H__
 
-#include <sierra_io.h>
-#include <sierra_info.h>
+#include "sierra_io.h"
+#include "sierra_info.h"
+#include "sierra_compatibility.h"
 
 #ifdef __cplusplus
 extern "C" {

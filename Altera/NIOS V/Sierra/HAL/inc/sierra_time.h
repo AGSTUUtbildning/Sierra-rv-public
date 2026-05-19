@@ -35,6 +35,8 @@
 extern "C" {
 #endif
 
+#include "sierra_compatibility.h"
+
 /*! \brief   Inititialize period time for current task.
  *  \details \par Description
  *           Initialize the period time for the calling task. This function must be performed before the use of the

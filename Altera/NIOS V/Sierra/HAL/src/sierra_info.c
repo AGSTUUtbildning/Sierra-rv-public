@@ -35,17 +35,17 @@ void sierra_print_versions(void)
   const version_register_union test = sierra_HW_version();
 
 
-  printf("Sierra HW Version %d.%d.%d\n", test.version_register.MAJOR_version,test.version_register.MINOR_version,test.version_register.PATCH_version );
-  printf("Sierra SW Version %d.%d.%d\n", info.sw_version.MAJOR_SW, info.sw_version.MINOR_SW, info.sw_version.PATCH_SW);
+  sierra_default_print("Sierra HW Version %d.%d.%d\n", test.version_register.MAJOR_version,test.version_register.MINOR_version,test.version_register.PATCH_version );
+  sierra_default_print("Sierra SW Version %d.%d.%d\n", info.sw_version.MAJOR_SW, info.sw_version.MINOR_SW, info.sw_version.PATCH_SW);
 }
 
 //----------------------------------------------------------------------------
 void sierra_printf_HW_version(void)
 { 
   const version_register_union test = sierra_HW_version();
-  printf("Version = %d.%d.%d\n", test.version_register.MAJOR_version, test.version_register.MINOR_version, test.version_register.PATCH_version);
-  printf("Number of tasks bits = %d\n", test.version_register.number_of_tasks);
-  printf("Number of semaphore bits = %d\n", test.version_register.number_of_semaphores);
+  sierra_default_print("Version = %d.%d.%d\n", test.version_register.MAJOR_version, test.version_register.MINOR_version, test.version_register.PATCH_version);
+  sierra_default_print("Number of tasks bits = %d\n", test.version_register.number_of_tasks);
+  sierra_default_print("Number of semaphore bits = %d\n", test.version_register.number_of_semaphores);
 }
 
 //----------------------------------------------------------------------------
@@ -59,18 +59,18 @@ void sierra_task_info(void)
   "Dormant"
   };
   info = sierra_get_task_info(0);
-  printf("Idle\n");
-  printf("  info.state_info = %s\n", task_state[info.state_info]);
-  printf("  info.priority = %d\n", info.priority); 
+  sierra_default_print("Idle\n");
+  sierra_default_print("  info.state_info = %s\n", task_state[info.state_info]);
+  sierra_default_print("  info.priority = %d\n", info.priority); 
 
   for (size_t i = 1; i < N_TASKS; ++i)
   {
     if (TCB_LIST[i].taskID != INVALID_TASK_ID)
     {
-      printf("Task %u\n", (unsigned int)i);
+      sierra_default_print("Task %u\n", (unsigned int)i);
       info = sierra_get_task_info(i);
-      printf("  info.state_info = %s\n", task_state[info.state_info]);
-      printf("  info.priority = %d\n", info.priority);
+      sierra_default_print("  info.state_info = %s\n", task_state[info.state_info]);
+      sierra_default_print("  info.priority = %d\n", info.priority);
     }
   }
 }

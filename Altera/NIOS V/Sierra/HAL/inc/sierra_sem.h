@@ -52,6 +52,9 @@
 extern "C" {
 #endif
 
+#include "sierra_io.h"
+#include "sierra_compatibility.h"
+
 /*------------------------------------------------------------------------
     Binary semaphore handling
 -------------------------------------------------------------------------*/

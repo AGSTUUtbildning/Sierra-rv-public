@@ -30,6 +30,7 @@
 #define __SIERRA_IO_H__
 
 #include <stdint.h>
+#include "sierra_compatibility.h"
 
 #ifdef __cplusplus
 extern "C" {
