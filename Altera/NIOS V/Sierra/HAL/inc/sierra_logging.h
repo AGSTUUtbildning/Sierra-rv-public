@@ -31,7 +31,7 @@
 // Sierra logging = 1 logging is on.
 // Sierra logging = 2 logging is on with timestamps.
 // Sierra logging = 3 avancerad logging. See manual. 
-#define SIERRA_LOGGING 3
+#define SIERRA_LOGGING 0
 
 #if SIERRA_LOGGING > 0
 
