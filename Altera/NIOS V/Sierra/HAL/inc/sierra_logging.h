@@ -30,7 +30,7 @@
 // Sierra logging = 0 logging is turned off. Logg functionality is optimized out from the program. 
 // Sierra logging = 1 logging is on.
 // Sierra logging = 2 logging is on with timestamps.
-// Sierra logging = 3 avancerad logging. See manual. 
+// Sierra logging = 3 advanced logging. See manual. 
 #define SIERRA_LOGGING 0
 
 #if SIERRA_LOGGING > 0
