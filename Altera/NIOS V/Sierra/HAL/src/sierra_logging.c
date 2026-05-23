@@ -27,7 +27,7 @@
 /* Include header for logging subsystem. */
 #include <sierra_logging.h>
 
-#if SIERRA_LOGGING > 0 // logging funktionerna finns inte ifall logging är av. 
+#if SIERRA_LOGGING > 0
 
   sierra_func_ptr_print sierra_logg_defined_print = sierra_default_print;
   sierra_func_ptr_void sierra_logg_defined_timer = sierra_get_current_time;
