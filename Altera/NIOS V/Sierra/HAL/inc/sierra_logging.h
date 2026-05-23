@@ -27,23 +27,29 @@
 #include <stdio.h>
 #include <sierra_compatibility.h>
 
-// Sierra logging = 0 logging är avstänkt. Logg funktionerna i koden optimeras bort. 
-// Sierra logging = 1 logging är på. Logg info skrivs ut via funktion definierat i sierra_backward_compatibility.h
-// Sierra logging = 2 logging med timestamps från sierran interna ticks.
-#define SIERRA_LOGGING 0
+// Sierra logging = 0 logging is turned off. Logg functionality is optimized out from the program. 
+// Sierra logging = 1 logging is on.
+// Sierra logging = 2 logging is on with timestamps.
+// Sierra logging = 3 avancerad logging. See manual. 
+#define SIERRA_LOGGING 3
 
 #if SIERRA_LOGGING > 0
 
-  // Funktions pekare på villken print funktion som ska användas för logging. Kan dynamiskt ändras av användaren.
+  // Function pointer for what function that is being used to print log info. Can be set dynamically. Vars (const char *, ...) return int.
   extern sierra_func_ptr_print sierra_logg_defined_print;
 
-  // Funktions pekare på villken timer funktion som ska användas till logging. Kan dynamiskt ändras av användaren.
+  // Function pointer for what function that is being used to get timer info. Can be set dynamically. Vars (void) return uint32_t
   extern sierra_func_ptr_void sierra_logg_defined_timer;
 
-  // Funktions pekare på villken tids konvertering till ms som ska användas till logging. Kan dynamiskt ändras av användaren.
+  // Function pointer for what function that is being used to calculate time to ms. Can be set dynamically. Vars (uint32_t) return uint32_t
   extern sierra_func_ptr_uint sierra_time_tick_converter;
 
-  // Struct for mlogging message list.
+  // For advanced log, level 3. See manual. 
+  #define logging_3_memmory_name ".log_memory"
+  #define LOG_MEMORY_SIZE 8192 // potency of 2. Can also be: 16384, 32768, 65536. Do not overfill a memory.
+  #define LOG_ALIGNMENT 16 // Some hardware is more optimal with other aligments.
+
+  // Struct for logging message list.
   typedef struct {
       const char* str;
       uint8_t nr_of_vars;
@@ -87,7 +93,7 @@
   *           SIERRA_LOGGING -> 0: This function is optimized away.
   *           SIERRA_LOGGING -> 1: Print out current log message.
   *           SIERRA_LOGGING -> 2: Print out current log message with timestamp.
-  *           SIERRA_LOGGING -> 3: Do not use. Work in progress.
+  *           SIERRA_LOGGING -> 3: Advanced logging. See manual
   */
   void sierra_logging(uint32_t message, uint32_t var1, uint32_t var2);
 
