@@ -83,10 +83,6 @@ typedef uint32_t (*sierra_func_ptr_uint)(uint32_t);
 //#define get_new_task(void)                sierra_get_new_task(void)
 //#define handle_service_call(pSVC)         sierra_handle_service_call(pSVC)
 
-// Declared in altera_avalon_sierra_ker.h defined in sierra.c
-// *Functions for internal use of Sierra*
-#define irq_wait(IRQ_number)      sierra_await_irq(IRQ_number)
-
 #ifdef __cplusplus
 }
 #endif

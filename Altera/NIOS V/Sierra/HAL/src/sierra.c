@@ -67,21 +67,33 @@ void dummy_isr(void* context) {
 }
   */
 
+// Compiler need to know this name exists.
+extern void sierra_trap_vector(void);
+
 static void init_interrupt(void)
 {
+  
+  unsigned long mstatus;
+  // Inactivate interrupt while changing.
+  asm volatile("csrrci %0, mstatus, 8" : "=r"(mstatus));
 
-    // Global enable: mstatus.MIE = 1
-    asm volatile("csrsi mstatus, 0x8");
+  // Get adress to sierras own trap_handler
+  uintptr_t sierra_trap_adress = (uintptr_t) sierra_trap_vector;
+  // Set machine trap to sierras trap handler. 
+  asm volatile("csrw mtvec, %0" :: "r"(sierra_trap_adress));
+  
+  // Global enable: mstatus.MIE = 1
+  asm volatile("csrw mstatus, %0" : : "r"(mstatus));
 
-    // Enable mask i mie: MEIE (bit11) + MSIE (bit3) = 0x800 + 0x008 = 0x808
-    asm volatile("li t0, 0x00000808");
-    asm volatile("csrs mie, t0");
+  // Enable mask i mie: MEIE (bit11) + MSIE (bit3) = 0x800 + 0x008 = 0x808
+  asm volatile("li t0, 0x00000808");
+  asm volatile("csrs mie, t0");
 
-        // Registrera ISR för Sierran, behövs inte, eftersom den tas om han i trap_vecktor
-   int rc = alt_ic_isr_register(0, SIERRA_RTOS_IRQ, dummy_isr, NULL, NULL);
-    if (rc != 0) {
-        sierra_default_print("error registration Sierra irq (rc=%d)\n", rc);
-    }
+      // Registrera ISR för Sierran, behövs inte, eftersom den tas om han i trap_vecktor
+  int rc = alt_ic_isr_register(0, SIERRA_RTOS_IRQ, dummy_isr, NULL, NULL);
+  if (rc != 0) {
+      sierra_default_print("error registration Sierra irq (rc=%d)\n", rc);
+  }
 }
 
 //! TCB list 
@@ -273,7 +285,7 @@ statusA_union handle_service_call(const svc_t* pSVC)
 }
 
 //----------------------------------------------------------------------------
-void sierra_await_irq(int IRQ_number)
+void sierra_await_external_signal(int IRQ_number)
 {
   // Logs data when an interrupt service task is ready to process to wait for an external interrupt
   sierra_logging_full(info_sierra_irq_task_wait_irq, RUNNING_TASKID, IRQ_number);

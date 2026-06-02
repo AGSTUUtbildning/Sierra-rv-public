@@ -102,17 +102,17 @@ void HW_CTX_SWITCH(void*);
  *    printf("IRQ Task starts\n");
  *    while(1)
  *    {
- *      sierra_await_irq(1); //Wait for external IRQ 1
+ *      sierra_await_external_signal(1); //Wait for external IRQ 1
  *      printf("IRQ 1 start\n");
  *      ...
- *      sierra_await_irq(0); //Wait for external IRQ 0
+ *      sierra_await_external_signal(0); //Wait for external IRQ 0
  *      printf("IRQ 0 start\n");
  *      ...
  *    }
  *  }
  *  \endcode
  */
-extern void sierra_await_irq(int IRQ_number);
+extern void sierra_await_external_signal(int IRQ_number);
 
 #ifdef __cplusplus
 }

@@ -7,13 +7,13 @@
 
 
 
-   .section .exceptions.entry, "xa"
+    .section .exceptions
     .align  2
 
-    .globl  trap_vector
+    .globl  sierra_trap_vector
     .globl  __alt_exception_stack_pointer
     .globl  __alt_exception_stack_limit
-    .type   trap_vector, @function
+    .type   sierra_trap_vector, @function
 
 # Register      ABI Name    Description                       Saver
  # x0            zero        Hard-wired zero                   -
@@ -29,7 +29,7 @@
  # x18-27        s2-11       Saved registers                   Callee
  # x28-31        t3-6        Temporaries                       Caller
 
-trap_vector:
+sierra_trap_vector:
 # Stäng av globala interrupts (Machine)
 csrc  mstatus, 0x8    # clear MIE (bit 3)
 
