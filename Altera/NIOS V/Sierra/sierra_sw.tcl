@@ -55,7 +55,7 @@ add_sw_property include_source HAL/inc/sierra_time.h
 add_sw_property include_source HAL/inc/sierra_extension/sierra_mbox.h
 
 #Include file Assembly
-add_sw_property asm_source HAL/src/machine_trap.S
+add_sw_property asm_source HAL/src/sierra_machine_trap.S
 
 # This driver supports HAL type
 add_sw_property supported_bsp_type HAL

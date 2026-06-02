@@ -27,7 +27,7 @@
 /* Include header for logging subsystem. */
 #include <sierra_logging.h>
 
-#if SIERRA_LOGGING > 0
+#if SIERRA_LOGGING > 0 // logging funktionerna finns inte ifall logging är av. 
 
   sierra_func_ptr_print sierra_logg_defined_print = sierra_default_print;
   sierra_func_ptr_void sierra_logg_defined_timer = sierra_get_current_time;
@@ -62,9 +62,7 @@
       [info_sierra_time_delay]            = {.str = "info  -> SIERRA_TIME -> Task %d will be delayed with %d ticks.\n",              .nr_of_vars = 2, .aktive = 1},
   };
 
-  #if SIERRA_LOGGING == 3 // This mode is for advance use.
-
-  
+  #if SIERRA_LOGGING == 3 // This mode is only for sierra test platform
 
   // Data structure for logging message.
   typedef struct {
@@ -74,21 +72,17 @@
       uint32_t var2;
   } log_data;
 
-  // Compiler helping definitions for log_memory. Fill memory size with datastructures and entries.
-  #define HEADER_AND_PADDING   ((2 * sizeof(uint32_t) + (LOG_ALIGNMENT - 1)) & ~(LOG_ALIGNMENT - 1))
-  #define NR_LOG_ENTRY            ((LOG_MEMORY_SIZE - HEADER_AND_PADDING) / sizeof(log_data))
-
   // Data structure for a cirkular memmory buffer.
   // This wil fill a 8kb memory.
   typedef struct {
       uint32_t head; // Last index in the buffer.
       uint32_t tail; // First index in the buffer.
-
-      log_data log_entry[NR_LOG_ENTRY]; // max 511 of messages in the bufferts.
+      uint32_t padding[2];
+      log_data log_entry[511]; // max 511 of messages in the bufferts.
   } log_memory;
 
   // log_memory Is a separate on-chip memory or a memory region named log_memory.
-  log_memory sierra_log __attribute__((section(logging_3_memmory_name)));
+  log_memory sierra_log __attribute__((section(".log_memory")));
 
   // Save_log data into log_memory.
   static void save_log(uint32_t message, uint32_t time, uint32_t var1, uint32_t var2) {
@@ -97,7 +91,7 @@
       sierra_log.log_entry[sierra_log.head].var1         = var1;
       sierra_log.log_entry[sierra_log.head].var2         = var2;
 
-      sierra_log.head = (sierra_log.head + 1) & NR_LOG_ENTRY; // Uppdatera head
+      sierra_log.head = (sierra_log.head + 1) & 511; // Uppdatera head
   }
 
   // Write all buffered messages into log_port.
@@ -106,7 +100,7 @@
       while(sierra_log.tail != sierra_log.head) {
           uint32_t index = sierra_log.tail;
           if (message_list[sierra_log.log_entry[index].message_code].aktive == 1){
-            sierra_logg_defined_print("Time: %lu ms : ", (unsigned long)sierra_log.log_entry[index].time_stamp);
+            sierra_logg_defined_print("Time: %lu ms : ", (unsigned long)sierra_time_tick_converter(sierra_log.log_entry[index].time_stamp));
             uint32_t nr_vars = message_list[sierra_log.log_entry[index].message_code].nr_of_vars;
             if(nr_vars == 0)
               sierra_logg_defined_print(message_list[sierra_log.log_entry[index].message_code].str);
@@ -115,7 +109,7 @@
             else if(nr_vars == 2)
               sierra_logg_defined_print(message_list[sierra_log.log_entry[index].message_code].str, sierra_log.log_entry[index].var1, sierra_log.log_entry[index].var2);
           }
-          sierra_log.tail = (sierra_log.tail + 1) & NR_LOG_ENTRY; // Uppdatera tail. 
+          sierra_log.tail = (sierra_log.tail + 1) & 511; // Uppdatera tail. 
       }
   }
   #endif
